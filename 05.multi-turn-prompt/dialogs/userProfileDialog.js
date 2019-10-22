@@ -16,6 +16,7 @@ const { UserProfile } = require('../userProfile');
 
 var genre1_tally = 0;
 var genre2_tally = 0;
+var userProfile;
 
 const CHOICE_PROMPT = 'CHOICE_PROMPT';
 const CONFIRM_PROMPT = 'CONFIRM_PROMPT';
@@ -49,22 +50,30 @@ class UserProfileDialog extends ComponentDialog {
 
             //Pre-Assessment
             this.explainPreAssessment.bind(this),
-            this.preAssessment_1.bind(this),
-            this.preAssessment_2.bind(this),
-            this.preAssessment_3.bind(this),
-            this.preAssessment_4.bind(this),
-            this.preAssessment_5.bind(this),
+            //this.preAssessment_1.bind(this),
+            //this.preAssessment_2.bind(this),
+            //this.preAssessment_3.bind(this),
+            //this.preAssessment_4.bind(this),
+            //this.preAssessment_5.bind(this),
 
             //Music Survey
-            this.explainMusicSurvey.bind(this),
-            this.musicSurvey_1.bind(this),
-            this.musicSurvey_2.bind(this),
-            this.musicSurvey_3.bind(this),
-            this.musicSurvey_4.bind(this),
-            this.musicSurvey_5.bind(this),
-            this.musicSurvey_6.bind(this),
-            this.musicSurvey_7.bind(this),
-            this.musicSurvey_8.bind(this),
+            //this.explainMusicSurvey.bind(this),
+            this.musicSurvey_st1_1.bind(this),
+            this.musicSurvey_st1_2.bind(this),
+            this.musicSurvey_st1_3.bind(this),
+            this.musicSurvey_st1_4.bind(this),
+            this.musicSurvey_st1_5.bind(this),
+            this.musicSurvey_st1_6.bind(this),
+            this.musicSurvey_st1_7.bind(this),
+            this.musicSurvey_st2_1.bind(this),
+            this.musicSurvey_st2_2.bind(this),
+            this.musicSurvey_st2_3.bind(this),
+            this.musicSurvey_st2_4.bind(this),
+            this.musicSurvey_st2_5.bind(this),
+            this.musicSurvey_st3_or_4_1.bind(this),
+            this.musicSurvey_st3_or_4_1.bind(this),
+            this.musicSurvey_st3_or_4_1.bind(this),
+            this.musicSurvey_final.bind(this),
 
             //Lyric Survey
             this.explainLyricSurvey.bind(this)
@@ -219,15 +228,15 @@ class UserProfileDialog extends ComponentDialog {
         return await step.prompt(BEGIN_PROMPT, promptOptions);  
     }
 
-    async musicSurvey_1(step){
+    async musicSurvey_st1_1(step){
         return await step.prompt(CHOICE_PROMPT, {
             prompt: 'Between these two genres of music, which would you prefer to listen to more?',
             choices: ChoiceFactory.toChoices(["Classical", "Pop"])
         }); 
     }
 
-    async musicSurvey_2(step) {
-        step.values.musicSurvey_1 = step.result.value;
+    async musicSurvey_st1_2(step) {
+        step.values.musicSurvey_st1_1 = step.result.value;
         var lastChosenGenre = step.result.value.toLowerCase();
         //await step.context.sendActivity(`You chose: ${ step.result.value }.`);
 
@@ -241,8 +250,8 @@ class UserProfileDialog extends ComponentDialog {
         }); 
     }
 
-    async musicSurvey_3(step) {
-        step.values.musicSurvey_2 = step.result.value;
+    async musicSurvey_st1_3(step) {
+        step.values.musicSurvey_st1_2 = step.result.value;
         var lastChosenGenre = step.result.value.toLowerCase();
         //await step.context.sendActivity(`You chose: ${step.result.value}.`);
 
@@ -256,8 +265,8 @@ class UserProfileDialog extends ComponentDialog {
         });
     }
 
-    async musicSurvey_4(step) {
-        step.values.musicSurvey_3 = step.result.value;
+    async musicSurvey_st1_4(step) {
+        step.values.musicSurvey_st1_3 = step.result.value;
         var lastChosenGenre = step.result.value.toLowerCase();
         //await step.context.sendActivity(`You chose: ${step.result.value}.`);
 
@@ -271,8 +280,8 @@ class UserProfileDialog extends ComponentDialog {
         });
     }
 
-    async musicSurvey_5(step) {
-        step.values.musicSurvey_4 = step.result.value;
+    async musicSurvey_st1_5(step) {
+        step.values.musicSurvey_st1_4 = step.result.value;
         var lastChosenGenre = step.result.value.toLowerCase();
         //await step.context.sendActivity(`You chose: ${step.result.value}.`);
 
@@ -286,8 +295,8 @@ class UserProfileDialog extends ComponentDialog {
         });
     }
 
-    async musicSurvey_6(step) {
-        step.values.musicSurvey_5 = step.result.value;
+    async musicSurvey_st1_6(step) {
+        step.values.musicSurvey_st1_5 = step.result.value;
         var lastChosenGenre = step.result.value.toLowerCase();
         //await step.context.sendActivity(`You chose: ${step.result.value}.`);
 
@@ -301,8 +310,8 @@ class UserProfileDialog extends ComponentDialog {
         });
     }
 
-    async musicSurvey_7(step) {
-        step.values.musicSurvey_6 = step.result.value;
+    async musicSurvey_st1_7(step) {
+        step.values.musicSurvey_st1_6 = step.result.value;
         var lastChosenGenre = step.result.value.toLowerCase();
         //await step.context.sendActivity(`You chose: ${step.result.value}.`);
 
@@ -316,8 +325,8 @@ class UserProfileDialog extends ComponentDialog {
         });
     }
 
-    async musicSurvey_8(step) {
-        step.values.musicSurvey_7 = step.result.value;
+    async musicSurvey_st2_1(step) {
+        step.values.musicSurvey_st1_7 = step.result.value;
         var lastChosenGenre = step.result.value.toLowerCase();
         //await step.context.sendActivity(`You chose: ${step.result.value}.`);
 
@@ -331,23 +340,21 @@ class UserProfileDialog extends ComponentDialog {
 
         //return await step.context.sendActivity("Your music category is: " + musicCategory);
 
-        const userProfile = await this.userProfile.get(step.context, new UserProfile());
-
-        //userProfile.age = step.values.age;
-        //userProfile.gender = step.values.gender;
+        userProfile = await this.userProfile.get(step.context, new UserProfile());
         userProfile.preAssessment = [step.values.preAssessment_1, step.values.preAssessment_2, step.values.preAssessment_3, step.values.preAssessment_4, step.values.preAssessment_5];
-        userProfile.musicSurveyChoices = [step.values.musicSurvey_1, step.values.musicSurvey_2, step.values.musicSurvey_3, step.values.musicSurvey_4, step.values.musicSurvey_5];
-        userProfile.musicCategory = musicCategory;
-
-        console.log(`Here are your pre - assessment choices: ${ userProfile.preAssessment }`);
-        console.log(`Here are your music survey choices: ${userProfile.musicSurveyChoices}`);
-        console.log(`Here is your music category: ${userProfile.musicCategory}`);
+        userProfile.musicSurveyChoices = [step.values.musicSurvey_st1_1, step.values.musicSurvey_st1_2, step.values.musicSurvey_st1_3, step.values.musicSurvey_st1_4, step.values.musicSurvey_st1_5, step.values.musicSurvey_st1_6, step.values.musicSurvey_st1_7];
 
         if (musicCategory == "sophisticated") {
+            userProfile.musicCategory = musicCategory;
             await step.context.sendActivity(`Ah, so you like that ${userProfile.musicCategory} kind of sound. How interesting!`);
-            return await step.next(-2);
+            return await step.next();
         }
         else {
+            // reset genre 1 and 2 tallies to zero
+            genre1_tally = 0;
+            genre2_tally = 0;
+
+            //proceed to part 2 of 4 in music survey
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: 'Between these two genres of music, which would you prefer to listen to more?',
                 choices: ChoiceFactory.toChoices(["Rap", "Early Rock N Roll"])
@@ -355,20 +362,261 @@ class UserProfileDialog extends ComponentDialog {
         }
     }
 
-    async musicSurvey_9(step) {
-        step.values.musicSurvey_8 = step.result.value;
-        var lastChosenGenre = step.result.value.toLowerCase();
-        //await step.context.sendActivity(`You chose: ${step.result.value}.`);
+    async musicSurvey_st2_2(step) {
+        if (userProfile.musicCategory == "") {
+            step.values.musicSurvey_st2_1 = step.result.value;
+            var lastChosenGenre = step.result.value.toLowerCase();
+            //await step.context.sendActivity(`You chose: ${step.result.value}.`);
 
-        // Update the tallies for genre 1 and genre 2
-        if (lastChosenGenre == "classical") { genre1_tally++; }
-        else if (lastChosenGenre == "rap") { genre2_tally++; }
+            // Update the tallies for genre 1 and genre 2
+            if (lastChosenGenre == "rap") { genre1_tally++; }
+            else if (lastChosenGenre == "early rock n roll") { genre2_tally++; }
 
-        return await step.prompt(CHOICE_PROMPT, {
-            prompt: 'Between these two genres of music, which would you prefer to listen to more?',
-            choices: ChoiceFactory.toChoices(["Rock", "Country"])
-        });
+            return await step.prompt(CHOICE_PROMPT, {
+                prompt: 'Between these two genres of music, which would you prefer to listen to more?',
+                choices: ChoiceFactory.toChoices(["Rock", "Country"])
+            });
+        }
+        else {
+            return await step.next();
+        }
 
+    }
+
+    async musicSurvey_st2_3(step) {
+        if (userProfile.musicCategory == "") {
+            step.values.musicSurvey_st2_2 = step.result.value;
+            var lastChosenGenre = step.result.value.toLowerCase();
+            //await step.context.sendActivity(`You chose: ${step.result.value}.`);
+
+            // Update the tallies for genre 1 and genre 2 
+            if (lastChosenGenre == "rock") { genre1_tally++; }
+            else if (lastChosenGenre == "country") { genre2_tally++; }
+
+            return await step.prompt(CHOICE_PROMPT, {
+                prompt: 'Between these two genres of music, which would you prefer to listen to more?',
+                choices: ChoiceFactory.toChoices(["Heavy Metal", "Soft Rock"])
+            });
+        }
+        else {
+            return await step.next();
+        }
+
+    }
+
+    async musicSurvey_st2_4(step) {
+        if (userProfile.musicCategory == "") {
+            step.values.musicSurvey_st2_3 = step.result.value;
+            var lastChosenGenre = step.result.value.toLowerCase();
+            //await step.context.sendActivity(`You chose: ${step.result.value}.`);
+
+            // Update the tallies for genre 1 and genre 2
+            if (lastChosenGenre == "heavy metal") { genre1_tally++; }
+            else if (lastChosenGenre == "soft rock") { genre2_tally++; }
+
+            return await step.prompt(CHOICE_PROMPT, {
+                prompt: 'Between these two genres of music, which would you prefer to listen to more?',
+                choices: ChoiceFactory.toChoices(["Punk", "Pop"])
+            });
+        }
+        else {
+            return await step.next();
+        }
+
+    }
+
+    async musicSurvey_st2_5(step) {
+        if (userProfile.musicCategory == "") {
+            step.values.musicSurvey_st2_4 = step.result.value;
+            var lastChosenGenre = step.result.value.toLowerCase();
+            //await step.context.sendActivity(`You chose: ${step.result.value}.`);
+
+            // Update the tallies for genre 1 and genre 2
+            if (lastChosenGenre == "punk") { genre1_tally++; }
+            else if (lastChosenGenre == "pop") { genre2_tally++; }
+
+            return await step.prompt(CHOICE_PROMPT, {
+                prompt: 'Between these two genres of music, which would you prefer to listen to more?',
+                choices: ChoiceFactory.toChoices(["Electronica", "Soul/R&B"])
+            });
+        }
+        else {
+            return await step.next();
+        }
+    }
+
+    async musicSurvey_st3_or_4_1(step) {
+        if (userProfile.musicCategory == "") {
+            step.values.musicSurvey_st2_5 = step.result.value;
+            var lastChosenGenre = step.result.value.toLowerCase();
+            //await step.context.sendActivity(`You chose: ${step.result.value}.`);
+
+            userProfile.musicSurveyChoices.push(step.values.musicSurvey_st2_1, step.values.musicSurvey_st2_2, step.values.musicSurvey_st2_3, step.values.musicSurvey_st2_4, step.values.musicSurvey_st2_5);
+
+            // Update the tallies for genre 1 and genre 2
+            if (lastChosenGenre == "electronica") { genre1_tally++; }
+            else if (lastChosenGenre == "soul/r&b") { genre2_tally++; }
+
+            if (genre1_tally > genre2_tally) {
+                // user proceeds to musicSurvey_st3_1 (intense or urban categories)
+                return await step.prompt(CHOICE_PROMPT, {
+                    prompt: 'Between these two genres of music, which would you prefer to listen to more?',
+                    choices: ChoiceFactory.toChoices(["Heavy Metal", "Acid Jazz"])
+                });
+            }
+            else {
+                // user proceeds to musicSurvey_st4_1 (campestral or mellow categories)
+                return await step.prompt(CHOICE_PROMPT, {
+                    prompt: 'Between these two genres of music, which would you prefer to listen to more?',
+                    choices: ChoiceFactory.toChoices(["Country", "Pop"])
+                });
+            }
+        }
+        else {
+            return await step.next();
+        }
+
+    }
+
+    async musicSurvey_st3_or_4_2(step) {
+        if (userProfile.musicCategory == "") {
+            step.values.musicSurvey_st3_or_4_1 = step.result.value;
+
+            genre1_tally = 0;
+            genre2_tally = 0;
+
+            var lastChosenGenre = step.result.value.toLowerCase();
+            //await step.context.sendActivity(`You chose: ${step.result.value}.`);
+
+            // Update the tallies for genre 1 and genre 2
+            if (lastChosenGenre == "heavy metal" || "acid jazz") {
+                // user is in step 3_1
+                if (lastChosenGenre == "heavy metal") {
+                    genre1_tally++;
+                }
+                else {
+                    genre2_tally++;
+                }
+                return await step.prompt(CHOICE_PROMPT, {
+                    prompt: 'Between these two genres of music, which would you prefer to listen to more?',
+                    choices: ChoiceFactory.toChoices(["Punk", "Rap"])
+                });
+            }
+            else if (lastChosenGenre == "country" || "pop") {
+                // user is in step 4_1
+                if (lastChosenGenre == "country") {
+                    genre1_tally++;
+                }
+                else {
+                    genre2_tally++;
+                }
+                return await step.prompt(CHOICE_PROMPT, {
+                    prompt: 'Between these two genres of music, which would you prefer to listen to more?',
+                    choices: ChoiceFactory.toChoices(["Soft Rock", "Jazz"])
+                });
+            }
+        }
+        else {
+            return await step.next();
+        }
+    }
+
+    async musicSurvey_st3_or_4_3(step) {
+        if (userProfile.musicCategory == "") {
+            step.values.musicSurvey_st3_or_4_2 = step.result.value;
+            var lastChosenGenre = step.result.value.toLowerCase();
+            //await step.context.sendActivity(`You chose: ${step.result.value}.`);
+
+            // Update the tallies for genre 1 and genre 2
+            if (lastChosenGenre == "punk" || "rap") {
+                // user is in step 3_2
+                if (lastChosenGenre == "punk") {
+                    genre1_tally++;
+                }
+                else {
+                    genre2_tally++;
+                }
+                return await step.prompt(CHOICE_PROMPT, {
+                    prompt: 'Between these two genres of music, which would you prefer to listen to more?',
+                    choices: ChoiceFactory.toChoices(["Rock", "Funk"])
+                });
+            }
+            else if (lastChosenGenre == "soft rock" || "jazz") {
+                // user is in step 4_1
+                if (lastChosenGenre == "soft rock") {
+                    genre1_tally++;
+                }
+                else {
+                    genre2_tally++;
+                }
+                return await step.prompt(CHOICE_PROMPT, {
+                    prompt: 'Between these two genres of music, which would you prefer to listen to more?',
+                    choices: ChoiceFactory.toChoices(["Early Rock N Roll", "Soul/R&B"])
+                });
+            }
+        }
+        else {
+            return await step.next();
+        }
+    }
+
+    async musicSurvey_final(step) {
+        if (userProfile.musicCategory == "") {
+            step.values.musicSurvey_st3_or_4_3 = step.result.value;
+            var lastChosenGenre = step.result.value.toLowerCase();
+            //await step.context.sendActivity(`You chose: ${step.result.value}.`);
+
+            userProfile.musicSurveyChoices.push(musicSurvey_st3_or_4_1, musicSurvey_st3_or_4_2, musicSurvey_st3_or_4_3);
+
+            // Update the tallies for genre 1 and genre 2
+            if (lastChosenGenre == "rock" || "funk") {
+                // user is in step 3_3
+                if (lastChosenGenre == "rock") {
+                    genre1_tally++;
+                }
+                else {
+                    genre2_tally++;
+                }
+
+                if (genre1_tally > genre2_tally) {
+                    // music category is intense
+                    userProfile.musicCategory = "intense";
+                    await step.context.sendActivity(`Ah, so you like that ${userProfile.musicCategory} kind of sound. How interesting!`);
+                    return await step.next();
+                }
+                else {
+                    // music category is urban
+                    userProfile.musicCategory = "urban";
+                    await step.context.sendActivity(`Ah, so you like that ${userProfile.musicCategory} kind of sound. How interesting!`);
+                    return await step.next();
+                }
+            }
+            else if (lastChosenGenre == "early rock n roll" || "soul/r&b") {
+                // user is in step 4_1
+                if (lastChosenGenre == "early rock n roll") {
+                    genre1_tally++;
+                }
+                else {
+                    genre2_tally++;
+                }
+
+                if (genre1_tally > genre2_tally) {
+                    // music category is campestral
+                    userProfile.musicCategory = "campestral";
+                    await step.context.sendActivity(`Ah, so you like that ${userProfile.musicCategory} kind of sound. How interesting!`);
+                    return await step.next();
+                }
+                else {
+                    // music category is mellow
+                    userProfile.musicCategory = "mellow";
+                    await step.context.sendActivity(`Ah, so you like that ${userProfile.musicCategory} kind of sound. How interesting!`);
+                    return await step.next();
+                }
+            }
+        }
+        else {
+            return await step.next();
+        }
     }
 
     async explainLyricSurvey(step) {
