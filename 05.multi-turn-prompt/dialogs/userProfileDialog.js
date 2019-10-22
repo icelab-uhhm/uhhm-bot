@@ -14,6 +14,9 @@ const {
 } = require('botbuilder-dialogs');
 const { UserProfile } = require('../userProfile');
 
+var genre1_tally = 0;
+var genre2_tally = 0;
+
 const CHOICE_PROMPT = 'CHOICE_PROMPT';
 const CONFIRM_PROMPT = 'CONFIRM_PROMPT';
 const NAME_PROMPT = 'NAME_PROMPT';
@@ -44,19 +47,35 @@ class UserProfileDialog extends ComponentDialog {
             // this.askGender.bind(this),
             // this.checkGender.bind(this),
 
-            //preassessment
-            // this.explainPreAssessment.bind(this),
-            // this.preAssessment_1.bind(this),
-            // this.preAssessment_2.bind(this),
-            // this.preAssessment_3.bind(this),
-            // this.preAssessment_4.bind(this),
-            // this.preAssessment_5.bind(this),
+            //Pre-Assessment
+            this.explainPreAssessment.bind(this),
+            this.preAssessment_1.bind(this),
+            this.preAssessment_2.bind(this),
+            this.preAssessment_3.bind(this),
+            this.preAssessment_4.bind(this),
+            this.preAssessment_5.bind(this),
 
+            //Music Survey
             this.explainMusicSurvey.bind(this),
-            this.musicSuvery_1.bind(this),
-            this.musicSuvery_2.bind(this),
-            this.musicSuvery_3.bind(this),
-            this.musicSuvery_4.bind(this)
+            this.musicSurvey_1.bind(this),
+            this.musicSurvey_2.bind(this),
+            this.musicSurvey_3.bind(this),
+            this.musicSurvey_4.bind(this),
+            this.musicSurvey_5.bind(this),
+            this.musicSurvey_6.bind(this),
+            this.musicSurvey_7.bind(this),
+            this.musicSurvey_8.bind(this),
+
+            //Lyric Survey
+            this.explainLyricSurvey.bind(this)
+
+            //Narrative Experience
+
+            //Consent
+
+            //Post-Assessment
+
+            //Conclusion
 
             //this.summaryStep.bind(this)
         ]));
@@ -158,21 +177,24 @@ class UserProfileDialog extends ComponentDialog {
             });
     }
 
-    async preAssessment_2(step){
+    async preAssessment_2(step) {
+        step.values.preAssessment_1 = step.result.value;
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: 'I enjoy learning about new things using technology.',
                 choices: ChoiceFactory.toChoices(['Disagree',  'Neutral', 'Agree'])
             });
     }
 
-    async preAssessment_3(step){
+    async preAssessment_3(step) {
+        step.values.preAssessment_2 = step.result.value;
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: 'Music is important to me.',
                 choices: ChoiceFactory.toChoices(['Disagree',  'Neutral', 'Agree'])
             });   
     }
 
-    async preAssessment_4(step){
+    async preAssessment_4(step) {
+        step.values.preAssessment_3 = step.result.value;
         return await step.prompt(CHOICE_PROMPT, {
             prompt: 'I consider myself a fan of hip hop music.',
             choices: ChoiceFactory.toChoices(['Disagree',  'Neutral', 'Agree'])
@@ -180,7 +202,8 @@ class UserProfileDialog extends ComponentDialog {
             
     }
 
-    async preAssessment_5(step){
+    async preAssessment_5(step) {
+        step.values.preAssessment_4 = step.result.value;
         return await step.prompt(CHOICE_PROMPT, {
             prompt: 'I consider myself to be knowledgeable about hip hop history and/or culture.',
             choices: ChoiceFactory.toChoices(['Disagree',  'Neutral', 'Agree'])
@@ -188,85 +211,219 @@ class UserProfileDialog extends ComponentDialog {
         
     }
 
-    async explainMusicSurvey(step){
+    async explainMusicSurvey(step) {
+        step.values.preAssessment_5 = step.result.value;
         await step.context.sendActivity("Excellent. Now, let’s get to the fun stuff. As a hip hop elemental, I have the power to tell a story specifically for you. I want you to tell me more about your music preferences. I will use this information to  customize your narrative experience.");
        
         const promptOptions = { prompt: 'Type "yes" when you are ready to get started.', retryPrompt: 'Type "yes" when you are ready to get started.' };
         return await step.prompt(BEGIN_PROMPT, promptOptions);  
     }
 
-    async musicSuvery_1(step){
-        var genre1 = "Classical";
-        var genre2 = "Pop";
-
-        await step.prompt(CHOICE_PROMPT, {
-            prompt: 'Between these two genres of music, which would you prefer to listen to more?',
-            choices: ChoiceFactory.toChoices([genre1,  genre2])
-        });
-
-        console.log(temp);
-    }
-
-    async musicSuvery_2(step){
-
-    }
-
-    async musicSuvery_3(step){
-
-    }
-
-    async musicSuvery_4(step){
-
-    }
-
-    async transportStep(step) {
-        // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
-        // Running a prompt here means the next WaterfallStep will be run when the users response is received.
+    async musicSurvey_1(step){
         return await step.prompt(CHOICE_PROMPT, {
-            prompt: 'Please enter your mode of transport.',
-            choices: ChoiceFactory.toChoices(['Car', 'Bus', 'Bicycle'])
+            prompt: 'Between these two genres of music, which would you prefer to listen to more?',
+            choices: ChoiceFactory.toChoices(["Classical", "Pop"])
+        }); 
+    }
+
+    async musicSurvey_2(step) {
+        step.values.musicSurvey_1 = step.result.value;
+        var lastChosenGenre = step.result.value.toLowerCase();
+        //await step.context.sendActivity(`You chose: ${ step.result.value }.`);
+
+        // Update the tallies for genre 1 and genre 2
+        if (lastChosenGenre == "classical") { genre1_tally++; }
+        else if (lastChosenGenre == "pop") { genre2_tally++; }
+
+        return await step.prompt(CHOICE_PROMPT, {
+            prompt: 'Between these two genres of music, which would you prefer to listen to more?',
+            choices: ChoiceFactory.toChoices(["Jazz", "Country"])
+        }); 
+    }
+
+    async musicSurvey_3(step) {
+        step.values.musicSurvey_2 = step.result.value;
+        var lastChosenGenre = step.result.value.toLowerCase();
+        //await step.context.sendActivity(`You chose: ${step.result.value}.`);
+
+        // Update the tallies for genre 1 and genre 2
+        if (lastChosenGenre == "jazz") { genre1_tally++; }
+        else if (lastChosenGenre == "country") { genre2_tally++; }
+
+        return await step.prompt(CHOICE_PROMPT, {
+            prompt: 'Between these two genres of music, which would you prefer to listen to more?',
+            choices: ChoiceFactory.toChoices(["World Music", "Heavy Metal"])
         });
     }
 
-    async nameStep(step) {
-        step.values.transport = step.result.value;
-        return await step.prompt(NAME_PROMPT, `What is your name, human?`);
+    async musicSurvey_4(step) {
+        step.values.musicSurvey_3 = step.result.value;
+        var lastChosenGenre = step.result.value.toLowerCase();
+        //await step.context.sendActivity(`You chose: ${step.result.value}.`);
+
+        // Update the tallies for genre 1 and genre 2
+        if (lastChosenGenre == "world music") { genre1_tally++; }
+        else if (lastChosenGenre == "heavy metal") { genre2_tally++; }
+
+        return await step.prompt(CHOICE_PROMPT, {
+            prompt: 'Between these two genres of music, which would you prefer to listen to more?',
+            choices: ChoiceFactory.toChoices(["Classical", "Electronica"])
+        });
     }
 
-    async nameConfirmStep(step) {
-        step.values.name = step.result;
+    async musicSurvey_5(step) {
+        step.values.musicSurvey_4 = step.result.value;
+        var lastChosenGenre = step.result.value.toLowerCase();
+        //await step.context.sendActivity(`You chose: ${step.result.value}.`);
 
-        // We can send messages to the user at any point in the WaterfallStep.
-        await step.context.sendActivity(`Thanks ${ step.result }.`);
+        // Update the tallies for genre 1 and genre 2
+        if (lastChosenGenre == "classical") { genre1_tally++; }
+        else if (lastChosenGenre == "electronica") { genre2_tally++; }
 
-        // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
-        return await step.prompt(CONFIRM_PROMPT, 'Do you want to give your age?', ['yes', 'no']);
+        return await step.prompt(CHOICE_PROMPT, {
+            prompt: 'Between these two genres of music, which would you prefer to listen to more?',
+            choices: ChoiceFactory.toChoices(["Jazz", "Rap"])
+        });
     }
+
+    async musicSurvey_6(step) {
+        step.values.musicSurvey_5 = step.result.value;
+        var lastChosenGenre = step.result.value.toLowerCase();
+        //await step.context.sendActivity(`You chose: ${step.result.value}.`);
+
+        // Update the tallies for genre 1 and genre 2
+        if (lastChosenGenre == "jazz") { genre1_tally++; }
+        else if (lastChosenGenre == "rap") { genre2_tally++; }
+
+        return await step.prompt(CHOICE_PROMPT, {
+            prompt: 'Between these two genres of music, which would you prefer to listen to more?',
+            choices: ChoiceFactory.toChoices(["World Music", "Electronica"])
+        });
+    }
+
+    async musicSurvey_7(step) {
+        step.values.musicSurvey_6 = step.result.value;
+        var lastChosenGenre = step.result.value.toLowerCase();
+        //await step.context.sendActivity(`You chose: ${step.result.value}.`);
+
+        // Update the tallies for genre 1 and genre 2
+        if (lastChosenGenre == "world music") { genre1_tally++; }
+        else if (lastChosenGenre == "electronica") { genre2_tally++; }
+
+        return await step.prompt(CHOICE_PROMPT, {
+            prompt: 'Between these two genres of music, which would you prefer to listen to more?',
+            choices: ChoiceFactory.toChoices(["Classical", "Rap"])
+        });
+    }
+
+    async musicSurvey_8(step) {
+        step.values.musicSurvey_7 = step.result.value;
+        var lastChosenGenre = step.result.value.toLowerCase();
+        //await step.context.sendActivity(`You chose: ${step.result.value}.`);
+
+        // Update the tallies for genre 1 and genre 2
+        if (lastChosenGenre == "classical") { genre1_tally++; }
+        else if (lastChosenGenre == "rap") { genre2_tally++; }
+
+        var musicCategory = "";
+        if (genre1_tally > genre2_tally) { musicCategory = "sophisticated"; }
+        else { musicCategory = "unsophisticated"; }
+
+        //return await step.context.sendActivity("Your music category is: " + musicCategory);
+
+        const userProfile = await this.userProfile.get(step.context, new UserProfile());
+
+        //userProfile.age = step.values.age;
+        //userProfile.gender = step.values.gender;
+        userProfile.preAssessment = [step.values.preAssessment_1, step.values.preAssessment_2, step.values.preAssessment_3, step.values.preAssessment_4, step.values.preAssessment_5];
+        userProfile.musicSurveyChoices = [step.values.musicSurvey_1, step.values.musicSurvey_2, step.values.musicSurvey_3, step.values.musicSurvey_4, step.values.musicSurvey_5];
+        userProfile.musicCategory = musicCategory;
+
+        console.log(`Here are your pre - assessment choices: ${ userProfile.preAssessment }`);
+        console.log(`Here are your music survey choices: ${userProfile.musicSurveyChoices}`);
+        console.log(`Here is your music category: ${userProfile.musicCategory}`);
+
+        if (musicCategory == "sophisticated") {
+            await step.context.sendActivity(`Ah, so you like that ${userProfile.musicCategory} kind of sound. How interesting!`);
+            return await step.next(-2);
+        }
+        else {
+            return await step.prompt(CHOICE_PROMPT, {
+                prompt: 'Between these two genres of music, which would you prefer to listen to more?',
+                choices: ChoiceFactory.toChoices(["Rap", "Early Rock N Roll"])
+            });
+        }
+    }
+
+    async musicSurvey_9(step) {
+        step.values.musicSurvey_8 = step.result.value;
+        var lastChosenGenre = step.result.value.toLowerCase();
+        //await step.context.sendActivity(`You chose: ${step.result.value}.`);
+
+        // Update the tallies for genre 1 and genre 2
+        if (lastChosenGenre == "classical") { genre1_tally++; }
+        else if (lastChosenGenre == "rap") { genre2_tally++; }
+
+        return await step.prompt(CHOICE_PROMPT, {
+            prompt: 'Between these two genres of music, which would you prefer to listen to more?',
+            choices: ChoiceFactory.toChoices(["Rock", "Country"])
+        });
+
+    }
+
+    async explainLyricSurvey(step) {
+        await step.context.sendActivity("Now I am curious to learn about your taste in hip hop lyrics. Let me ask you a few more questions.");
+        return step.next();
+    }
+
+    //async transportStep(step) {
+    //    // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
+    //    // Running a prompt here means the next WaterfallStep will be run when the users response is received.
+    //    return await step.prompt(CHOICE_PROMPT, {
+    //        prompt: 'Please enter your mode of transport.',
+    //        choices: ChoiceFactory.toChoices(['Car', 'Bus', 'Bicycle'])
+    //    });
+    //}
+
+    //async nameStep(step) {
+    //    step.values.transport = step.result.value;
+    //    return await step.prompt(NAME_PROMPT, `What is your name, human?`);
+    //}
+
+    //async nameConfirmStep(step) {
+    //    step.values.name = step.result;
+
+    //    // We can send messages to the user at any point in the WaterfallStep.
+    //    await step.context.sendActivity(`Thanks ${ step.result }.`);
+
+    //    // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
+    //    return await step.prompt(CONFIRM_PROMPT, 'Do you want to give your age?', ['yes', 'no']);
+    //}
 
     
-    async summaryStep(step) {
-        if (step.result) {
-            // Get the current profile object from user state.
-            const userProfile = await this.userProfile.get(step.context, new UserProfile());
+    //async summaryStep(step) {
+    //    if (step.result) {
+    //        // Get the current profile object from user state.
+    //        const userProfile = await this.userProfile.get(step.context, new UserProfile());
 
-            userProfile.transport = step.values.transport;
-            userProfile.name = step.values.name;
-            userProfile.age = step.values.age;
-            userProfile.gender = step.values.gender;
+    //        userProfile.transport = step.values.transport;
+    //        userProfile.name = step.values.name;
+    //        userProfile.age = step.values.age;
+    //        userProfile.gender = step.values.gender;
 
-            let msg = `I have your mode of transport as ${ userProfile.transport } and your name as ${ userProfile.name }.`;
-            if (userProfile.age !== -1) {
-                msg += ` And age as ${ userProfile.age }.`;
-            }
+    //        let msg = `I have your mode of transport as ${ userProfile.transport } and your name as ${ userProfile.name }.`;
+    //        if (userProfile.age !== -1) {
+    //            msg += ` And age as ${ userProfile.age }.`;
+    //        }
 
-            await step.context.sendActivity(msg);
-        } else {
-            await step.context.sendActivity('Thanks. Your profile will not be kept.');
-        }
+    //        await step.context.sendActivity(msg);
+    //    } else {
+    //        await step.context.sendActivity('Thanks. Your profile will not be kept.');
+    //    }
 
-        // WaterfallStep always finishes with the end of the Waterfall or with another dialog, here it is the end.
-        return await step.endDialog();
-    }
+    //    // WaterfallStep always finishes with the end of the Waterfall or with another dialog, here it is the end.
+    //    return await step.endDialog();
+    //}
 
     async agePromptValidator(promptContext) {
         // This condition is our validation rule. You can also change the value at this point.
