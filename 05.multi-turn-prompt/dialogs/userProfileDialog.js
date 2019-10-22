@@ -17,6 +17,7 @@ const { UserProfile } = require('../userProfile');
 const CHOICE_PROMPT = 'CHOICE_PROMPT';
 const CONFIRM_PROMPT = 'CONFIRM_PROMPT';
 const NAME_PROMPT = 'NAME_PROMPT';
+const BEGIN_PROMPT = 'BEGIN_PROMPT';
 const NUMBER_PROMPT = 'NUMBER_PROMPT';
 const USER_PROFILE = 'USER_PROFILE';
 const WATERFALL_DIALOG = 'WATERFALL_DIALOG';
@@ -31,26 +32,31 @@ class UserProfileDialog extends ComponentDialog {
         this.addDialog(new ChoicePrompt(CHOICE_PROMPT));
         this.addDialog(new ConfirmPrompt(CONFIRM_PROMPT));
         this.addDialog(new NumberPrompt(NUMBER_PROMPT, this.agePromptValidator));
+        this.addDialog(new TextPrompt(BEGIN_PROMPT, this.beginPromptValidator));
 
         this.addDialog(new WaterfallDialog(WATERFALL_DIALOG, [
             //Demographics: age and gender
-            this.askAge.bind(this),
-            this.ageStep.bind(this),
-            this.confirmAgeStep.bind(this),
+            this.startExperience.bind(this),
+            // this.askAge.bind(this),
+            // this.ageStep.bind(this),
+            // this.confirmAgeStep.bind(this),
 
-            this.askGender.bind(this),
-            this.checkGender.bind(this),
+            // this.askGender.bind(this),
+            // this.checkGender.bind(this),
 
             //preassessment
-            this.explainPreAssessment.bind(this),
-            this.preAssessment_1.bind(this),
-            this.preAssessment_2.bind(this),
-            this.preAssessment_3.bind(this),
-            this.preAssessment_4.bind(this),
-            this.preAssessment_5.bind(this)
+            // this.explainPreAssessment.bind(this),
+            // this.preAssessment_1.bind(this),
+            // this.preAssessment_2.bind(this),
+            // this.preAssessment_3.bind(this),
+            // this.preAssessment_4.bind(this),
+            // this.preAssessment_5.bind(this),
 
-
-
+            this.explainMusicSurvey.bind(this),
+            this.musicSuvery_1.bind(this),
+            this.musicSuvery_2.bind(this),
+            this.musicSuvery_3.bind(this),
+            this.musicSuvery_4.bind(this)
 
             //this.summaryStep.bind(this)
         ]));
@@ -74,6 +80,15 @@ class UserProfileDialog extends ComponentDialog {
             await dialogContext.beginDialog(this.id);
         }
     }
+
+
+    async startExperience(step){
+        const promptOptions = { prompt: 'Type "yes" when you are ready to get started.', retryPrompt: 'Type "yes" when you are ready to get started.' };
+
+        return await step.prompt(BEGIN_PROMPT, promptOptions);
+    }
+
+    
 
     async askAge(step) {
         // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
@@ -132,56 +147,77 @@ class UserProfileDialog extends ComponentDialog {
     }
 
     async explainPreAssessment(step){
-        step.values.gender = step.result.value;
-        await step.context.sendActivity(`PREASSESSMENT EXPLAINED!.`);
-        return await step.prompt(NAME_PROMPT, `Let's start?`);
+       await step.context.sendActivity("Please indicate how you agree or disagree with each of the following statements:");
+       return step.next();
     }
 
     async preAssessment_1(step){
-        if(step.result){
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: 'I consider myself to be an experienced technology user.',
-                choices: ChoiceFactory.toChoices(['Strongly Disagree', 'Slightly Disagree', 'Neither Agree nor Disagree', 'Slightly Agree', 'Strongly Agree'])
+                choices: ChoiceFactory.toChoices(['Disagree',  'Neutral', 'Agree'])
             });
-        }
-        else {
-            return await step.endDialog();
-        }
     }
 
     async preAssessment_2(step){
-        await step.context.sendActivity(step.result.value);
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: 'I enjoy learning about new things using technology.',
-                choices: ChoiceFactory.toChoices(['Strongly Disagree', 'Slightly Disagree', 'Neither Agree nor Disagree', 'Slightly Agree', 'Strongly Agree'])
+                choices: ChoiceFactory.toChoices(['Disagree',  'Neutral', 'Agree'])
             });
     }
 
     async preAssessment_3(step){
-        await step.context.sendActivity(step.result.value);
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: 'Music is important to me.',
-                choices: ChoiceFactory.toChoices(['Strongly Disagree', 'Slightly Disagree', 'Neither Agree nor Disagree', 'Slightly Agree', 'Strongly Agree'])
-            });    
+                choices: ChoiceFactory.toChoices(['Disagree',  'Neutral', 'Agree'])
+            });   
     }
 
     async preAssessment_4(step){
-        await step.context.sendActivity(step.result.value);
-            return await step.prompt(CHOICE_PROMPT, {
-                prompt: 'I consider myself a fan of hip hop music.',
-                choices: ChoiceFactory.toChoices(['Strongly Disagree', 'Slightly Disagree', 'Neither Agree nor Disagree', 'Slightly Agree', 'Strongly Agree'])
-            });
+        return await step.prompt(CHOICE_PROMPT, {
+            prompt: 'I consider myself a fan of hip hop music.',
+            choices: ChoiceFactory.toChoices(['Disagree',  'Neutral', 'Agree'])
+        }); 
+            
     }
 
     async preAssessment_5(step){
-        await step.context.sendActivity(step.result.value);
-            return await step.prompt(CHOICE_PROMPT, {
-                prompt: 'I consider myself to be knowledgeable about hip hop history and/or culture.',
-                choices: ChoiceFactory.toChoices(['Strongly Disagree', 'Slightly Disagree', 'Neither Agree nor Disagree', 'Slightly Agree', 'Strongly Agree'])
-            });
+        return await step.prompt(CHOICE_PROMPT, {
+            prompt: 'I consider myself to be knowledgeable about hip hop history and/or culture.',
+            choices: ChoiceFactory.toChoices(['Disagree',  'Neutral', 'Agree'])
+        }); 
+        
     }
 
+    async explainMusicSurvey(step){
+        await step.context.sendActivity("Excellent. Now, let’s get to the fun stuff. As a hip hop elemental, I have the power to tell a story specifically for you. I want you to tell me more about your music preferences. I will use this information to  customize your narrative experience.");
+       
+        const promptOptions = { prompt: 'Type "yes" when you are ready to get started.', retryPrompt: 'Type "yes" when you are ready to get started.' };
+        return await step.prompt(BEGIN_PROMPT, promptOptions);  
+    }
 
+    async musicSuvery_1(step){
+        var genre1 = "Classical";
+        var genre2 = "Pop";
+
+        await step.prompt(CHOICE_PROMPT, {
+            prompt: 'Between these two genres of music, which would you prefer to listen to more?',
+            choices: ChoiceFactory.toChoices([genre1,  genre2])
+        });
+
+        console.log(temp);
+    }
+
+    async musicSuvery_2(step){
+
+    }
+
+    async musicSuvery_3(step){
+
+    }
+
+    async musicSuvery_4(step){
+
+    }
 
     async transportStep(step) {
         // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
@@ -235,6 +271,13 @@ class UserProfileDialog extends ComponentDialog {
     async agePromptValidator(promptContext) {
         // This condition is our validation rule. You can also change the value at this point.
         return promptContext.recognized.succeeded && promptContext.recognized.value > 0 && promptContext.recognized.value < 150;
+    }
+
+    async beginPromptValidator(promptContext) {
+        // This condition is our validation rule. You can also change the value at this point.
+        var str = new String(promptContext.recognized.value.toLowerCase());
+        //console.log(str);
+        return str.valueOf() === "yes".valueOf();
     }
 }
 
