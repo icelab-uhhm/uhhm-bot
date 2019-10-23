@@ -41,25 +41,19 @@ class UserProfileDialog extends ComponentDialog {
         this.addDialog(new TextPrompt(BEGIN_PROMPT, this.beginPromptValidator));
 
         this.addDialog(new WaterfallDialog(WATERFALL_DIALOG, [
-            //Demographics: age and gender
+            // Introduction
             this.startExperience.bind(this),
-            // this.askAge.bind(this),
-            // this.ageStep.bind(this),
-            // this.confirmAgeStep.bind(this),
-
-            // this.askGender.bind(this),
-            // this.checkGender.bind(this),
 
             //Pre-Assessment
             this.explainPreAssessment.bind(this),
-            //this.preAssessment_1.bind(this),
-            //this.preAssessment_2.bind(this),
-            //this.preAssessment_3.bind(this),
-            //this.preAssessment_4.bind(this),
-            //this.preAssessment_5.bind(this),
+            this.preAssessment_1.bind(this),
+            this.preAssessment_2.bind(this),
+            this.preAssessment_3.bind(this),
+            this.preAssessment_4.bind(this),
+            this.preAssessment_5.bind(this),
 
             //Music Survey
-            //this.explainMusicSurvey.bind(this),
+            this.explainMusicSurvey.bind(this),
             this.musicSurvey_st1_1.bind(this),
             this.musicSurvey_st1_2.bind(this),
             this.musicSurvey_st1_3.bind(this),
@@ -748,7 +742,7 @@ class UserProfileDialog extends ComponentDialog {
         }
         else {
             await step.context.sendActivity("Okay, thanks! You actually need to be 18 or older to participate in this survey, but as a young person, you play a very important role in continuing to impact Hip Hop culture and history!");
-            return await step.next();
+            return step.next();
         }
         
     }
