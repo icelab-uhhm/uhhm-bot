@@ -17,6 +17,8 @@ const { UserProfile } = require('../userProfile');
 var genre1_tally = 0;
 var genre2_tally = 0;
 var userProfile;
+var userIsAdult = false;
+
 
 const CHOICE_PROMPT = 'CHOICE_PROMPT';
 const CONFIRM_PROMPT = 'CONFIRM_PROMPT';
@@ -76,7 +78,7 @@ class UserProfileDialog extends ComponentDialog {
             this.musicSurvey_final.bind(this),
 
             //Lyric Survey
-            this.explainLyricSurvey.bind(this)
+            this.explainLyricSurvey.bind(this),
             // this.lyricSurvey_1.bind(this),
             // this.lyricSurvey_2.bind(this),
             // this.lyricSurvey_3.bind(this),
@@ -84,32 +86,34 @@ class UserProfileDialog extends ComponentDialog {
             // this.lyricSurvey_5.bind(this),
             // this.lyricSurvey_final.bind(this),
 
-            // TODO: NARRATIVE FLOW
-            // this.explainNarrativeCustomization.bind(this),
-            // this.introduceNarrative.bind(this),
-            // this.beginNarrative.bind(this),
+            // NARRATIVE FLOW
+             this.explainNarrativeCustomization.bind(this),
+             this.introduceNarrative.bind(this),
+             this.beginNarrative.bind(this),
+             this.concludeNarrative.bind(this),
 
-            // TODO: CONSENT FLOW
-            // this.checkIfAdult.bind(this),
-            // this.askConsent.bind(this),
-            // this.checkConsent.bind(this),
+            // CONSENT FLOW
+             this.checkIfAdult.bind(this),
+             this.askConsent.bind(this),
+             this.checkConsent.bind(this),
 
-            // TODO: POST-ASSESSMENT FLOW
-            // this.askAge.bind(this),
-            // this.askGender.bind(this),
-            // this.checkGender.bind(this),
-            // this.preAssessment_1.bind(this),
-            // this.preAssessment_2.bind(this),
-            // this.preAssessment_3.bind(this),
-            // this.preAssessment_4.bind(this),
-            // this.preAssessment_5.bind(this),
-            // this.preAssessment_6.bind(this),
-            // this.checkRating.bind(this),
+            // POST-ASSESSMENT FLOW
+             this.askAge.bind(this),
+             this.askGender.bind(this),
+             this.checkGender.bind(this),
+             this.explainPostAssessment.bind(this),
+             this.postAssessment_1.bind(this),
+             this.postAssessment_2.bind(this),
+             this.postAssessment_3.bind(this),
+             this.postAssessment_4.bind(this),
+             this.postAssessment_5.bind(this),
+             this.postAssessment_6.bind(this),
+             this.checkRating.bind(this),
 
-            // TODO: CONCLUSION
-            // this.endExperience_1.bind(this),
-            // this.endExperience_2.bind(this),
-            // this.endExperience_3.bind(this),
+            // CONCLUSION
+             this.endExperience_1.bind(this),
+             this.endExperience_2.bind(this),
+             this.endExperience_3.bind(this),
 
         ]));
 
@@ -142,10 +146,10 @@ class UserProfileDialog extends ComponentDialog {
 
     
 
-    async askAge(step) {
-        // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
-        return await step.prompt(CONFIRM_PROMPT, 'Do you want to give your age?', ['yes', 'no']);
-    }
+    //async askAge(step) {
+    //    // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
+    //    return await step.prompt(CONFIRM_PROMPT, 'Do you want to give your age?', ['yes', 'no']);
+    //}
 
     async ageStep(step) {
         if (step.result) {
@@ -179,23 +183,6 @@ class UserProfileDialog extends ComponentDialog {
 
         // WaterfallStep always finishes with the end of the Waterfall or with another dialog, here it is a Prompt Dialog.
         return await step.next();
-    }
-
-    async askGender(step) {
-        // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
-        // Running a prompt here means the next WaterfallStep will be run when the users response is received.
-        return await step.prompt(CHOICE_PROMPT, {
-            prompt: 'Please input your Gender.',
-            choices: ChoiceFactory.toChoices(['Female', 'Male', 'Other'])
-        });
-    }
-
-    async checkGender(step){
-        if(step.result.value == "Other"){
-            return await step.prompt(NAME_PROMPT, `Type in your gender`);
-        }
-        
-        return await step.next(step.result.value);
     }
 
     async explainPreAssessment(step){
@@ -657,32 +644,297 @@ class UserProfileDialog extends ComponentDialog {
     // Question 5 of 5
     // Feedback on user's lyrical taste
 
-    // TODO: NARRATIVE FLOW
-    // Explain customization
-    // Invites user to enter begin
-    // Introduce narrative + tell user to enter next when they are done
+    // TODO: Make sure the music survey + lyric survey data are added to the userProfile, specifically userProfile.lyricCategory so we can choose the narrative to play
 
-    // TODO: CONSENT FLOW
-    // Ask user if they are 18 and older
-    // If they are 18+, prompt for consent; else, skip to transition page
-    // If 18+ user says yes, continue to post assessment flow; else, skip to transition page
+    // NARRATIVE FLOW
+    async explainNarrativeCustomization(step) {
+        // TEMPORARY ASSIGNMENT OF LYRIC CATEGORY TO TEST BELOW COMPONENTS 
+        userProfile.lyricCategory = "Social Issues";
 
-    // TODO: POST-ASSESSMENT FLOW
-    // Age bracket
-    // Gender
-    // Question 1 of 6
-    // Question 2 of 6
-    // Question 3 of 6
-    // Question 4 of 6
-    // Question 5 of 6
-    // Question 6 of 6
-    // Statement about user's rating
+        // DETERMINE WHICH NARRATIVE TO PLAY FOR USER
+        if (userProfile.lyricCategory == "Fashion") {
+            userProfile.narrative = Math.floor(Math.random() * 4 + 1);
+        }
+        else if (userProfile.lyricCategory == "Social Issues") {
+            var min = 5;
+            var max = 8;
+            userProfile.narrative = Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        else if (userProfile.lyricCategory == "Location") {
+            var min = 9;
+            var max = 11;
+            userProfile.narrative = Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // DETERMINE WHICH PLAYLIST TO PLAY FOR USER
+        if (userProfile.musicCategory == "mellow") {
+            userProfile.playlist = "M" + userProfile.narrative.toString();
+        }
+        else if (userProfile.musicCategory == "urban") {
+            userProfile.playlist = "U" + userProfile.narrative.toString();
+        }
+        else if (userProfile.musicCategory == "sophisticated") {
+            userProfile.playlist = "S" + userProfile.narrative.toString();
+        }
+        else if (userProfile.musicCategory == "intense") {
+            userProfile.playlist = "I" + userProfile.narrative.toString();
+        }
+        else if (userProfile.musicCategory == "campestral") {
+            userProfile.playlist = "C" + userProfile.narrative.toString();
+        }
+
+        await step.context.sendActivity("Based on all of the information you provided me, I have created a customized narrative experience just for you.");
+        return step.next();
+    }
+
+    async introduceNarrative(step) {
+        const promptOptions = { prompt: 'Type "yes" when you are ready to explore your narrative.', retryPrompt: 'Type "yes" when you are ready to explore your narrative.' };
+
+        return await step.prompt(BEGIN_PROMPT, promptOptions);
+    }
+
+    async beginNarrative(step) {
+        var narrativeTitle_dictionary = ["",
+            "Hip Hop, Punk Rock, Rock and Roll",
+            "From the Streets to Fashion Week",
+            "Brand Marketing Through Hip Hop",
+            "Evolution of Bling",
+            "Violence",
+            "Drugs",
+            "Self Representation of Women",
+            "What Moves the Crowd",
+            "Internet Streaming, Social Media, and Hip Hop",
+            "From the Bronx to Across the U.S.",
+            "Global Influence of Hip Hop"
+        ];
+        var narrativeTitle = narrativeTitle_dictionary[userProfile.narrative];
+
+        console.log("User Narrative: " + userProfile.narrative.toString());
+        console.log("User Narrative Title: " + narrativeTitle);
+        console.log("User Playlist: " + userProfile.playlist);
+
+        await step.context.sendActivity("EXPLORE YOUR CUSTOM NARRATIVE: ");
+        await step.context.sendActivity(userProfile.lyricCategory + ": " + narrativeTitle);
+
+        // TODO: Add playlist using CardFactory AudioCard
+        // TODO: Add link to narrative experience file on website
+
+        return step.next();
+    }
+
+    async concludeNarrative(step) {
+        const promptOptions = { prompt: 'Type "yes" when you are finished exploring your narrative.', retryPrompt: 'Type "yes" when you are finished exploring your narrative.' };
+
+        return await step.prompt(BEGIN_PROMPT, promptOptions);
+    }
+
+    // CONSENT FLOW
+
+    async checkIfAdult(step) {
+        step.values.preAssessment_1 = step.result.value;
+        return await step.prompt(CHOICE_PROMPT, {
+            prompt: 'I hope you enjoyed learning about hip hop culture and history with me today. I’d love to hear what you thought about your narrative experience. Are you 18 years old or order?',
+            choices: ChoiceFactory.toChoices(['No', 'Yes'])
+        });
+    }
+
+    async askConsent(step) {
+        if (step.result.value == "Yes") {
+            userIsAdult = true;
+            return await step.prompt(CHOICE_PROMPT, {
+                prompt: 'Great! Would you sharing your feedback with MIT to help improve the future experience?',
+                choices: ChoiceFactory.toChoices(['No', 'Yes'])
+            });
+        }
+        else {
+            await step.context.sendActivity("Okay, thanks! You actually need to be 18 or older to participate in this survey, but as a young person, you play a very important role in continuing to impact Hip Hop culture and history!");
+            return await step.next();
+        }
+        
+    }
+
+    async checkConsent(step) {
+        if (userIsAdult) {
+            if (step.result.value == "Yes") {
+                userProfile.consent = true;
+                await step.context.sendActivity("Awesome, you rock. Thanks for helping us make this experience even better for future visitors. I have a few questions for you about your experience today.");
+                return await step.next();
+            }
+            else {
+                await step.context.sendActivity("Okay, no worries! Your information will not be saved.");
+                return await step.next();
+            }
+        }
+        else {
+            return await step.next();
+        }
+    }
+
+    // POST-ASSESSMENT FLOW
+    async askAge(step) {
+        if (userProfile.consent) {
+            const promptOptions = { prompt: 'Please enter your age.', retryPrompt: 'The value entered must be greater than 0 and less than 150.' };
+            return await step.prompt(NUMBER_PROMPT, promptOptions);
+        }
+        else {
+            return step.next();
+        }
+    }
+
+    async askGender(step) {
+        if (userProfile.consent) {
+            return await step.prompt(CHOICE_PROMPT, {
+                prompt: 'Please input your Gender.',
+                choices: ChoiceFactory.toChoices(['Female', 'Male', 'Other'])
+            });
+        }
+        else {
+            return step.next();
+        }
+    }
+
+    async checkGender(step) {
+        if (userProfile.consent) {
+            if (step.result.value == "Other") {
+                return await step.prompt(NAME_PROMPT, `Type in your gender`);
+            }
+
+            return await step.next(step.result.value);
+        }
+        else {
+            return step.next();
+        }
+    }
+
+    async explainPostAssessment(step) {
+        if (userProfile.consent) {
+            await step.context.sendActivity("Please indicate how you agree or disagree with each of the following statements:");
+            return step.next();
+        }
+        else {
+            return step.next();
+        }
+    }
+
+    async postAssessment_1(step) {
+        if (userProfile.consent) {
+            return await step.prompt(CHOICE_PROMPT, {
+                prompt: 'I found the experience to be easy to understand.',
+                choices: ChoiceFactory.toChoices(['Disagree', 'Neutral', 'Agree'])
+            });
+        }
+        else {
+            return step.next();
+        }
+    }
+
+    async postAssessment_2(step) {
+        if (userProfile.consent) {
+            step.values.postAssessment_1 = step.result.value;
+            return await step.prompt(CHOICE_PROMPT, {
+                prompt: ' I enjoyed the experience.',
+                choices: ChoiceFactory.toChoices(['Disagree', 'Neutral', 'Agree'])
+            });
+        }
+        else {
+            return step.next();
+        }
+    }
+
+    async postAssessment_3(step) {
+        if (userProfile.consent) {
+            step.values.postAssessment_2 = step.result.value;
+            return await step.prompt(CHOICE_PROMPT, {
+                prompt: 'I learned something new about hip hop history and/or culture from the experience.',
+                choices: ChoiceFactory.toChoices(['Disagree', 'Neutral', 'Agree'])
+            });
+        }
+        else {
+            return step.next();
+        }
+    }
+
+    async postAssessment_4(step) {
+        if (userProfile.consent) {
+            step.values.postAssessment_3 = step.result.value;
+            return await step.prompt(CHOICE_PROMPT, {
+                prompt: 'I felt like the experience was customized to fit my interests.',
+                choices: ChoiceFactory.toChoices(['Disagree', 'Neutral', 'Agree'])
+            });
+        }
+        else {
+            return step.next();
+        }
+    }
+
+    async postAssessment_5(step) {
+        if (userProfile.consent) {
+            step.values.postAssessment_4 = step.result.value;
+            return await step.prompt(CHOICE_PROMPT, {
+                prompt: 'I felt like the audio playlist was customized to fit my music preferences.',
+                choices: ChoiceFactory.toChoices(['Disagree', 'Neutral', 'Agree'])
+            });
+        }
+        else {
+            return step.next();
+        }
+    }
+
+    async postAssessment_6(step) {
+        if (userProfile.consent) {
+            step.values.postAssessment_5 = step.result.value;
+            return await step.prompt(CHOICE_PROMPT, {
+                prompt: 'Finally, how would you rate the Breakbeat Narrative experience overall on a scale from 1 to 5, with 1 being the worst possible experience and 5 being the best possible experience?',
+                choices: ChoiceFactory.toChoices(['1', '2', '3', '4', '5'])
+            });
+        }
+        else {
+            return step.next();
+        }
+    }
+
+    async checkRating(step) {
+        if (userProfile.consent) {
+            step.values.postAssessment_6 = step.result.value;
+
+            userProfile.postAssessment = [step.values.postAssessment_1, step.values.postAssessment_2, step.values.postAssessment_3, step.values.postAssessment_4, step.values.postAssessment_5, step.values.postAssessment_6]
+            if (step.values.postAssessment_6 == 1 || step.values.postAssessment_6 == 2) {
+                var checkRatingMsg = "I'm sorry that you didn't find the experience as interesting as we'd hoped, but your feedback will be very helpful for us to make it better!";
+            }
+            else if (step.values.postAssessment_6 == 3) {
+                var checkRatingMsg = "I hope you were able to learn something new or interesting from the narrative experience and I'm glad to have had you participate.";
+            }
+            else if (step.values.postAssessment_6 == 4 || step.values.postAssessment_6 == 5) {
+                var checkRatingMsg = "I'm so glad you enjoyed your customized narrative experience!";
+            }
+            await step.context.sendActivity(checkRatingMsg);
+            await step.context.sendActivity("I definitely enjoyed getting to learn more about you today.");
+            return step.next();
+        }
+        else {
+            return step.next();
+        }
+    }
+
+    // CONCLUSION
+
+    async endExperience_1(step) {
+        await step.context.sendActivity("Thanks again for joining me for the Breakbeat Narrative Experience! To retrieve your custom music playlist, scan the QR code below with your mobile device camera.");
+        // TODO: Add CardFactory HeroCard with image of QR code + link to playlist
+        return step.next();
+    }
+
+    async endExperience_2(step) {
+        const promptOptions = { prompt: 'When you’re done, type "yes" to return to the home page.', retryPrompt: 'When you’re done, type "yes" to return to the home page.' };
+        return await step.prompt(BEGIN_PROMPT, promptOptions);
+    }
+
+    async endExperience_3(step) {
+        await step.context.sendActivity("Enjoy the rest of your day exploring the [R]Evolution of Hip Hop! Goodbye.");
+        return await step.endDialog();
+    }
 
 
-    // TODO: CONCLUSION
-    // Thank user for participating
-    // Invite them to scan their QR code
-    // Tell them to enter "done" when they are finished
 
 
     //async transportStep(step) {
@@ -736,7 +988,7 @@ class UserProfileDialog extends ComponentDialog {
 
     async agePromptValidator(promptContext) {
         // This condition is our validation rule. You can also change the value at this point.
-        return promptContext.recognized.succeeded && promptContext.recognized.value > 0 && promptContext.recognized.value < 150;
+        return promptContext.recognized.succeeded && promptContext.recognized.value > 0 && promptContext.recognized.value < 120;
     }
 
     async beginPromptValidator(promptContext) {
