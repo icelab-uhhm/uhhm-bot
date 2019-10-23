@@ -77,16 +77,40 @@ class UserProfileDialog extends ComponentDialog {
 
             //Lyric Survey
             this.explainLyricSurvey.bind(this)
+            // this.lyricSurvey_1.bind(this),
+            // this.lyricSurvey_2.bind(this),
+            // this.lyricSurvey_3.bind(this),
+            // this.lyricSurvey_4.bind(this),
+            // this.lyricSurvey_5.bind(this),
+            // this.lyricSurvey_final.bind(this),
 
-            //Narrative Experience
+            // TODO: NARRATIVE FLOW
+            // this.explainNarrativeCustomization.bind(this),
+            // this.introduceNarrative.bind(this),
+            // this.beginNarrative.bind(this),
 
-            //Consent
+            // TODO: CONSENT FLOW
+            // this.checkIfAdult.bind(this),
+            // this.askConsent.bind(this),
+            // this.checkConsent.bind(this),
 
-            //Post-Assessment
+            // TODO: POST-ASSESSMENT FLOW
+            // this.askAge.bind(this),
+            // this.askGender.bind(this),
+            // this.checkGender.bind(this),
+            // this.preAssessment_1.bind(this),
+            // this.preAssessment_2.bind(this),
+            // this.preAssessment_3.bind(this),
+            // this.preAssessment_4.bind(this),
+            // this.preAssessment_5.bind(this),
+            // this.preAssessment_6.bind(this),
+            // this.checkRating.bind(this),
 
-            //Conclusion
+            // TODO: CONCLUSION
+            // this.endExperience_1.bind(this),
+            // this.endExperience_2.bind(this),
+            // this.endExperience_3.bind(this),
 
-            //this.summaryStep.bind(this)
         ]));
 
         this.initialDialogId = WATERFALL_DIALOG;
@@ -625,7 +649,41 @@ class UserProfileDialog extends ComponentDialog {
         return step.next();
     }
 
-    
+    // TODO: LYRIC SURVEY
+    // Question 1 of 5
+    // Question 2 of 5
+    // Question 3 of 5
+    // Question 4 of 5
+    // Question 5 of 5
+    // Feedback on user's lyrical taste
+
+    // TODO: NARRATIVE FLOW
+    // Explain customization
+    // Invites user to enter begin
+    // Introduce narrative + tell user to enter next when they are done
+
+    // TODO: CONSENT FLOW
+    // Ask user if they are 18 and older
+    // If they are 18+, prompt for consent; else, skip to transition page
+    // If 18+ user says yes, continue to post assessment flow; else, skip to transition page
+
+    // TODO: POST-ASSESSMENT FLOW
+    // Age bracket
+    // Gender
+    // Question 1 of 6
+    // Question 2 of 6
+    // Question 3 of 6
+    // Question 4 of 6
+    // Question 5 of 6
+    // Question 6 of 6
+    // Statement about user's rating
+
+
+    // TODO: CONCLUSION
+    // Thank user for participating
+    // Invite them to scan their QR code
+    // Tell them to enter "done" when they are finished
+
 
     //async transportStep(step) {
     //    // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
