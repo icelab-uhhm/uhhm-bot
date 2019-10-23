@@ -736,11 +736,12 @@ class UserProfileDialog extends ComponentDialog {
         if (step.result.value == "Yes") {
             userIsAdult = true;
             return await step.prompt(CHOICE_PROMPT, {
-                prompt: 'Great! Would you sharing your feedback with MIT to help improve the future experience?',
+                prompt: 'Great! Can I share your feedback with MIT to help improve the future experience?',
                 choices: ChoiceFactory.toChoices(['No', 'Yes'])
             });
         }
         else {
+            userIsAdult = false;
             await step.context.sendActivity("Okay, thanks! You actually need to be 18 or older to participate in this survey, but as a young person, you play a very important role in continuing to impact Hip Hop culture and history!");
             return step.next();
         }
