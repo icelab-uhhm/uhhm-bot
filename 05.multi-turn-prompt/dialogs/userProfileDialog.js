@@ -71,8 +71,8 @@ class UserProfileDialog extends ComponentDialog {
             this.musicSurvey_st2_4.bind(this),
             this.musicSurvey_st2_5.bind(this),
             this.musicSurvey_st3_or_4_1.bind(this),
-            this.musicSurvey_st3_or_4_1.bind(this),
-            this.musicSurvey_st3_or_4_1.bind(this),
+            this.musicSurvey_st3_or_4_2.bind(this),
+            this.musicSurvey_st3_or_4_3.bind(this),
             this.musicSurvey_final.bind(this),
 
             //Lyric Survey
@@ -456,7 +456,7 @@ class UserProfileDialog extends ComponentDialog {
             // Update the tallies for genre 1 and genre 2
             if (lastChosenGenre == "electronica") { genre1_tally++; }
             else if (lastChosenGenre == "soul/r&b") { genre2_tally++; }
-
+            console.log("musicSurvey_st3_or_4_1");
             if (genre1_tally > genre2_tally) {
                 // user proceeds to musicSurvey_st3_1 (intense or urban categories)
                 return await step.prompt(CHOICE_PROMPT, {
@@ -487,7 +487,7 @@ class UserProfileDialog extends ComponentDialog {
 
             var lastChosenGenre = step.result.value.toLowerCase();
             //await step.context.sendActivity(`You chose: ${step.result.value}.`);
-
+            console.log("musicSurvey_st3_or_4_2");
             // Update the tallies for genre 1 and genre 2
             if (lastChosenGenre == "heavy metal" || "acid jazz") {
                 // user is in step 3_1
@@ -526,7 +526,7 @@ class UserProfileDialog extends ComponentDialog {
             step.values.musicSurvey_st3_or_4_2 = step.result.value;
             var lastChosenGenre = step.result.value.toLowerCase();
             //await step.context.sendActivity(`You chose: ${step.result.value}.`);
-
+            console.log("musicSurvey_st3_or_4_3");
             // Update the tallies for genre 1 and genre 2
             if (lastChosenGenre == "punk" || "rap") {
                 // user is in step 3_2
@@ -562,11 +562,12 @@ class UserProfileDialog extends ComponentDialog {
 
     async musicSurvey_final(step) {
         if (userProfile.musicCategory == "") {
+            console.log("musicSurvey_final");
             step.values.musicSurvey_st3_or_4_3 = step.result.value;
             var lastChosenGenre = step.result.value.toLowerCase();
             //await step.context.sendActivity(`You chose: ${step.result.value}.`);
 
-            userProfile.musicSurveyChoices.push(musicSurvey_st3_or_4_1, musicSurvey_st3_or_4_2, musicSurvey_st3_or_4_3);
+            userProfile.musicSurveyChoices.push(step.values.musicSurvey_st3_or_4_1, step.values.musicSurvey_st3_or_4_2, step.values.musicSurvey_st3_or_4_3);
 
             // Update the tallies for genre 1 and genre 2
             if (lastChosenGenre == "rock" || "funk") {
@@ -623,6 +624,8 @@ class UserProfileDialog extends ComponentDialog {
         await step.context.sendActivity("Now I am curious to learn about your taste in hip hop lyrics. Let me ask you a few more questions.");
         return step.next();
     }
+
+    
 
     //async transportStep(step) {
     //    // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
