@@ -18,7 +18,10 @@ var genre1_tally = 0;
 var genre2_tally = 0;
 var userProfile;
 var userIsAdult = false;
-
+var L1 = "";
+var L2 = "";
+var lyric_category_tally = {FL:0, SIL:0, LL:0};
+var lyric_category_map = {FL: "Fashion", SIL: "Social Issues", LL: "Location" };
 
 const CHOICE_PROMPT = 'CHOICE_PROMPT';
 const CONFIRM_PROMPT = 'CONFIRM_PROMPT';
@@ -73,12 +76,12 @@ class UserProfileDialog extends ComponentDialog {
 
             //Lyric Survey
             this.explainLyricSurvey.bind(this),
-            // this.lyricSurvey_1.bind(this),
-            // this.lyricSurvey_2.bind(this),
-            // this.lyricSurvey_3.bind(this),
-            // this.lyricSurvey_4.bind(this),
-            // this.lyricSurvey_5.bind(this),
-            // this.lyricSurvey_final.bind(this),
+            this.lyricSurvey_1.bind(this),
+            this.lyricSurvey_2.bind(this),
+            this.lyricSurvey_3.bind(this),
+            this.lyricSurvey_4.bind(this),
+            this.lyricSurvey_5.bind(this),
+            this.lyricSurvey_final.bind(this),
 
             // NARRATIVE FLOW
              this.explainNarrativeCustomization.bind(this),
@@ -632,29 +635,155 @@ class UserProfileDialog extends ComponentDialog {
 
     // TODO: LYRIC SURVEY
     // Question 1 of 5
+    async lyricSurvey_1(step){
+        L1 = "1.“This is truffle season\nTom Ford tuxedos for no reason\nAll Saints for my angel\nAlexander Wang too”\n\nSuit and Tie, Justin Timberlake and Jay Z";
+        L2 = "2.“And still I see no changes can't a brother get a little peace\nIt's war on the streets and the war in the Middle East\nInstead of war on poverty they got a war on drugs\nSo the police can bother me”\n\nChanges, Tupac Shakur&B";
+        
+        await step.context.sendActivity("Between these two choices of hip hop lyrics, which do you like more?");
+        await step.context.sendActivity(L1);
+        await step.context.sendActivity(L2);
+        return await step.prompt(CHOICE_PROMPT, {
+            prompt: '',
+            choices: ChoiceFactory.toChoices(["1", "2"])
+        });
+    }
     // Question 2 of 5
+    async lyricSurvey_2(step){
+        //remove after uncommenting everything!
+        userProfile = await this.userProfile.get(step.context, new UserProfile());
+        if(step.result.value == 1){
+            lyric_category_tally["FL"]++;
+            userProfile.lyricSurveyChoices = ["FL1"];
+        } else{
+            lyric_category_tally["SIL"]++;
+            userProfile.lyricSurveyChoices = ["SIL1"];
+        }
+        
+        L1 = "1.“I must say, by your songs I'm unimpressed, hey\nBut I love to see a Black man get paid\nAnd plus, you havin' fun and I respect that\nBut have you ever thought about your impact?”\n\n1985, J. Cole";
+        L2 = "2.“In the concrete jungle, the strong stand and rumble The weak fold and crumble, it's the land of trouble Brooklyn, home of the greatest rappers Big comes first, then the Queen comes after”\n\nLighters Up, Lil’ Kim";
+        
+        await step.context.sendActivity("Between these two choices of hip hop lyrics, which do you like more?");
+        await step.context.sendActivity(L1);
+        await step.context.sendActivity(L2);
+        return await step.prompt(CHOICE_PROMPT, {
+            prompt: '',
+            choices: ChoiceFactory.toChoices(["1", "2"])
+        });
+        
+    }
     // Question 3 of 5
+    async lyricSurvey_3(step){
+        if(step.result.value == 1){
+            lyric_category_tally["SIL"]++;
+            userProfile.lyricSurveyChoices.push("SIL2");
+        } else{
+            lyric_category_tally["LL"]++;
+            userProfile.lyricSurveyChoices.push("LL1");
+        }
+        
+        L1 = "1.“My motivation is from thirty pointers, VVS\nThe furniture my mouth piece simply symbolize success”\n\nGrillz, Nelly ft. Paul Wall, Ali & Gipp";
+        L2 = "2.“I drive a Benz and I got a lot of friends\nUp on the Concourse where Tremont ends\nOr Jerome Avenue or Gun Hill Road\nThe place where rap started in the days of old”\n\nThe Bronx, Kurtis Blow";
+        
+        await step.context.sendActivity("Between these two choices of hip hop lyrics, which do you like more?");
+        await step.context.sendActivity(L1);
+        await step.context.sendActivity(L2);
+        return await step.prompt(CHOICE_PROMPT, {
+            prompt: '',
+            choices: ChoiceFactory.toChoices(["1", "2"])
+        });
+        
+    }
     // Question 4 of 5
+    async lyricSurvey_4(step){
+        if(step.result.value == 1){
+            lyric_category_tally["FL"]++;
+            userProfile.lyricSurveyChoices.push("FL2");
+        } else{
+            lyric_category_tally["LL"]++;
+            userProfile.lyricSurveyChoices.push("LL1");
+        }
+        
+        L1 = "1.“I made 'Jesus Walks,' so I'm never going to hell\nCouture-level flow is never going on sale\nLuxury rap, the Hermes of verses\nSophisticated ignorance, write my curses in cursive”\n\nOtis, Kanye West and Jay-Z";
+        L2 = "2.“And with this love I do hip-hop from the soul\nA real MC, who never sweats how many copies are sold\nYeah I want to go gold, platinum, uh-huh etceteras\nBut why put out some wackness when no one will respect ya”\n\nPeace, Prosperity & Paper, A Tribe Called Quest";
+        
+        await step.context.sendActivity("Between these two choices of hip hop lyrics, which do you like more?");
+        await step.context.sendActivity(L1);
+        await step.context.sendActivity(L2);
+        return await step.prompt(CHOICE_PROMPT, {
+            prompt: '',
+            choices: ChoiceFactory.toChoices(["1", "2"])
+        });
+        
+    }
     // Question 5 of 5
+    async lyricSurvey_5(step){
+        if(step.result.value == 1){
+            lyric_category_tally["FL"]++;
+            userProfile.lyricSurveyChoices.push("FL3");
+        } else{
+            lyric_category_tally["SIL"]++;
+            userProfile.lyricSurveyChoices.push("SIL3");
+        }
+        
+        L1 = "1.“Powdered eggs and government cheeses The calendars with Martin, JFK and Jesus Gotta be fresh to go to school with fly sneakers Schools with outdated books, we are the forgotten”\n\nThe Slave & The Master, Nas";
+        L2 = "2.“Sitting on they front stoop sipping Guinesses\nUsing native dialect in they sentences\nFrom the treeline blocks to the tenements\nTo the Mom & Pop local shop menaces”\n\nBrooklyn, Mos Def";
+        
+        await step.context.sendActivity("Between these two choices of hip hop lyrics, which do you like more?");
+        await step.context.sendActivity(L1);
+        await step.context.sendActivity(L2);
+        return await step.prompt(CHOICE_PROMPT, {
+            prompt: '',
+            choices: ChoiceFactory.toChoices(["1", "2"])
+        });
+        
+    }
     // Feedback on user's lyrical taste
+    async lyricSurvey_final(step){
+        if(step.result.value == 1){
+            lyric_category_tally["SIL"]++;
+            userProfile.lyricSurveyChoices.push("SIL4");
+        } else{
+            lyric_category_tally["LL"]++;
+            userProfile.lyricSurveyChoices.push("LL3");
+        }
+
+        var max_key = Object.keys(lyric_category_tally).reduce(function(a, b){ return lyric_category_tally[a] > lyric_category_tally[b] ? a : b});
+        var rnd = [max_key];
+
+        for(var key in lyric_category_tally) {
+            if(key === max_key) continue;
+            if(lyric_category_tally[key] == lyric_category_tally[max_key]){
+                rnd.push(key);
+                max_key = rnd[Math.round(Math.random())]
+                break;
+            }
+        }
+
+        console.log(rnd, max_key);
+
+        userProfile.lyricCategory = lyric_category_map[max_key];
+        await step.context.sendActivity("Fantastic! So, it sounds like you’re into "+userProfile.musicCategory+" music and care about hip hop music that deals with "+lyric_category_map[max_key]+".");
+        return await step.next();
+
+    }
 
     // TODO: Make sure the music survey + lyric survey data are added to the userProfile, specifically userProfile.lyricCategory so we can choose the narrative to play
 
     // NARRATIVE FLOW
     async explainNarrativeCustomization(step) {
         // TEMPORARY ASSIGNMENT OF LYRIC CATEGORY TO TEST BELOW COMPONENTS 
-        userProfile.lyricCategory = "Social Issues";
+        //userProfile.lyricCategory = "Social Issues";
 
         // DETERMINE WHICH NARRATIVE TO PLAY FOR USER
-        if (userProfile.lyricCategory == "Fashion") {
+        if (userProfile.lyricCategory == "Fashion") { //Fashion
             userProfile.narrative = Math.floor(Math.random() * 4 + 1);
         }
-        else if (userProfile.lyricCategory == "Social Issues") {
+        else if (userProfile.lyricCategory == "Social Issues") { //Social Issues
             var min = 5;
             var max = 8;
             userProfile.narrative = Math.floor(Math.random() * (max - min + 1)) + min;
         }
-        else if (userProfile.lyricCategory == "Location") {
+        else if (userProfile.lyricCategory == "Location") { //Location
             var min = 9;
             var max = 11;
             userProfile.narrative = Math.floor(Math.random() * (max - min + 1)) + min;
