@@ -22,6 +22,8 @@ var L1 = "";
 var L2 = "";
 var lyric_category_tally = {FL:0, SIL:0, LL:0};
 var lyric_category_map = {FL: "Fashion", SIL: "Social Issues", LL: "Location" };
+var lyric_category_user_map = {"Fashion": "Fashion", "Social Issues": "Social Issues", "Location": "Location"};
+var music_category_user_map = {"sophisticated":"sophisticated", "intense": "intense", "urban": "urban", "mellow":"mellow", "campestral":"campestral"};
 
 const CHOICE_PROMPT = 'CHOICE_PROMPT';
 const CONFIRM_PROMPT = 'CONFIRM_PROMPT';
@@ -354,7 +356,7 @@ class UserProfileDialog extends ComponentDialog {
 
         if (musicCategory == "sophisticated") {
             userProfile.musicCategory = musicCategory;
-            await step.context.sendActivity(`Ah, so you like that ${userProfile.musicCategory} kind of sound. How interesting!`);
+            await step.context.sendActivity(`Ah, so you like that ${music_category_user_map[userProfile.musicCategory]} kind of sound. How interesting!`);
             return await step.next();
         }
         else {
@@ -590,13 +592,13 @@ class UserProfileDialog extends ComponentDialog {
                 if (genre1_tally > genre2_tally) {
                     // music category is intense
                     userProfile.musicCategory = "intense";
-                    await step.context.sendActivity(`Ah, so you like that ${userProfile.musicCategory} kind of sound. How interesting!`);
+                    await step.context.sendActivity(`Ah, so you like that ${music_category_user_map[userProfile.musicCategory]} kind of sound. How interesting!`);
                     return await step.next();
                 }
                 else {
                     // music category is urban
                     userProfile.musicCategory = "urban";
-                    await step.context.sendActivity(`Ah, so you like that ${userProfile.musicCategory} kind of sound. How interesting!`);
+                    await step.context.sendActivity(`Ah, so you like that ${music_category_user_map[userProfile.musicCategory]} kind of sound. How interesting!`);
                     return await step.next();
                 }
             }
@@ -612,13 +614,13 @@ class UserProfileDialog extends ComponentDialog {
                 if (genre1_tally > genre2_tally) {
                     // music category is campestral
                     userProfile.musicCategory = "campestral";
-                    await step.context.sendActivity(`Ah, so you like that ${userProfile.musicCategory} kind of sound. How interesting!`);
+                    await step.context.sendActivity(`Ah, so you like that ${music_category_user_map[userProfile.musicCategory]} kind of sound. How interesting!`);
                     return await step.next();
                 }
                 else {
                     // music category is mellow
                     userProfile.musicCategory = "mellow";
-                    await step.context.sendActivity(`Ah, so you like that ${userProfile.musicCategory} kind of sound. How interesting!`);
+                    await step.context.sendActivity(`Ah, so you like that ${music_category_user_map[userProfile.musicCategory]} kind of sound. How interesting!`);
                     return await step.next();
                 }
             }
@@ -762,7 +764,7 @@ class UserProfileDialog extends ComponentDialog {
         console.log(rnd, max_key);
 
         userProfile.lyricCategory = lyric_category_map[max_key];
-        await step.context.sendActivity("Fantastic! So, it sounds like you’re into "+userProfile.musicCategory+" music and care about hip hop music that deals with "+lyric_category_map[max_key]+".");
+        await step.context.sendActivity("Fantastic! So, it sounds like you’re into "+music_category_user_map[userProfile.musicCategory]+" music and care about hip hop music that deals with "+lyric_category_user_map[userProfile.lyricCategory]+".");
         return await step.next();
 
     }
@@ -837,7 +839,7 @@ class UserProfileDialog extends ComponentDialog {
         console.log("User Playlist: " + userProfile.playlist);
 
         await step.context.sendActivity("EXPLORE YOUR CUSTOM NARRATIVE: ");
-        await step.context.sendActivity(userProfile.lyricCategory + ": " + narrativeTitle);
+        await step.context.sendActivity(lyric_category_user_map[userProfile.lyricCategory] + ": " + narrativeTitle);
 
         // TODO: Add playlist using CardFactory AudioCard
         // TODO: Add link to narrative experience file on website
