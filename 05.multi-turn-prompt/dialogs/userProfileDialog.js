@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+const { AttachmentLayoutTypes, CardFactory } = require('botbuilder');
 
 const {
     ChoiceFactory,
@@ -12,6 +13,7 @@ const {
     TextPrompt,
     WaterfallDialog
 } = require('botbuilder-dialogs');
+
 const { UserProfile } = require('../userProfile');
 
 var genre1_tally = 0;
@@ -24,6 +26,7 @@ var lyric_category_tally = {FL:0, SIL:0, LL:0};
 var lyric_category_map = {FL: "Fashion", SIL: "Social Issues", LL: "Location" };
 var lyric_category_user_map = {"Fashion": "Fashion", "Social Issues": "Social Issues", "Location": "Location"};
 var music_category_user_map = {"sophisticated":"sophisticated", "intense": "intense", "urban": "urban", "mellow":"mellow", "campestral":"campestral"};
+var lyric, url, songName, singerName;
 
 const CHOICE_PROMPT = 'CHOICE_PROMPT';
 const CONFIRM_PROMPT = 'CONFIRM_PROMPT';
@@ -139,7 +142,6 @@ class UserProfileDialog extends ComponentDialog {
 
     async startExperience(step){
         const promptOptions = { prompt: 'Type "yes" when you are ready to get started.', retryPrompt: 'Type "yes" when you are ready to get started.' };
-
         return await step.prompt(BEGIN_PROMPT, promptOptions);
     }
 
@@ -638,12 +640,25 @@ class UserProfileDialog extends ComponentDialog {
     // TODO: LYRIC SURVEY
     // Question 1 of 5
     async lyricSurvey_1(step){
-        L1 = "1.“This is truffle season\nTom Ford tuxedos for no reason\nAll Saints for my angel\nAlexander Wang too”\n\nSuit and Tie, Justin Timberlake and Jay Z";
-        L2 = "2.“And still I see no changes can't a brother get a little peace\nIt's war on the streets and the war in the Middle East\nInstead of war on poverty they got a war on drugs\nSo the police can bother me”\n\nChanges, Tupac Shakur&B";
-        
+        // L1 = "1.“This is truffle season\nTom Ford tuxedos for no reason\nAll Saints for my angel\nAlexander Wang too”\n\nSuit and Tie, Justin Timberlake and Jay Z";
+        // L2 = "2.“And still I see no changes can't a brother get a little peace\nIt's war on the streets and the war in the Middle East\nInstead of war on poverty they got a war on drugs\nSo the police can bother me”\n\nChanges, Tupac Shakur&B";
+        // await step.context.sendActivity(L1);
+        // await step.context.sendActivity(L2);
+
         await step.context.sendActivity("Between these two choices of hip hop lyrics, which do you like more?");
-        await step.context.sendActivity(L1);
-        await step.context.sendActivity(L2);
+
+        lyric="“This is truffle season\nTom Ford tuxedos for no reason\nAll Saints for my angel\nAlexander Wang too”";
+        url="";
+        songName = "Suit and Tie";
+        singerName = "Justin Timberlake and Jay Z";
+        await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
+
+        lyric= "“And still I see no changes can't a brother get a little peace\nIt's war on the streets and the war in the Middle East\nInstead of war on poverty they got a war on drugs\nSo the police can bother me”";
+        url="";
+        songName = "Changes";
+        singerName = "Tupac Shakur&B";
+        await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
+        
         return await step.prompt(CHOICE_PROMPT, {
             prompt: '',
             choices: ChoiceFactory.toChoices(["1", "2"])
@@ -661,12 +676,26 @@ class UserProfileDialog extends ComponentDialog {
             userProfile.lyricSurveyChoices = ["SIL1"];
         }
         
-        L1 = "1.“I must say, by your songs I'm unimpressed, hey\nBut I love to see a Black man get paid\nAnd plus, you havin' fun and I respect that\nBut have you ever thought about your impact?”\n\n1985, J. Cole";
-        L2 = "2.“In the concrete jungle, the strong stand and rumble The weak fold and crumble, it's the land of trouble Brooklyn, home of the greatest rappers Big comes first, then the Queen comes after”\n\nLighters Up, Lil’ Kim";
+        // L1 = "1.“I must say, by your songs I'm unimpressed, hey\nBut I love to see a Black man get paid\nAnd plus, you havin' fun and I respect that\nBut have you ever thought about your impact?”\n\n1985, J. Cole";
+        // L2 = "2.“In the concrete jungle, the strong stand and rumble The weak fold and crumble, it's the land of trouble Brooklyn, home of the greatest rappers Big comes first, then the Queen comes after”\n\nLighters Up, Lil’ Kim";
+        // await step.context.sendActivity(L1);
+        // await step.context.sendActivity(L2);
         
         await step.context.sendActivity("Between these two choices of hip hop lyrics, which do you like more?");
-        await step.context.sendActivity(L1);
-        await step.context.sendActivity(L2);
+        
+
+        lyric= "“I must say, by your songs I'm unimpressed, hey\nBut I love to see a Black man get paid\nAnd plus, you havin' fun and I respect that\nBut have you ever thought about your impact?”";
+        url="";
+        songName = "1985";
+        singerName = "J. Cole";
+        await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
+
+        lyric= "“In the concrete jungle, the strong stand and rumble The weak fold and crumble, it's the land of trouble Brooklyn, home of the greatest rappers Big comes first, then the Queen comes after”";
+        url="";
+        songName = "Lighters Up";
+        singerName = "Lil’ Kim";
+        await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
+
         return await step.prompt(CHOICE_PROMPT, {
             prompt: '',
             choices: ChoiceFactory.toChoices(["1", "2"])
@@ -683,12 +712,26 @@ class UserProfileDialog extends ComponentDialog {
             userProfile.lyricSurveyChoices.push("LL1");
         }
         
-        L1 = "1.“My motivation is from thirty pointers, VVS\nThe furniture my mouth piece simply symbolize success”\n\nGrillz, Nelly ft. Paul Wall, Ali & Gipp";
-        L2 = "2.“I drive a Benz and I got a lot of friends\nUp on the Concourse where Tremont ends\nOr Jerome Avenue or Gun Hill Road\nThe place where rap started in the days of old”\n\nThe Bronx, Kurtis Blow";
-        
+        // L1 = "1.“My motivation is from thirty pointers, VVS\nThe furniture my mouth piece simply symbolize success”\n\nGrillz, Nelly ft. Paul Wall, Ali & Gipp";
+        // L2 = "2.“I drive a Benz and I got a lot of friends\nUp on the Concourse where Tremont ends\nOr Jerome Avenue or Gun Hill Road\nThe place where rap started in the days of old”\n\nThe Bronx, Kurtis Blow";
+        // await step.context.sendActivity(L1);
+        // await step.context.sendActivity(L2);
+
         await step.context.sendActivity("Between these two choices of hip hop lyrics, which do you like more?");
-        await step.context.sendActivity(L1);
-        await step.context.sendActivity(L2);
+       
+
+        lyric= "“My motivation is from thirty pointers, VVS\nThe furniture my mouth piece simply symbolize success”";
+        url="";
+        songName = "Grillz";
+        singerName = "Nelly ft. Paul Wall, Ali & Gipp";
+        await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
+
+        lyric= "“I drive a Benz and I got a lot of friends\nUp on the Concourse where Tremont ends\nOr Jerome Avenue or Gun Hill Road\nThe place where rap started in the days of old”";
+        url="";
+        songName = "The Bronx";
+        singerName = "Kurtis Blow";
+        await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
+
         return await step.prompt(CHOICE_PROMPT, {
             prompt: '',
             choices: ChoiceFactory.toChoices(["1", "2"])
@@ -705,12 +748,26 @@ class UserProfileDialog extends ComponentDialog {
             userProfile.lyricSurveyChoices.push("LL1");
         }
         
-        L1 = "1.“I made 'Jesus Walks,' so I'm never going to hell\nCouture-level flow is never going on sale\nLuxury rap, the Hermes of verses\nSophisticated ignorance, write my curses in cursive”\n\nOtis, Kanye West and Jay-Z";
-        L2 = "2.“And with this love I do hip-hop from the soul\nA real MC, who never sweats how many copies are sold\nYeah I want to go gold, platinum, uh-huh etceteras\nBut why put out some wackness when no one will respect ya”\n\nPeace, Prosperity & Paper, A Tribe Called Quest";
-        
+        // L1 = "1.“I made 'Jesus Walks,' so I'm never going to hell\nCouture-level flow is never going on sale\nLuxury rap, the Hermes of verses\nSophisticated ignorance, write my curses in cursive”\n\nOtis, Kanye West and Jay-Z";
+        // L2 = "2.“And with this love I do hip-hop from the soul\nA real MC, who never sweats how many copies are sold\nYeah I want to go gold, platinum, uh-huh etceteras\nBut why put out some wackness when no one will respect ya”\n\nPeace, Prosperity & Paper, A Tribe Called Quest";
+        // await step.context.sendActivity(L1);
+        // await step.context.sendActivity(L2);
+
         await step.context.sendActivity("Between these two choices of hip hop lyrics, which do you like more?");
-        await step.context.sendActivity(L1);
-        await step.context.sendActivity(L2);
+  
+
+        lyric= "“I made 'Jesus Walks,' so I'm never going to hell\nCouture-level flow is never going on sale\nLuxury rap, the Hermes of verses\nSophisticated ignorance, write my curses in cursive”";
+        url="";
+        songName = "Otis";
+        singerName = "Kanye West and Jay-Z";
+        await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
+
+        lyric= "“And with this love I do hip-hop from the soul\nA real MC, who never sweats how many copies are sold\nYeah I want to go gold, platinum, uh-huh etceteras\nBut why put out some wackness when no one will respect ya”";
+        url="";
+        songName = "Peace, Prosperity & Paper";
+        singerName = "A Tribe Called Quest";
+        await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
+
         return await step.prompt(CHOICE_PROMPT, {
             prompt: '',
             choices: ChoiceFactory.toChoices(["1", "2"])
@@ -727,12 +784,25 @@ class UserProfileDialog extends ComponentDialog {
             userProfile.lyricSurveyChoices.push("SIL3");
         }
         
-        L1 = "1.“Powdered eggs and government cheeses The calendars with Martin, JFK and Jesus Gotta be fresh to go to school with fly sneakers Schools with outdated books, we are the forgotten”\n\nThe Slave & The Master, Nas";
-        L2 = "2.“Sitting on they front stoop sipping Guinesses\nUsing native dialect in they sentences\nFrom the treeline blocks to the tenements\nTo the Mom & Pop local shop menaces”\n\nBrooklyn, Mos Def";
-        
+        // L1 = "1.“Powdered eggs and government cheeses The calendars with Martin, JFK and Jesus Gotta be fresh to go to school with fly sneakers Schools with outdated books, we are the forgotten”\n\nThe Slave & The Master, Nas";
+        // L2 = "2.“Sitting on they front stoop sipping Guinesses\nUsing native dialect in they sentences\nFrom the treeline blocks to the tenements\nTo the Mom & Pop local shop menaces”\n\nBrooklyn, Mos Def";
+        // await step.context.sendActivity(L1);
+        // await step.context.sendActivity(L2);
+
         await step.context.sendActivity("Between these two choices of hip hop lyrics, which do you like more?");
-        await step.context.sendActivity(L1);
-        await step.context.sendActivity(L2);
+
+        lyric= "“Powdered eggs and government cheeses The calendars with Martin, JFK and Jesus Gotta be fresh to go to school with fly sneakers Schools with outdated books, we are the forgotten”";
+        url="";
+        songName = "The Slave & The Master";
+        singerName = "Nas";
+        await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
+
+        lyric= "“Sitting on they front stoop sipping Guinesses\nUsing native dialect in they sentences\nFrom the treeline blocks to the tenements\nTo the Mom & Pop local shop menaces”";
+        url="";
+        songName = "Brooklyn";
+        singerName = "Mos Def";
+        await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
+
         return await step.prompt(CHOICE_PROMPT, {
             prompt: '',
             choices: ChoiceFactory.toChoices(["1", "2"])
@@ -1123,7 +1193,22 @@ class UserProfileDialog extends ComponentDialog {
         //console.log(str);
         return str.valueOf() === "yes".valueOf();
     }
+
+    createAudioCard(lyric, url, songName, singerName) {
+        return CardFactory.audioCard(
+            songName,
+            [url],
+            CardFactory.actions([]),
+            {
+                subtitle: singerName,
+                text: lyric,
+                image: ""
+            }
+        );
+    }
 }
+
+
 
 module.exports.UserProfileDialog = UserProfileDialog;
 
