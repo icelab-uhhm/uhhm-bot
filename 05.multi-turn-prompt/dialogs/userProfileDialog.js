@@ -156,7 +156,7 @@ class UserProfileDialog extends ComponentDialog {
         if (step.result) {
             // User said "yes" so we will be prompting for the age.
             // WaterfallStep always finishes with the end of the Waterfall or with another dialog, here it is a Prompt Dialog.
-            const promptOptions = { prompt: 'Please enter your age.', retryPrompt: 'The value entered must be greater than 0 and less than 150.' };
+            const promptOptions = { prompt: 'Please enter your age.', retryPrompt: 'The value entered must be greater than 17 and less than 150.' };
 
             return await step.prompt(NUMBER_PROMPT, promptOptions);
         } else {
@@ -1184,7 +1184,7 @@ class UserProfileDialog extends ComponentDialog {
 
     async agePromptValidator(promptContext) {
         // This condition is our validation rule. You can also change the value at this point.
-        return promptContext.recognized.succeeded && promptContext.recognized.value > 0 && promptContext.recognized.value < 120;
+        return promptContext.recognized.succeeded && promptContext.recognized.value > 17 && promptContext.recognized.value < 120;
     }
 
     async beginPromptValidator(promptContext) {
@@ -1206,6 +1206,32 @@ class UserProfileDialog extends ComponentDialog {
             }
         );
     }
+
+    createAnimationCard(url, title, text) {
+        return CardFactory.animationCard(
+            title,
+            [
+                { url: url }
+            ],
+            [],
+            {
+                subtitle: text
+            }
+        );
+    }
+
+    // imageCard usage
+        // var img = 'https://sec.ch9.ms/ch9/7ff5/e07cfef0-aa3b-40bb-9baa-7c9ef8ff7ff5/buildreactionbotframework_960.jpg';
+        // var text = "Scan the QR code with your camera to get your playlist";
+        // await step.context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
+    createHeroCard(img, text) {
+        return CardFactory.heroCard(
+            text,
+            CardFactory.images([img]),
+            CardFactory.actions([])
+        );
+    }
+
 }
 
 
