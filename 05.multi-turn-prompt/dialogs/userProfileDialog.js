@@ -649,19 +649,19 @@ class UserProfileDialog extends ComponentDialog {
 
         lyric="“This is truffle season\nTom Ford tuxedos for no reason\nAll Saints for my angel\nAlexander Wang too”";
         url="";
-        songName = "Suit and Tie";
+        songName = "Song 1: Suit and Tie";
         singerName = "Justin Timberlake and Jay Z";
         await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
 
         lyric= "“And still I see no changes can't a brother get a little peace\nIt's war on the streets and the war in the Middle East\nInstead of war on poverty they got a war on drugs\nSo the police can bother me”";
         url="";
-        songName = "Changes";
+        songName = "Song 2: Changes";
         singerName = "Tupac Shakur&B";
         await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
         
         return await step.prompt(CHOICE_PROMPT, {
             prompt: '',
-            choices: ChoiceFactory.toChoices(["1", "2"])
+            choices: ChoiceFactory.toChoices(["Song 1", "Song 2"])
         });
     }
     // Question 2 of 5
@@ -686,19 +686,19 @@ class UserProfileDialog extends ComponentDialog {
 
         lyric= "“I must say, by your songs I'm unimpressed, hey\nBut I love to see a Black man get paid\nAnd plus, you havin' fun and I respect that\nBut have you ever thought about your impact?”";
         url="";
-        songName = "1985";
+        songName = "Song 1: 1985";
         singerName = "J. Cole";
         await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
 
         lyric= "“In the concrete jungle, the strong stand and rumble The weak fold and crumble, it's the land of trouble Brooklyn, home of the greatest rappers Big comes first, then the Queen comes after”";
         url="";
-        songName = "Lighters Up";
+        songName = "Song 2: Lighters Up";
         singerName = "Lil’ Kim";
         await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
 
         return await step.prompt(CHOICE_PROMPT, {
             prompt: '',
-            choices: ChoiceFactory.toChoices(["1", "2"])
+            choices: ChoiceFactory.toChoices(["Song 1", "Song 2"])
         });
         
     }
@@ -722,19 +722,19 @@ class UserProfileDialog extends ComponentDialog {
 
         lyric= "“My motivation is from thirty pointers, VVS\nThe furniture my mouth piece simply symbolize success”";
         url="";
-        songName = "Grillz";
+        songName = "Song 1: Grillz";
         singerName = "Nelly ft. Paul Wall, Ali & Gipp";
         await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
 
         lyric= "“I drive a Benz and I got a lot of friends\nUp on the Concourse where Tremont ends\nOr Jerome Avenue or Gun Hill Road\nThe place where rap started in the days of old”";
         url="";
-        songName = "The Bronx";
+        songName = "Song 2: The Bronx";
         singerName = "Kurtis Blow";
         await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
 
         return await step.prompt(CHOICE_PROMPT, {
             prompt: '',
-            choices: ChoiceFactory.toChoices(["1", "2"])
+            choices: ChoiceFactory.toChoices(["Song 1", "Song 2"])
         });
         
     }
@@ -758,19 +758,19 @@ class UserProfileDialog extends ComponentDialog {
 
         lyric= "“I made 'Jesus Walks,' so I'm never going to hell\nCouture-level flow is never going on sale\nLuxury rap, the Hermes of verses\nSophisticated ignorance, write my curses in cursive”";
         url="";
-        songName = "Otis";
+        songName = "Song 1: Otis";
         singerName = "Kanye West and Jay-Z";
         await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
 
         lyric= "“And with this love I do hip-hop from the soul\nA real MC, who never sweats how many copies are sold\nYeah I want to go gold, platinum, uh-huh etceteras\nBut why put out some wackness when no one will respect ya”";
         url="";
-        songName = "Peace, Prosperity & Paper";
+        songName = "Song 2: Peace, Prosperity & Paper";
         singerName = "A Tribe Called Quest";
         await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
 
         return await step.prompt(CHOICE_PROMPT, {
             prompt: '',
-            choices: ChoiceFactory.toChoices(["1", "2"])
+            choices: ChoiceFactory.toChoices(["Song 1", "Song 2"])
         });
         
     }
@@ -793,19 +793,19 @@ class UserProfileDialog extends ComponentDialog {
 
         lyric= "“Powdered eggs and government cheeses The calendars with Martin, JFK and Jesus Gotta be fresh to go to school with fly sneakers Schools with outdated books, we are the forgotten”";
         url="";
-        songName = "The Slave & The Master";
+        songName = "Song 1: The Slave & The Master";
         singerName = "Nas";
         await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
 
         lyric= "“Sitting on they front stoop sipping Guinesses\nUsing native dialect in they sentences\nFrom the treeline blocks to the tenements\nTo the Mom & Pop local shop menaces”";
         url="";
-        songName = "Brooklyn";
+        songName = "Song 2: Brooklyn";
         singerName = "Mos Def";
         await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
 
         return await step.prompt(CHOICE_PROMPT, {
             prompt: '',
-            choices: ChoiceFactory.toChoices(["1", "2"])
+            choices: ChoiceFactory.toChoices(["Song 1", "Song 2"])
         });
         
     }
