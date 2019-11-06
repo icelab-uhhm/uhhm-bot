@@ -469,14 +469,14 @@ class UserProfileDialog extends ComponentDialog {
             if (lastChosenGenre == "electronica") { genre1_tally++; }
             else if (lastChosenGenre == "soul/r&b") { genre2_tally++; }
 
-            console.log("musicSurvey_st3_or_4_1");
+            console.log("Music Survey Step 3 or 4:");
             console.log("Genre 1 Tally: " + genre1_tally);
             console.log("Genre 2 Tally: " + genre2_tally);
 
-            genre1_tally = 0;
-            genre2_tally = 0;
-
             if (genre1_tally > genre2_tally) {
+                console.log("STEP 3 (Genre 1 > Genre 2)");
+                genre1_tally = 0;
+                genre2_tally = 0;
                 // user proceeds to musicSurvey_st3_1 (intense or urban categories)
                 return await step.prompt(CHOICE_PROMPT, {
                     prompt: 'Between these two genres of music, which would you prefer to listen to more?',
@@ -484,6 +484,9 @@ class UserProfileDialog extends ComponentDialog {
                 });
             }
             else {
+                console.log("STEP 4 (Genre 1 < Genre 2)");
+                genre1_tally = 0;
+                genre2_tally = 0;
                 // user proceeds to musicSurvey_st4_1 (campestral or mellow categories)
                 return await step.prompt(CHOICE_PROMPT, {
                     prompt: 'Between these two genres of music, which would you prefer to listen to more?',
@@ -503,28 +506,42 @@ class UserProfileDialog extends ComponentDialog {
 
             var lastChosenGenre = step.result.value.toLowerCase();
             //await step.context.sendActivity(`You chose: ${step.result.value}.`);
-            console.log("musicSurvey_st3_or_4_2");
+            console.log("musicSurvey_st3_or_4_2 -- last Chosen Genre is: ");
+            console.log(lastChosenGenre);
+
             // Update the tallies for genre 1 and genre 2
-            if (lastChosenGenre == "heavy metal" || "acid jazz") {
+            if (lastChosenGenre == "heavy metal" || lastChosenGenre == "acid jazz") {
                 // user is in step 3_1
+                console.log("STEP 3 - Question #1");
+
                 if (lastChosenGenre == "heavy metal") {
                     genre1_tally++;
+                    console.log("Genre 1 Tally: " + genre1_tally);
+                    console.log("Genre 2 Tally: " + genre2_tally);
                 }
                 else {
                     genre2_tally++;
+                    console.log("Genre 1 Tally: " + genre1_tally);
+                    console.log("Genre 2 Tally: " + genre2_tally);
                 }
                 return await step.prompt(CHOICE_PROMPT, {
                     prompt: 'Between these two genres of music, which would you prefer to listen to more?',
                     choices: ChoiceFactory.toChoices(["Punk", "Rap"])
                 });
             }
-            else if (lastChosenGenre == "country" || "pop") {
+            else if (lastChosenGenre == "country" || lastChosenGenre == "pop") {
                 // user is in step 4_1
+                console.log("STEP 4 - Question #1");
+
                 if (lastChosenGenre == "country") {
                     genre1_tally++;
+                    console.log("Genre 1 Tally: " + genre1_tally);
+                    console.log("Genre 2 Tally: " + genre2_tally);
                 }
                 else {
                     genre2_tally++;
+                    console.log("Genre 1 Tally: " + genre1_tally);
+                    console.log("Genre 2 Tally: " + genre2_tally);
                 }
                 return await step.prompt(CHOICE_PROMPT, {
                     prompt: 'Between these two genres of music, which would you prefer to listen to more?',
@@ -544,8 +561,10 @@ class UserProfileDialog extends ComponentDialog {
             //await step.context.sendActivity(`You chose: ${step.result.value}.`);
             console.log("musicSurvey_st3_or_4_3");
             // Update the tallies for genre 1 and genre 2
-            if (lastChosenGenre == "punk" || "rap") {
+            if (lastChosenGenre == "punk" || lastChosenGenre == "rap") {
                 // user is in step 3_2
+                console.log("STEP 3 - Question #2");
+
                 if (lastChosenGenre == "punk") {
                     genre1_tally++;
                 }
@@ -557,8 +576,10 @@ class UserProfileDialog extends ComponentDialog {
                     choices: ChoiceFactory.toChoices(["Rock", "Funk"])
                 });
             }
-            else if (lastChosenGenre == "soft rock" || "jazz") {
-                // user is in step 4_1
+            else if (lastChosenGenre == "soft rock" || lastChosenGenre == "jazz") {
+                // user is in step 4_2
+                console.log("STEP 4 - Question #2");
+
                 if (lastChosenGenre == "soft rock") {
                     genre1_tally++;
                 }
@@ -586,8 +607,10 @@ class UserProfileDialog extends ComponentDialog {
             userProfile.musicSurveyChoices.push(step.values.musicSurvey_st3_or_4_1, step.values.musicSurvey_st3_or_4_2, step.values.musicSurvey_st3_or_4_3);
 
             // Update the tallies for genre 1 and genre 2
-            if (lastChosenGenre == "rock" || "funk") {
+            if (lastChosenGenre == "rock" || lastChosenGenre == "funk") {
                 // user is in step 3_3
+                console.log("STEP 3 - Question #3");
+
                 if (lastChosenGenre == "rock") {
                     genre1_tally++;
                 }
@@ -608,8 +631,10 @@ class UserProfileDialog extends ComponentDialog {
                     return await step.next();
                 }
             }
-            else if (lastChosenGenre == "early rock n roll" || "soul/r&b") {
-                // user is in step 4_1
+            else if (lastChosenGenre == "early rock n roll" || lastChosenGenre == "soul/r&b") {
+                // user is in step 4_3
+                console.log("STEP 4 - Question #3");
+
                 if (lastChosenGenre == "early rock n roll") {
                     genre1_tally++;
                 }
