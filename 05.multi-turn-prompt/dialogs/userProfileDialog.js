@@ -36,6 +36,8 @@ const NUMBER_PROMPT = 'NUMBER_PROMPT';
 const USER_PROFILE = 'USER_PROFILE';
 const WATERFALL_DIALOG = 'WATERFALL_DIALOG';
 
+
+
 class UserProfileDialog extends ComponentDialog {
     constructor(userState) {
         super('userProfileDialog');
@@ -128,6 +130,8 @@ class UserProfileDialog extends ComponentDialog {
      * @param {*} turnContext
      * @param {*} accessor
      */
+
+
     async run(turnContext, accessor) {
         const dialogSet = new DialogSet(accessor);
         dialogSet.add(this);
@@ -146,7 +150,7 @@ class UserProfileDialog extends ComponentDialog {
     }
 
     
-
+   
     //async askAge(step) {
     //    // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
     //    return await step.prompt(CONFIRM_PROMPT, 'Do you want to give your age?', ['yes', 'no']);
