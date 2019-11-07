@@ -695,8 +695,8 @@ class UserProfileDialog extends ComponentDialog {
         });
     }
     // Question 2 of 5
-    async lyricSurvey_2(step){
-        if(step.result.value == 1){
+    async lyricSurvey_2(step) {
+        if (step.result.value.toLowerCase() == "song 1") {
             lyric_category_tally["FL"]++;
             userProfile.lyricSurveyChoices = ["FL1"];
         } else{
@@ -733,7 +733,7 @@ class UserProfileDialog extends ComponentDialog {
     }
     // Question 3 of 5
     async lyricSurvey_3(step){
-        if(step.result.value == 1){
+        if (step.result.value.toLowerCase() == "song 1"){
             lyric_category_tally["SIL"]++;
             userProfile.lyricSurveyChoices.push("SIL2");
         } else{
@@ -770,7 +770,7 @@ class UserProfileDialog extends ComponentDialog {
     }
     // Question 4 of 5
     async lyricSurvey_4(step){
-        if(step.result.value == 1){
+        if (step.result.value.toLowerCase() == "song 1"){
             lyric_category_tally["FL"]++;
             userProfile.lyricSurveyChoices.push("FL2");
         } else{
@@ -807,7 +807,7 @@ class UserProfileDialog extends ComponentDialog {
     }
     // Question 5 of 5
     async lyricSurvey_5(step){
-        if(step.result.value == 1){
+        if (step.result.value.toLowerCase() == "song 1"){
             lyric_category_tally["FL"]++;
             userProfile.lyricSurveyChoices.push("FL3");
         } else{
@@ -843,7 +843,7 @@ class UserProfileDialog extends ComponentDialog {
     }
     // Feedback on user's lyrical taste
     async lyricSurvey_final(step){
-        if(step.result.value == 1){
+        if (step.result.value.toLowerCase() == "Song 1"){
             lyric_category_tally["SIL"]++;
             userProfile.lyricSurveyChoices.push("SIL4");
         } else{
@@ -873,8 +873,6 @@ class UserProfileDialog extends ComponentDialog {
         return await step.next();
 
     }
-
-    // TODO: Make sure the music survey + lyric survey data are added to the userProfile, specifically userProfile.lyricCategory so we can choose the narrative to play
 
     // NARRATIVE FLOW
     async explainNarrativeCustomization(step) {
@@ -945,9 +943,6 @@ class UserProfileDialog extends ComponentDialog {
 
         await step.context.sendActivity("EXPLORE YOUR CUSTOM NARRATIVE: ");
         await step.context.sendActivity(userProfile.lyricCategory + ": " + narrativeTitle);
-
-        // TODO: Add playlist using CardFactory AudioCard
-        // TODO: Add link to narrative experience file on website
 
         return step.next();
     }
