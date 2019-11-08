@@ -25,8 +25,11 @@ var L2 = "";
 var lyric_category_tally = {FL:0, SIL:0, LL:0};
 var lyric_category_map = {FL: "Fashion", SIL: "Social Issues", LL: "Location" };
 var lyric_category_user_map = {"Fashion": "fashion", "Social Issues": "social issues", "Location": "location"};
-var music_category_user_map = {"sophisticated":"sophisticated", "intense": "intense", "urban": "urban", "mellow":"mellow", "campestral":"campestral"};
-var transitions = {0: "Okay, dope! Let’s move to the next questions.", 1: "Sounds Cool! Now let's move on."};
+var music_category_user_map = { "sophisticated": "sophisticated", "intense": "intense", "urban": "urban", "mellow": "mellow", "campestral": "campestral" };
+
+// TODO: Fox to update transition text to suit tone and personality of characters. Right now, these transitions are chosen at random between questions.
+var transitions = { 0: "Okay, dope! Let’s move to the next question.", 1: "Sounds cool! Let's move on." };
+
 var lyric, url, songName, singerName;
 
 const CHOICE_PROMPT = 'CHOICE_PROMPT';
