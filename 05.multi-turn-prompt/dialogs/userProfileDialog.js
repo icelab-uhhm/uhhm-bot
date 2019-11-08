@@ -23,9 +23,13 @@ var userIsAdult = false;
 var L1 = "";
 var L2 = "";
 var lyric_category_tally = {FL:0, SIL:0, LL:0};
-var lyric_category_map = {FL: "Fashion", SIL: "Social Issues", LL: "Location" };
-var lyric_category_user_map = {"Fashion": "fashion", "Social Issues": "social issues", "Location": "location"};
+var lyric_category_map = { FL: "Fashion", SIL: "Social Issues", LL: "Location" };
+
+// TODO: Fox to update the adjectives associated with giving user feedback on their music survey outcome
 var music_category_user_map = { "sophisticated": "sophisticated", "intense": "intense", "urban": "urban", "mellow": "mellow", "campestral": "campestral" };
+
+// TODO: Fox to update the adjectives associated with giving user feedback on their lyric survey outcome
+var lyric_category_user_map = { "Fashion": "fashion", "Social Issues": "social issues", "Location": "location" };
 
 // TODO: Fox to update transition text to suit tone and personality of characters. Right now, these transitions are chosen at random between questions.
 var transitions = { 0: "Okay, dope! Let’s move to the next question.", 1: "Sounds cool! Let's move on." };
@@ -744,7 +748,8 @@ class UserProfileDialog extends ComponentDialog {
 
     async explainLyricSurvey(step) {
         await step.context.sendActivity("Now I am curious to learn about your taste in Hip Hop lyrics. Let me ask you a few more questions.");
-        return step.next();
+        const promptOptions = { prompt: 'Type "yes" when you are ready to explore your lyrical preferences.', retryPrompt: 'Type "yes" when you are ready to explore your lyrical preferences.' };
+        return await step.prompt(BEGIN_PROMPT, promptOptions);
     }
 
     // LYRIC SURVEY
@@ -956,12 +961,15 @@ class UserProfileDialog extends ComponentDialog {
             }
         }
         console.log(lyric_category_tally);
-        console.log(userProfile.lyricSurveyChoices);
+        console.log("User's Lyric Survey Choice: " + userProfile.lyricSurveyChoices);
         console.log(rnd, max_key);
+        userProfile.lyricCategory = lyric_category_map[max_key];
+        console.log("User's Lyric Category: " + userProfile.lyricCategory);
+
+        console.log("User's Music Survey Choice: " + userProfile.musicSurveyChoices);
         console.log("User's Music Category: " + userProfile.musicCategory);
         console.log("Music Category User Map: " + music_category_user_map[userProfile.musicCategory]);
 
-        userProfile.lyricCategory = lyric_category_map[max_key];
         await step.context.sendActivity("Fantastic! So, it sounds like you’re into " + music_category_user_map[userProfile.musicCategory] + " music and care about Hip Hop music that deals with "+lyric_category_user_map[userProfile.lyricCategory]+".");
         return await step.next();
 
@@ -1068,7 +1076,8 @@ class UserProfileDialog extends ComponentDialog {
         else {
             userIsAdult = false;
             await step.context.sendActivity("Okay, thanks! You actually need to be 18 or older to participate in this survey, but as a young person, you play a very important role in continuing to impact Hip Hop culture and history!");
-            return step.next();
+            const promptOptions = { prompt: 'Type "yes" when you are ready to move on.', retryPrompt: 'Type "yes" when you are ready to move on.' };
+            return await step.prompt(BEGIN_PROMPT, promptOptions);
         }
         
     }
@@ -1082,7 +1091,8 @@ class UserProfileDialog extends ComponentDialog {
             }
             else {
                 await step.context.sendActivity("Okay, no worries! Your information will not be saved.");
-                return await step.next();
+                const promptOptions = { prompt: 'Type "yes" when you are ready to move on.', retryPrompt: 'Type "yes" when you are ready to move on.' };
+                return await step.prompt(BEGIN_PROMPT, promptOptions);
             }
         }
         else {
@@ -1105,7 +1115,7 @@ class UserProfileDialog extends ComponentDialog {
         if (userProfile.consent) {
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: 'Please input your Gender.',
-                choices: ChoiceFactory.toChoices(['Female', 'Male', 'Other'])
+                choices: ChoiceFactory.toChoices(['Female', 'Male', 'Non-binary', 'Other'])
             });
         }
         else {
@@ -1151,6 +1161,10 @@ class UserProfileDialog extends ComponentDialog {
     async postAssessment_2(step) {
         if (userProfile.consent) {
             step.values.postAssessment_1 = step.result.value;
+
+            var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
+            await step.context.sendActivity(transitions[rndInd]);
+
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: ' I enjoyed the experience.',
                 choices: ChoiceFactory.toChoices(['Disagree', 'Neutral', 'Agree'])
@@ -1164,6 +1178,10 @@ class UserProfileDialog extends ComponentDialog {
     async postAssessment_3(step) {
         if (userProfile.consent) {
             step.values.postAssessment_2 = step.result.value;
+
+            var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
+            await step.context.sendActivity(transitions[rndInd]);
+
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: 'I learned something new about Hip Hop history and/or culture from the experience.',
                 choices: ChoiceFactory.toChoices(['Disagree', 'Neutral', 'Agree'])
@@ -1177,6 +1195,10 @@ class UserProfileDialog extends ComponentDialog {
     async postAssessment_4(step) {
         if (userProfile.consent) {
             step.values.postAssessment_3 = step.result.value;
+
+            var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
+            await step.context.sendActivity(transitions[rndInd]);
+
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: 'I felt like the experience was customized to fit my interests.',
                 choices: ChoiceFactory.toChoices(['Disagree', 'Neutral', 'Agree'])
@@ -1190,6 +1212,10 @@ class UserProfileDialog extends ComponentDialog {
     async postAssessment_5(step) {
         if (userProfile.consent) {
             step.values.postAssessment_4 = step.result.value;
+
+            var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
+            await step.context.sendActivity(transitions[rndInd]);
+
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: 'I felt like the audio playlist was customized to fit my music preferences.',
                 choices: ChoiceFactory.toChoices(['Disagree', 'Neutral', 'Agree'])
@@ -1203,6 +1229,10 @@ class UserProfileDialog extends ComponentDialog {
     async postAssessment_6(step) {
         if (userProfile.consent) {
             step.values.postAssessment_5 = step.result.value;
+
+            var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
+            await step.context.sendActivity(transitions[rndInd]);
+
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: 'Finally, how would you rate the Breakbeat Narrative experience overall on a scale from 1 to 5, with 1 being the worst possible experience and 5 being the best possible experience?',
                 choices: ChoiceFactory.toChoices(['1', '2', '3', '4', '5'])
@@ -1229,7 +1259,9 @@ class UserProfileDialog extends ComponentDialog {
             }
             await step.context.sendActivity(checkRatingMsg);
             await step.context.sendActivity("I definitely enjoyed getting to learn more about you today.");
-            return step.next();
+
+            const promptOptions = { prompt: 'Type "yes" when you are ready to move on.', retryPrompt: 'Type "yes" when you are ready to move on.' };
+            return await step.prompt(BEGIN_PROMPT, promptOptions);
         }
         else {
             return step.next();
@@ -1244,7 +1276,7 @@ class UserProfileDialog extends ComponentDialog {
         var currentDir = process.cwd();
         var QRcodeImg = currentDir + "/playlistQRCodes/" + userProfile.playlist + ".png";
         console.log("Path to QR code: " + QRcodeImg);
-        var text = "Your Custom Playlist";
+        var text = "Here's Your Custom [R]Evolution of Hip Hop Playlist!";
         await step.context.sendActivity({ attachments: [this.createHeroCard(QRcodeImg, text)] });
 
         return step.next();
