@@ -30,9 +30,9 @@ class DialogBot extends ActivityHandler {
             wel = false;
             for (const idx in context.activity.membersAdded) {
                 if (context.activity.membersAdded[idx].id !== context.activity.recipient.id) {
-                    await context.sendActivity(`Welcome to the [R]Evolution of Hip Hop Breakbeat Narrative Experience.`);
-                    await context.sendActivity(`[Introduction of characters, explanation of what a hip hop elemental is]. I hope you’re as excited to be at the Universal Hip Hop Museum today as I am.`);
-                    await context.sendActivity('To begin, I’d like to ask a few questions to get a sense of your feelings towards hip hop and music in general.');
+                    await context.sendActivity("Welcome to the [R]Evolution of Hip Hop Breakbeat Narrative Experience!");
+                    await context.sendActivity("We are the five cosmic forces of Hip Hop: MC-ing, DJ-ing, Breakdance, Graffiti, and Knowledge. We'll be taking you through this experience today.");
+                    await context.sendActivity("To kick it off, we got some questions about your feelings towards Hip Hop and music in general.");
                     wel = true;
                 }
             }
