@@ -763,14 +763,16 @@ class UserProfileDialog extends ComponentDialog {
         await step.context.sendActivity("Between these two choices of Hip Hop lyrics, which do you like more?");
 
         lyric = "“This is truffle season\n\nTom Ford tuxedos for no reason\n\nAll Saints for my angel\n\nAlexander Wang too”";
-        var currentDir = process.cwd();
-        url = currentDir + "/lyricSurveyAudio/FL1_Suit_and_Tie.wav";
+        //var currentDir = process.cwd();
+        //url = currentDir + "/lyricSurveyAudio/FL1_Suit_and_Tie.wav";
+        url = "https://uhhmstorage.blob.core.windows.net/lyricsurveyaudio/FL1_Suit_and_Tie.wav";
         songName = "Song 1: Suit and Tie";
         singerName = "Justin Timberlake and Jay Z";
         await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
 
         lyric = "“And still I see no changes can't a brother get a little peace\n\nIt's war on the streets and the war in the Middle East\n\nInstead of war on poverty they got a war on drugs\n\nSo the police can bother me”";
-        url = currentDir + "/lyricSurveyAudio/SIL1_Changes.wav";
+        //url = currentDir + "/lyricSurveyAudio/SIL1_Changes.wav";
+        url = "https://uhhmstorage.blob.core.windows.net/lyricsurveyaudio/SIL1_Changes.wav";
         songName = "Song 2: Changes";
         singerName = "Tupac Shakur";
         await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
@@ -802,14 +804,16 @@ class UserProfileDialog extends ComponentDialog {
         
 
         lyric = "“I must say, by your songs I'm unimpressed, hey\n\nBut I love to see a Black man get paid\n\nAnd plus, you havin' fun and I respect that\n\nBut have you ever thought about your impact?”";
-        var currentDir = process.cwd();
-        url = currentDir + "/lyricSurveyAudio/SIL2_1985.wav";
+        //var currentDir = process.cwd();
+        //url = currentDir + "/lyricSurveyAudio/SIL2_1985.wav";
+        url = "https://uhhmstorage.blob.core.windows.net/lyricsurveyaudio/SIL2_1985.wav";
         songName = "Song 1: 1985";
         singerName = "J. Cole";
         await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
 
         lyric = "“In the concrete jungle, the strong stand and rumble \n\nThe weak fold and crumble, it's the land of trouble \n\nBrooklyn, home of the greatest rappers \n\nBig comes first, then the Queen comes after”";
-        url = currentDir + "/lyricSurveyAudio/LL1_Lighters_Up.wav";
+        //url = currentDir + "/lyricSurveyAudio/LL1_Lighters_Up.wav";
+        url = "https://uhhmstorage.blob.core.windows.net/lyricsurveyaudio/LL1_Lighters_Up.wav";
         songName = "Song 2: Lighters Up";
         singerName = "Lil’ Kim";
         await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
@@ -842,14 +846,16 @@ class UserProfileDialog extends ComponentDialog {
        
 
         lyric= "“My motivation is from thirty pointers, VVS\n\nThe furniture my mouth piece simply symbolize success”";
-        var currentDir = process.cwd();
-        url = currentDir + "/lyricSurveyAudio/FL2_Grillz.wav";
+        //var currentDir = process.cwd();
+        //url = currentDir + "/lyricSurveyAudio/FL2_Grillz.wav";
+        url = "https://uhhmstorage.blob.core.windows.net/lyricsurveyaudio/FL2_Grillz.wav";
         songName = "Song 1: Grillz";
         singerName = "Nelly ft. Paul Wall, Ali & Gipp";
         await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
 
         lyric= "“I drive a Benz and I got a lot of friends\n\nUp on the Concourse where Tremont ends\n\nOr Jerome Avenue or Gun Hill Road\n\nThe place where rap started in the days of old”";
-        url = currentDir + "/lyricSurveyAudio/LL2_The_Bronx.wav";
+        //url = currentDir + "/lyricSurveyAudio/LL2_The_Bronx.wav";
+        url = "https://uhhmstorage.blob.core.windows.net/lyricsurveyaudio/LL2_The_Bronx.wav";
         songName = "Song 2: The Bronx";
         singerName = "Kurtis Blow";
         await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
@@ -882,14 +888,16 @@ class UserProfileDialog extends ComponentDialog {
   
 
         lyric= "“I made 'Jesus Walks,' so I'm never going to hell\n\nCouture-level flow is never going on sale\n\nLuxury rap, the Hermes of verses\n\nSophisticated ignorance, write my curses in cursive”";
-        var currentDir = process.cwd();
-        url = currentDir + "/lyricSurveyAudio/FL3_Otis.wav";
+        //var currentDir = process.cwd();
+        //url = currentDir + "/lyricSurveyAudio/FL3_Otis.wav";
+        url = "https://uhhmstorage.blob.core.windows.net/lyricsurveyaudio/FL3_Otis.wav";
         songName = "Song 1: Otis";
         singerName = "Kanye West and Jay-Z";
         await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
 
         lyric= "“And with this love I do hip-hop from the soul\n\nA real MC, who never sweats how many copies are sold\n\nYeah I want to go gold, platinum, uh-huh etceteras\n\nBut why put out some wackness when no one will respect ya”";
-        url = currentDir + "/lyricSurveyAudio/SIL3_Peace_Prosperity_and_Paper.wav";
+        //url = currentDir + "/lyricSurveyAudio/SIL3_Peace_Prosperity_and_Paper.wav";
+        url = "https://uhhmstorage.blob.core.windows.net/lyricsurveyaudio/SIL3_Peace_Prosperity_and_Paper.wav";
         songName = "Song 2: Peace, Prosperity & Paper";
         singerName = "A Tribe Called Quest";
         await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
@@ -921,14 +929,16 @@ class UserProfileDialog extends ComponentDialog {
         await step.context.sendActivity("Between these two choices of Hip Hop lyrics, which do you like more?");
 
         lyric = "“Powdered eggs and government cheeses \n\nThe calendars with Martin, JFK and Jesus \n\nGotta be fresh to go to school with fly sneakers \n\nSchools with outdated books, we are the forgotten”";
-        var currentDir = process.cwd();
-        url = currentDir + "/lyricSurveyAudio/SIL4_The_Master_and_the_Slave.wav";
+        //var currentDir = process.cwd();
+        //url = currentDir + "/lyricSurveyAudio/SIL4_The_Master_and_the_Slave.wav";
+        url = "https://uhhmstorage.blob.core.windows.net/lyricsurveyaudio/SIL4_The_Master_and_the_Slave.wav";
         songName = "Song 1: The Slave & The Master";
         singerName = "Nas";
         await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
 
         lyric= "“Sitting on they front stoop sipping Guinesses\n\nUsing native dialect in they sentences\n\nFrom the treeline blocks to the tenements\n\nTo the Mom & Pop local shop menaces”";
-        url = currentDir + "/lyricSurveyAudio/LL3_Brooklyn.wav";
+        //url = currentDir + "/lyricSurveyAudio/LL3_Brooklyn.wav";
+        url = "https://uhhmstorage.blob.core.windows.net/lyricsurveyaudio/LL3_Brooklyn.wav";
         songName = "Song 2: Brooklyn";
         singerName = "Mos Def";
         await step.context.sendActivity({ attachments: [this.createAudioCard(lyric, url, songName, singerName)] });
@@ -1273,8 +1283,9 @@ class UserProfileDialog extends ComponentDialog {
     async endExperience_1(step) {
         await step.context.sendActivity("Thanks again for joining me for the Breakbeat Narrative Experience! To retrieve your custom music playlist, scan the QR code below with your mobile device camera.");
         // Display QR code to playlist
-        var currentDir = process.cwd();
-        var QRcodeImg = currentDir + "/playlistQRCodes/" + userProfile.playlist + ".png";
+        //var currentDir = process.cwd();
+        //var QRcodeImg = currentDir + "/playlistQRCodes/" + userProfile.playlist + ".png";
+        var QRcodeImg = "https://uhhmstorage.blob.core.windows.net/qrcodes/" + userProfile.playlist + ".png";
         console.log("Path to QR code: " + QRcodeImg);
         var text = "Here's Your Custom [R]Evolution of Hip Hop Playlist!";
         await step.context.sendActivity({ attachments: [this.createHeroCard(QRcodeImg, text)] });
