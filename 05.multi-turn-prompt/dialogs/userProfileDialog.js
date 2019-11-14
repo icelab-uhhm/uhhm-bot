@@ -60,7 +60,8 @@ class UserProfileDialog extends ComponentDialog {
 
         this.addDialog(new WaterfallDialog(WATERFALL_DIALOG, [
             // Introduction
-            this.startExperience.bind(this),
+            this.startExperience1.bind(this),
+            this.startExperience2.bind(this),
 
             //Pre-Assessment
             this.explainPreAssessment.bind(this),
@@ -152,7 +153,15 @@ class UserProfileDialog extends ComponentDialog {
     }
 
 
-    async startExperience(step){
+    async startExperience1(step){
+        const promptOptions = { prompt: 'Type "yes" to continue.', retryPrompt: 'Type "yes" to continue.' };
+        return await step.prompt(BEGIN_PROMPT, promptOptions);
+    }
+
+    async startExperience2(step) {
+        await step.context.sendActivity("As Hip Hop Elementals, we have the power to tell a story specifically for you.");
+        await step.context.sendActivity("To kick it off, we got some questions about your feelings towards Hip Hop and music in general.");
+
         const promptOptions = { prompt: 'Type "yes" when you are ready to get started.', retryPrompt: 'Type "yes" when you are ready to get started.' };
         return await step.prompt(BEGIN_PROMPT, promptOptions);
     }
@@ -164,44 +173,16 @@ class UserProfileDialog extends ComponentDialog {
     //    return await step.prompt(CONFIRM_PROMPT, 'Do you want to give your age?', ['yes', 'no']);
     //}
 
-    async ageStep(step) {
-        if (step.result) {
-            // User said "yes" so we will be prompting for the age.
-            // WaterfallStep always finishes with the end of the Waterfall or with another dialog, here it is a Prompt Dialog.
-            const promptOptions = { prompt: 'Please enter your age.', retryPrompt: 'Your age has to be between 18 and 120 years old.' };
+    async explainPreAssessment(step) {
 
-            return await step.prompt(NUMBER_PROMPT, promptOptions);
-        } else {
-            // User said "no" so we will skip the next step. Give -1 as the age.
-            return await step.next(-1);
-        }
-    }
+        // TODO: Replace Elemental Image
+        var img = "https://uhhmstorage.blob.core.windows.net/artwork/Graffiti.png";
+        var text = "Graffiti here. Let's kick this thing off!";
+        await step.context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
 
-    async confirmAgeStep(step) {
-        step.values.age = step.result;
+        await step.context.sendActivity("**I want you to tell me how you agree or disagree with each of the following statements:**");
 
-        if(step.values.age == -1){
-            await step.context.sendActivity("Yo, please provide your age to continue.");
-            return step.endDialog();
-        }
-        else if(step.values.age < 18){
-            await step.context.sendActivity("Aight. You're younger than 18!");
-            return await step.endDialog();
-        }
-        
-        const msg = `For real though, thanks for providing your age!`;
-
-        // We can send messages to the user at any point in the WaterfallStep.
-        await step.context.sendActivity(msg);
-
-        // WaterfallStep always finishes with the end of the Waterfall or with another dialog, here it is a Prompt Dialog.
-        return await step.next();
-    }
-
-    async explainPreAssessment(step){
-        await step.context.sendActivity("That’s what’s up! Let's start!");
-       await step.context.sendActivity("Please indicate how you agree or disagree with each of the following statements:");
-       return step.next();
+        return step.next();
     }
 
     async preAssessment_1(step){
@@ -263,7 +244,13 @@ class UserProfileDialog extends ComponentDialog {
 
     async explainMusicSurvey(step) {
         step.values.preAssessment_5 = step.result.value;
-        await step.context.sendActivity("Tight. Now, let’s get to the fun stuff. As Hip Hop Elementals, we have the power to tell a story specifically for you. We need you to tell us more about your music tastes. We’ll use this information to customize the story you’ll experience.");
+
+        // TODO: Replace Elemental Image
+        var img = "https://uhhmstorage.blob.core.windows.net/artwork/DJ.png";
+        var text = "Yo, it's DJ. Let's get to the fun stuff!";
+        await step.context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
+
+        await step.context.sendActivity("**We need you to tell us more about your music tastes. We’ll use this information to customize the story you’ll experience.**");
        
         const promptOptions = { prompt: 'Type "yes" when you are ready to get started.', retryPrompt: 'Type "yes" when you are ready to get started.' };
         return await step.prompt(BEGIN_PROMPT, promptOptions);  
@@ -407,7 +394,8 @@ class UserProfileDialog extends ComponentDialog {
         if (musicCategory == "sophisticated") {
             userProfile.musicCategory = musicCategory;
             await step.context.sendActivity(`Ah, so you like that ${music_category_user_map[userProfile.musicCategory]} kind of sound. How interesting!`);
-            return await step.next();
+            const promptOptions = { prompt: 'Type "yes" when you are ready to continue.', retryPrompt: 'Type "yes" when you are ready to continue.' };
+            return await step.prompt(BEGIN_PROMPT, promptOptions);
         }
         else {
             // reset genre 1 and 2 tallies to zero
@@ -708,13 +696,15 @@ class UserProfileDialog extends ComponentDialog {
                     // music category is intense
                     userProfile.musicCategory = "intense";
                     await step.context.sendActivity(`Ah, so you like that ${music_category_user_map[userProfile.musicCategory]} kind of sound. How interesting!`);
-                    return await step.next();
+                    const promptOptions = { prompt: 'Type "yes" when you are ready to continue.', retryPrompt: 'Type "yes" when you are ready to continue.' };
+                    return await step.prompt(BEGIN_PROMPT, promptOptions);
                 }
                 else {
                     // music category is urban
                     userProfile.musicCategory = "urban";
                     await step.context.sendActivity(`Ah, so you like that ${music_category_user_map[userProfile.musicCategory]} kind of sound. How interesting!`);
-                    return await step.next();
+                    const promptOptions = { prompt: 'Type "yes" when you are ready to continue.', retryPrompt: 'Type "yes" when you are ready to continue.' };
+                    return await step.prompt(BEGIN_PROMPT, promptOptions);
                 }
             }
             else if (lastChosenGenre == "early rock n roll" || lastChosenGenre == "soul/r&b") {
@@ -732,13 +722,15 @@ class UserProfileDialog extends ComponentDialog {
                     // music category is campestral
                     userProfile.musicCategory = "campestral";
                     await step.context.sendActivity(`Ah, so you like that ${music_category_user_map[userProfile.musicCategory]} kind of sound. How interesting!`);
-                    return await step.next();
+                    const promptOptions = { prompt: 'Type "yes" when you are ready to continue.', retryPrompt: 'Type "yes" when you are ready to continue.' };
+                    return await step.prompt(BEGIN_PROMPT, promptOptions);
                 }
                 else {
                     // music category is mellow
                     userProfile.musicCategory = "mellow";
                     await step.context.sendActivity(`Ah, so you like that ${music_category_user_map[userProfile.musicCategory]} kind of sound. How interesting!`);
-                    return await step.next();
+                    const promptOptions = { prompt: 'Type "yes" when you are ready to continue.', retryPrompt: 'Type "yes" when you are ready to continue.' };
+                    return await step.prompt(BEGIN_PROMPT, promptOptions);
                 }
             }
         }
@@ -748,7 +740,13 @@ class UserProfileDialog extends ComponentDialog {
     }
 
     async explainLyricSurvey(step) {
-        await step.context.sendActivity("Now I am curious to learn about your taste in Hip Hop lyrics. Let me ask you a few more questions.");
+
+        // TODO: Replace Elemental Image
+        var img = "https://uhhmstorage.blob.core.windows.net/artwork/MC.png";
+        var text = "Tight! It's MC over here.";
+        await step.context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
+
+        await step.context.sendActivity("**Now I'm curious to learn about your taste in Hip Hop lyrics. Let me ask you a few more questions.**");
         const promptOptions = { prompt: 'Type "yes" when you are ready to explore your lyrical preferences.', retryPrompt: 'Type "yes" when you are ready to explore your lyrical preferences.' };
         return await step.prompt(BEGIN_PROMPT, promptOptions);
     }
@@ -981,9 +979,9 @@ class UserProfileDialog extends ComponentDialog {
         console.log("User's Music Category: " + userProfile.musicCategory);
         console.log("Music Category User Map: " + music_category_user_map[userProfile.musicCategory]);
 
-        await step.context.sendActivity("Fantastic! So, it sounds like you’re into " + music_category_user_map[userProfile.musicCategory] + " music and care about Hip Hop music that deals with "+lyric_category_user_map[userProfile.lyricCategory]+".");
-        return await step.next();
-
+        await step.context.sendActivity("That's dope! So, it sounds like you’re into " + music_category_user_map[userProfile.musicCategory] + " music and care about Hip Hop music that deals with "+lyric_category_user_map[userProfile.lyricCategory]+".");
+        const promptOptions = { prompt: 'Type "yes" when you are ready to continue.', retryPrompt: 'Type "yes" when you are ready to continue.' };
+        return await step.prompt(BEGIN_PROMPT, promptOptions);
     }
 
     // NARRATIVE FLOW
@@ -1023,12 +1021,17 @@ class UserProfileDialog extends ComponentDialog {
             userProfile.playlist = "C" + userProfile.narrative.toString();
         }
 
-        await step.context.sendActivity("Based on all of the information you provided us, we've created a customized narrative experience just for you.");
+        // TODO: Replace Elemental Image
+        var img = "https://uhhmstorage.blob.core.windows.net/artwork/Breakdance.png";
+        var text = "This is Breakdance taking over.";
+        await step.context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
+
+        await step.context.sendActivity("**Based on all the information you gave us, we've created a customized narrative experience just for you!**");
         return step.next();
     }
 
     async introduceNarrative(step) {
-        const promptOptions = { prompt: 'Type "yes" when you are ready to explore your narrative.', retryPrompt: 'Type "yes" when you are ready to explore your narrative.' };
+        const promptOptions = { prompt: "Type 'yes' when you're ready to explore your narrative.", retryPrompt: "Type 'yes' when you're ready to explore your narrative." };
 
         return await step.prompt(BEGIN_PROMPT, promptOptions);
     }
@@ -1053,14 +1056,14 @@ class UserProfileDialog extends ComponentDialog {
         console.log("User Narrative Title: " + narrativeTitle);
         console.log("User Playlist: " + userProfile.playlist);
 
-        await step.context.sendActivity("EXPLORE YOUR CUSTOM NARRATIVE: ");
-        await step.context.sendActivity(userProfile.lyricCategory + ": " + narrativeTitle);
+        await step.context.sendActivity("**EXPLORE YOUR CUSTOM NARRATIVE:**");
+        await step.context.sendActivity("**"+userProfile.lyricCategory + ": " + narrativeTitle+"**");
 
         return step.next();
     }
 
     async concludeNarrative(step) {
-        const promptOptions = { prompt: 'Type "yes" when you are finished exploring your narrative.', retryPrompt: 'Type "yes" when you are finished exploring your narrative.' };
+        const promptOptions = { prompt: "Type 'yes' when you're finished exploring your narrative.", retryPrompt: "Type 'yes' when you're finished exploring your narrative." };
 
         return await step.prompt(BEGIN_PROMPT, promptOptions);
     }
@@ -1068,8 +1071,13 @@ class UserProfileDialog extends ComponentDialog {
     // CONSENT FLOW
 
     async checkIfAdult(step) {
-        step.values.preAssessment_1 = step.result.value;
-        await step.context.sendActivity("Yo, we hope you enjoyed learning about Hip Hop culture and history with us today! We wanna hear what you thought about the experience to help us research how to improve it.");
+
+        // TODO: Replace Elemental Image
+        var img = "https://uhhmstorage.blob.core.windows.net/artwork/Knowledge.png";
+        var text = "Yo, it's Knowledge. Hope you enjoyed your narrative!";
+        await step.context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
+
+        await step.context.sendActivity("**We wanna hear what you thought about the experience to help us research how to improve it.**");
         return await step.prompt(CHOICE_PROMPT, {
             prompt: "We can only use your feedback if you're over 18 years old, though. Are you over 18?",
             choices: ChoiceFactory.toChoices(['No', 'Yes'])
@@ -1087,7 +1095,7 @@ class UserProfileDialog extends ComponentDialog {
         else {
             userIsAdult = false;
             await step.context.sendActivity("Word up. You've gotta be 18 or older to participate in the survey, but as a young person, you play a big role in impacting Hip Hop culture and history!");
-            const promptOptions = { prompt: 'Type "yes" when you are ready to move on.', retryPrompt: 'Type "yes" when you are ready to move on.' };
+            const promptOptions = { prompt: "Type 'yes' when you're ready to move on.", retryPrompt: "Type 'yes' when you're ready to move on." };
             return await step.prompt(BEGIN_PROMPT, promptOptions);
         }
         
@@ -1102,7 +1110,7 @@ class UserProfileDialog extends ComponentDialog {
             }
             else {
                 await step.context.sendActivity("No worries! Your information will not be saved.");
-                const promptOptions = { prompt: 'Type "yes" when you are ready to move on.', retryPrompt: 'Type "yes" when you are ready to move on.' };
+                const promptOptions = { prompt: "Type 'yes' when you're ready to move on.", retryPrompt: "Type 'yes' when you're ready to move on." };
                 return await step.prompt(BEGIN_PROMPT, promptOptions);
             }
         }
@@ -1114,7 +1122,7 @@ class UserProfileDialog extends ComponentDialog {
     // POST-ASSESSMENT FLOW
     async askAge(step) {
         if (userProfile.consent) {
-            const promptOptions = { prompt: 'Please enter your age.', retryPrompt: 'Your age has to be between 18 and 120 years old.' };
+            const promptOptions = { prompt: 'Yo, please provide your age to continue.', retryPrompt: "You've gotta be between 18 and 120 years old." };
             return await step.prompt(NUMBER_PROMPT, promptOptions);
         }
         else {
@@ -1125,7 +1133,7 @@ class UserProfileDialog extends ComponentDialog {
     async askGender(step) {
         if (userProfile.consent) {
             return await step.prompt(CHOICE_PROMPT, {
-                prompt: 'Please input your Gender.',
+                prompt: 'Got it. Please input your Gender.',
                 choices: ChoiceFactory.toChoices(['Female', 'Male', 'Non-binary', 'Other'])
             });
         }
@@ -1137,7 +1145,7 @@ class UserProfileDialog extends ComponentDialog {
     async checkGender(step) {
         if (userProfile.consent) {
             if (step.result.value == "Other") {
-                return await step.prompt(NAME_PROMPT, `Type in your gender`);
+                return await step.prompt(NAME_PROMPT, `Cool. Please type in your gender`);
             }
 
             return await step.next(step.result.value);
@@ -1317,14 +1325,14 @@ class UserProfileDialog extends ComponentDialog {
     // CONCLUSION
 
     async endExperience_1(step) {
-        await step.context.sendActivity("Thanks again for joining us for the Breakbeat Narrative Experience! To retrieve your custom music playlist, scan the QR code below with your mobile device camera.");
+        await step.context.sendActivity("**Thanks again for joining us for the Breakbeat Narrative Experience! To get your custom music playlist, scan the QR code below with your mobile device camera.**");
         // Display QR code to playlist
         //var currentDir = process.cwd();
         //var QRcodeImg = currentDir + "/playlistQRCodes/" + userProfile.playlist + ".png";
         var QRcodeImg = "https://uhhmstorage.blob.core.windows.net/qrcodes/" + userProfile.playlist + ".png";
-        console.log("Path to QR code: " + QRcodeImg);
         var text = "Here's Your Custom [R]Evolution of Hip Hop Playlist!";
         await step.context.sendActivity({ attachments: [this.createHeroCard(QRcodeImg, text)] });
+        //console.log("Path to QR code: " + QRcodeImg);
 
         return step.next();
     }
@@ -1335,7 +1343,7 @@ class UserProfileDialog extends ComponentDialog {
     }
 
     async endExperience_3(step) {
-        await step.context.sendActivity("Enjoy the rest of your day exploring the [R]Evolution of Hip Hop! Goodbye.");
+        await step.context.sendActivity("Enjoy the rest of your day exploring the [R]Evolution of Hip Hop! Peace out.");
         return await step.endDialog();
     }
 

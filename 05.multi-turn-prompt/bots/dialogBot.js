@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-const { ActivityHandler } = require('botbuilder');
+const { ActivityHandler, CardFactory } = require('botbuilder');
+
 var wel = false;
 
 class DialogBot extends ActivityHandler {
@@ -30,9 +31,17 @@ class DialogBot extends ActivityHandler {
             wel = false;
             for (const idx in context.activity.membersAdded) {
                 if (context.activity.membersAdded[idx].id !== context.activity.recipient.id) {
-                    await context.sendActivity("Welcome to the [R]Evolution of Hip Hop Breakbeat Narrative Experience!");
-                    await context.sendActivity("We are the five cosmic forces of Hip Hop: MC-ing, DJ-ing, Breakdance, Graffiti, and Knowledge. We'll be taking you through this experience today.");
-                    await context.sendActivity("To kick it off, we got some questions about your feelings towards Hip Hop and music in general.");
+
+                    // TODO: Replace Image of All 5 Elementals
+                    var img = "https://uhhmstorage.blob.core.windows.net/artwork/AllElementals.png";
+                    var text = "Welcome to the Breakbeat Narrative Experience.";
+                    await context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
+
+                    await context.sendActivity("**We are the Hip Hop Elementals!**");
+                    //await context.sendActivity("We embody the Five Cosmic Forces of Hip Hop:");
+                    //await context.sendActivity("* **MC-ing**\n\n" + "* **DJ-ing**\n\n" + "* **Breakdance**\n\n" + "* **Graffiti**\n\n" + "* **Knowledge**");
+                    await context.sendActivity("We embody the Five Cosmic Forces of Hip Hop:\n\n" + "* MC-ing\n\n" + "* DJ-ing\n\n" + "* Breakdance\n\n" + "* Graffiti\n\n" + "* Knowledge");
+
                     wel = true;
                 }
             }
@@ -50,6 +59,14 @@ class DialogBot extends ActivityHandler {
             await this.userState.saveChanges(context, false);
             await next();
         });
+    }
+
+    createHeroCard(img, text) {
+        return CardFactory.heroCard(
+            text,
+            CardFactory.images([img]),
+            CardFactory.actions([])
+        );
     }
 }
 
