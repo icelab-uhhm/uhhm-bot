@@ -37,7 +37,7 @@ class DialogBot extends ActivityHandler {
                     var text = "Yo, we are the Hip Hop Elementals! \n\nWelcome to the Breakbeat Narrative Experience.";
                     await context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
 
-                    await context.sendActivity("**Our names are:**\n\n" + "* MCing\n\n" + "* DJing\n\n" + "* Breakdancing\n\n" + "* Graffiti Art\n\n" + "* Knowledge");
+                    await context.sendActivity("**Our names are:**\n\n" + "* MC\n\n" + "* DJ\n\n" + "* Breakdance\n\n" + "* Graffiti Art\n\n" + "* Knowledge");
                     await context.sendActivity("We embody the Five Cosmic Forces of Hip Hop.");
 
                     wel = true;
