@@ -33,7 +33,7 @@ var music_category_user_map = { "sophisticated": "artsy", "intense": "intense", 
 var lyric_category_user_map = { "Fashion": "fashion", "Social Issues": "social impacts", "Location": "location" };
 
 // TODO: Fox to update transition text to suit tone and personality of characters. Right now, these transitions are chosen at random between questions.
-var transitions = { 0: "Dope. Let’s move to the next question.", 1: "Word. Let's move on." };
+var transitions = { 0: "Dope. Let’s move to the next question.", 1: "Word. Let's move on.", 2: "That's whassup. Let's move on.", 3: "Kool, kool. Let's move to the next one." };
 
 var lyric, url, songName, singerName;
 
@@ -153,32 +153,24 @@ class UserProfileDialog extends ComponentDialog {
         }
     }
 
-
     async startExperience1(step){
         const promptOptions = { prompt: 'Type "yes" to continue.', retryPrompt: 'Type "yes" to continue.' };
         return await step.prompt(BEGIN_PROMPT, promptOptions);
     }
 
     async startExperience2(step) {
-        await step.context.sendActivity("As Hip Hop Elementals, we have the power to tell a story specifically for you.");
+        await step.context.sendActivity("We'll use our Hip Hop Elemental powers to tell a story specifically for you.");
         await step.context.sendActivity("To kick it off, we got some questions about your feelings towards Hip Hop and music in general.");
 
         const promptOptions = { prompt: 'Type "yes" when you are ready to get started.', retryPrompt: 'Type "yes" when you are ready to get started.' };
         return await step.prompt(BEGIN_PROMPT, promptOptions);
     }
 
-    
-   
-    //async askAge(step) {
-    //    // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
-    //    return await step.prompt(CONFIRM_PROMPT, 'Do you want to give your age?', ['yes', 'no']);
-    //}
-
     async explainPreAssessment(step) {
 
         // TODO: Replace Elemental Image
         var img = "https://uhhmstorage.blob.core.windows.net/artwork/Graffiti.png";
-        var text = "Graffiti here. Let's kick this thing off!";
+        var text = "Graffiti Art here. Let's kick this thing off!";
         await step.context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
 
         await step.context.sendActivity("**I want you to tell me how you agree or disagree with each of the following statements:**");
@@ -217,38 +209,12 @@ class UserProfileDialog extends ComponentDialog {
             });   
     }
 
-    //async preAssessment_4(step) {
-    //    step.values.preAssessment_3 = step.result.value;
-
-    //    var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
-    //    await step.context.sendActivity(transitions[rndInd]);
-
-    //    return await step.prompt(CHOICE_PROMPT, {
-    //        prompt: "I'm an experienced technology user.",
-    //        choices: ChoiceFactory.toChoices(['Disagree',  'Neutral', 'Agree'])
-    //    }); 
-            
-    //}
-
-    //async preAssessment_5(step) {
-    //    step.values.preAssessment_4 = step.result.value;
-
-    //    var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
-    //    await step.context.sendActivity(transitions[rndInd]);
-
-    //    return await step.prompt(CHOICE_PROMPT, {
-    //        prompt: 'I enjoy learning about new things using technology.',
-    //        choices: ChoiceFactory.toChoices(['Disagree',  'Neutral', 'Agree'])
-    //    }); 
-        
-    //}
-
     async explainMusicSurvey(step) {
-        step.values.preAssessment_5 = step.result.value;
+        step.values.preAssessment_3 = step.result.value;
 
         // TODO: Replace Elemental Image
         var img = "https://uhhmstorage.blob.core.windows.net/artwork/DJ.png";
-        var text = "Yo, it's DJ. Let's get to the fun stuff!";
+        var text = "Whassup, it's DJing. Let's get to the fun stuff!";
         await step.context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
 
         await step.context.sendActivity("**We need you to tell us more about your music tastes. We’ll use this information to customize the story you’ll experience.**");
@@ -270,14 +236,14 @@ class UserProfileDialog extends ComponentDialog {
         //await step.context.sendActivity(`You chose: ${ step.result.value }.`);
 
         var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
-        //await step.context.sendActivity(transitions[rndInd]);
+        await step.context.sendActivity(transitions[rndInd]);
 
         // Update the tallies for genre 1 and genre 2
         if (lastChosenGenre == "classical") { genre1_tally++; }
         else if (lastChosenGenre == "pop") { genre2_tally++; }
 
         return await step.prompt(CHOICE_PROMPT, {
-            prompt: 'Aight, between these two types of music, which is more dope?',
+            prompt: 'Between these two types of music, which is more dope?',
             choices: ChoiceFactory.toChoices(["Jazz", "Country"])
         }); 
     }
@@ -288,14 +254,14 @@ class UserProfileDialog extends ComponentDialog {
         //await step.context.sendActivity(`You chose: ${step.result.value}.`);
 
         var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
-        //await step.context.sendActivity(transitions[rndInd]);
+        await step.context.sendActivity(transitions[rndInd]);
 
         // Update the tallies for genre 1 and genre 2
         if (lastChosenGenre == "jazz") { genre1_tally++; }
         else if (lastChosenGenre == "country") { genre2_tally++; }
 
         return await step.prompt(CHOICE_PROMPT, {
-            prompt: 'Cool, between these two types of music, which do you like more?',
+            prompt: 'Between these two types of music, which are you more down with (which do you like more)?',
             choices: ChoiceFactory.toChoices(["World Music", "Heavy Metal"])
         });
     }
@@ -306,14 +272,14 @@ class UserProfileDialog extends ComponentDialog {
         //await step.context.sendActivity(`You chose: ${step.result.value}.`);
 
         var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
-        //await step.context.sendActivity(transitions[rndInd]);
+        await step.context.sendActivity(transitions[rndInd]);
 
         // Update the tallies for genre 1 and genre 2
         if (lastChosenGenre == "world music") { genre1_tally++; }
         else if (lastChosenGenre == "heavy metal") { genre2_tally++; }
 
         return await step.prompt(CHOICE_PROMPT, {
-            prompt: 'Nice. Between these next two types of music, which do ya like better?',
+            prompt: 'Between these next two types of music, which one ya like better?',
             choices: ChoiceFactory.toChoices(["Classical", "Electronica"])
         });
     }
@@ -324,14 +290,14 @@ class UserProfileDialog extends ComponentDialog {
         //await step.context.sendActivity(`You chose: ${step.result.value}.`);
 
         var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
-        //await step.context.sendActivity(transitions[rndInd]);
+        await step.context.sendActivity(transitions[rndInd]);
 
         // Update the tallies for genre 1 and genre 2
         if (lastChosenGenre == "classical") { genre1_tally++; }
         else if (lastChosenGenre == "electronica") { genre2_tally++; }
 
         return await step.prompt(CHOICE_PROMPT, {
-            prompt: 'Word up. Now, between these two kinds of music, which do you like better?',
+            prompt: 'Now, tell us which you like more between these. Which is more def out of the next two?',
             choices: ChoiceFactory.toChoices(["Jazz", "Rap"])
         });
     }
@@ -342,14 +308,14 @@ class UserProfileDialog extends ComponentDialog {
         //await step.context.sendActivity(`You chose: ${step.result.value}.`);
 
         var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
-        //await step.context.sendActivity(transitions[rndInd]);
+        await step.context.sendActivity(transitions[rndInd]);
 
         // Update the tallies for genre 1 and genre 2
         if (lastChosenGenre == "jazz") { genre1_tally++; }
         else if (lastChosenGenre == "rap") { genre2_tally++; }
 
         return await step.prompt(CHOICE_PROMPT, {
-            prompt: 'Aight, between these two types of music, which is more dope?',
+            prompt: 'Between these two types of music, which is more your jam?',
             choices: ChoiceFactory.toChoices(["World Music", "Electronica"])
         });
     }
@@ -360,14 +326,14 @@ class UserProfileDialog extends ComponentDialog {
         //await step.context.sendActivity(`You chose: ${step.result.value}.`);
 
         var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
-        //await step.context.sendActivity(transitions[rndInd]);
+        await step.context.sendActivity(transitions[rndInd]);
 
         // Update the tallies for genre 1 and genre 2
         if (lastChosenGenre == "world music") { genre1_tally++; }
         else if (lastChosenGenre == "electronica") { genre2_tally++; }
 
         return await step.prompt(CHOICE_PROMPT, {
-            prompt: 'I gotchu! Between these two types of music, which would you prefer to listen to more?',
+            prompt: "Now let's hear what you like better between these two types of music. Which of the following two do ya feel more?",
             choices: ChoiceFactory.toChoices(["Classical", "Rap"])
         });
     }
@@ -385,16 +351,13 @@ class UserProfileDialog extends ComponentDialog {
         if (genre1_tally > genre2_tally) { musicCategory = "sophisticated"; }
         else { musicCategory = "unsophisticated"; }
 
-        //return await step.context.sendActivity("Your music category is: " + musicCategory);
-
         userProfile = await this.userProfile.get(step.context, new UserProfile());
-        //userProfile.preAssessment = [step.values.preAssessment_1, step.values.preAssessment_2, step.values.preAssessment_3, step.values.preAssessment_4, step.values.preAssessment_5];
         userProfile.preAssessment = [step.values.preAssessment_1, step.values.preAssessment_2, step.values.preAssessment_3];
         userProfile.musicSurveyChoices = [step.values.musicSurvey_st1_1, step.values.musicSurvey_st1_2, step.values.musicSurvey_st1_3, step.values.musicSurvey_st1_4, step.values.musicSurvey_st1_5, step.values.musicSurvey_st1_6, step.values.musicSurvey_st1_7];
 
         if (musicCategory == "sophisticated") {
             userProfile.musicCategory = musicCategory;
-            await step.context.sendActivity(`Ah, so you like that ${music_category_user_map[userProfile.musicCategory]} kind of sound. How interesting!`);
+            await step.context.sendActivity(`Ah, so ya like that ${music_category_user_map[userProfile.musicCategory]} kind of sound. Fresh!`);
             const promptOptions = { prompt: 'Type "yes" when you are ready to continue.', retryPrompt: 'Type "yes" when you are ready to continue.' };
             return await step.prompt(BEGIN_PROMPT, promptOptions);
         }
@@ -404,11 +367,11 @@ class UserProfileDialog extends ComponentDialog {
             genre2_tally = 0;
 
             var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
-            //await step.context.sendActivity(transitions[rndInd]);
+            await step.context.sendActivity(transitions[rndInd]);
 
             //proceed to part 2 of 4 in music survey
             return await step.prompt(CHOICE_PROMPT, {
-                prompt: 'Cool, cool. Now, between these two types of music, which one do you like more?',
+                prompt: 'Now, between these two types of music, which ya like more?',
                 choices: ChoiceFactory.toChoices(["Rap", "Early Rock N Roll"])
             });
         }
@@ -425,10 +388,10 @@ class UserProfileDialog extends ComponentDialog {
             else if (lastChosenGenre == "early rock n roll") { genre2_tally++; }
             
             var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
-            //await step.context.sendActivity(transitions[rndInd]);
+            await step.context.sendActivity(transitions[rndInd]);
 
             return await step.prompt(CHOICE_PROMPT, {
-                prompt: 'Right on. Aight, between these two kinds of music, which is better to you?',
+                prompt: 'Between these two kinds of music, which is cooler to you?',
                 choices: ChoiceFactory.toChoices(["Rock", "Country"])
             });
         }
@@ -449,10 +412,10 @@ class UserProfileDialog extends ComponentDialog {
             else if (lastChosenGenre == "country") { genre2_tally++; }
 
             var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
-            //await step.context.sendActivity(transitions[rndInd]);
+            await step.context.sendActivity(transitions[rndInd]);
 
             return await step.prompt(CHOICE_PROMPT, {
-                prompt: 'Tight. Ok, between these two types of music, which ya like more?',
+                prompt: 'Now, between these two types of music, which ya like more?',
                 choices: ChoiceFactory.toChoices(["Heavy Metal", "Soft Rock"])
             });
         }
@@ -473,9 +436,9 @@ class UserProfileDialog extends ComponentDialog {
             else if (lastChosenGenre == "soft rock") { genre2_tally++; }
 
             var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
-            //await step.context.sendActivity(transitions[rndInd]);
+            await step.context.sendActivity(transitions[rndInd]);
             return await step.prompt(CHOICE_PROMPT, {
-                prompt: 'Dope! Between these two types of music, which do you like more?',
+                prompt: 'I wanna know which ya think is better. Between these two types of music, which is more fire?',
                 choices: ChoiceFactory.toChoices(["Punk", "Pop"])
             });
         }
@@ -496,10 +459,10 @@ class UserProfileDialog extends ComponentDialog {
             else if (lastChosenGenre == "pop") { genre2_tally++; }
 
             var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
-            //await step.context.sendActivity(transitions[rndInd]);
+            await step.context.sendActivity(transitions[rndInd]);
 
             return await step.prompt(CHOICE_PROMPT, {
-                prompt: 'Got it. Now, which of these kinds of music ya like more?',
+                prompt: 'Now, which of these kinds of music ya like more?',
                 choices: ChoiceFactory.toChoices(["Electronica", "Soul/R&B"])
             });
         }
@@ -530,7 +493,7 @@ class UserProfileDialog extends ComponentDialog {
                 genre2_tally = 0;
 
                 var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
-                //await step.context.sendActivity(transitions[rndInd]);
+                await step.context.sendActivity(transitions[rndInd]);
 
                 // user proceeds to musicSurvey_st3_1 (intense or urban categories)
                 return await step.prompt(CHOICE_PROMPT, {
@@ -545,10 +508,10 @@ class UserProfileDialog extends ComponentDialog {
                 // user proceeds to musicSurvey_st4_1 (campestral or mellow categories)
 
                 var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
-                //await step.context.sendActivity(transitions[rndInd]);
+                await step.context.sendActivity(transitions[rndInd]);
 
                 return await step.prompt(CHOICE_PROMPT, {
-                    prompt: 'Gotchu. Between these two genres of music, which do ya prefer more?',
+                    prompt: 'Between these two genres of music, which do ya prefer more?',
                     choices: ChoiceFactory.toChoices(["Country", "Pop"])
                 });
             }
@@ -585,10 +548,10 @@ class UserProfileDialog extends ComponentDialog {
                 }
 
                 var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
-                //await step.context.sendActivity(transitions[rndInd]);
+                await step.context.sendActivity(transitions[rndInd]);
 
                 return await step.prompt(CHOICE_PROMPT, {
-                    prompt: 'Cool, cool. Between these two types of music, which would ya wanna listen to more?',
+                    prompt: "Between these two types of music, which ya feelin' more?",
                     choices: ChoiceFactory.toChoices(["Punk", "Rap"])
                 });
             }
@@ -608,10 +571,10 @@ class UserProfileDialog extends ComponentDialog {
                 }
 
                 var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
-                //await step.context.sendActivity(transitions[rndInd]);
+                await step.context.sendActivity(transitions[rndInd]);
 
                 return await step.prompt(CHOICE_PROMPT, {
-                    prompt: 'Aight. Between these two types of music, which would you prefer more?',
+                    prompt: 'Between these two types of music, which is nicer?',
                     choices: ChoiceFactory.toChoices(["Soft Rock", "Jazz"])
                 });
             }
@@ -627,6 +590,7 @@ class UserProfileDialog extends ComponentDialog {
             var lastChosenGenre = step.result.value.toLowerCase();
             //await step.context.sendActivity(`You chose: ${step.result.value}.`);
             //console.log("musicSurvey_st3_or_4_3");
+
             // Update the tallies for genre 1 and genre 2
             if (lastChosenGenre == "punk" || lastChosenGenre == "rap") {
                 // user is in step 3_2
@@ -640,7 +604,7 @@ class UserProfileDialog extends ComponentDialog {
                 }
 
                 var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
-                //await step.context.sendActivity(transitions[rndInd]);
+                await step.context.sendActivity(transitions[rndInd]);
 
                 return await step.prompt(CHOICE_PROMPT, {
                     prompt: 'Word! Between these two types of music, which is better to you?',
@@ -659,10 +623,10 @@ class UserProfileDialog extends ComponentDialog {
                 }
 
                 var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
-                //await step.context.sendActivity(transitions[rndInd]);
+                await step.context.sendActivity(transitions[rndInd]);
 
                 return await step.prompt(CHOICE_PROMPT, {
-                    prompt: 'Bet. Between these two types of music, which do you prefer more?',
+                    prompt: 'Between these two types of music right here, which ya prefer more?',
                     choices: ChoiceFactory.toChoices(["Early Rock N Roll", "Soul/R&B"])
                 });
             }
@@ -696,14 +660,14 @@ class UserProfileDialog extends ComponentDialog {
                 if (genre1_tally > genre2_tally) {
                     // music category is intense
                     userProfile.musicCategory = "intense";
-                    await step.context.sendActivity(`Ah, so you like that ${music_category_user_map[userProfile.musicCategory]} kind of sound. How interesting!`);
+                    await step.context.sendActivity(`Ah, so ya like that ${music_category_user_map[userProfile.musicCategory]} kind of sound. Fresh!`);
                     const promptOptions = { prompt: 'Type "yes" when you are ready to continue.', retryPrompt: 'Type "yes" when you are ready to continue.' };
                     return await step.prompt(BEGIN_PROMPT, promptOptions);
                 }
                 else {
                     // music category is urban
                     userProfile.musicCategory = "urban";
-                    await step.context.sendActivity(`Ah, so you like that ${music_category_user_map[userProfile.musicCategory]} kind of sound. How interesting!`);
+                    await step.context.sendActivity(`Ah, so ya like that ${music_category_user_map[userProfile.musicCategory]} kind of sound. Cool!`);
                     const promptOptions = { prompt: 'Type "yes" when you are ready to continue.', retryPrompt: 'Type "yes" when you are ready to continue.' };
                     return await step.prompt(BEGIN_PROMPT, promptOptions);
                 }
@@ -722,14 +686,14 @@ class UserProfileDialog extends ComponentDialog {
                 if (genre1_tally > genre2_tally) {
                     // music category is campestral
                     userProfile.musicCategory = "campestral";
-                    await step.context.sendActivity(`Ah, so you like that ${music_category_user_map[userProfile.musicCategory]} kind of sound. How interesting!`);
+                    await step.context.sendActivity(`Ah, so ya like that ${music_category_user_map[userProfile.musicCategory]} kind of sound. Word up!`);
                     const promptOptions = { prompt: 'Type "yes" when you are ready to continue.', retryPrompt: 'Type "yes" when you are ready to continue.' };
                     return await step.prompt(BEGIN_PROMPT, promptOptions);
                 }
                 else {
                     // music category is mellow
                     userProfile.musicCategory = "mellow";
-                    await step.context.sendActivity(`Ah, so you like that ${music_category_user_map[userProfile.musicCategory]} kind of sound. How interesting!`);
+                    await step.context.sendActivity(`Ah, so ya like that ${music_category_user_map[userProfile.musicCategory]} kind of sound. Dope!`);
                     const promptOptions = { prompt: 'Type "yes" when you are ready to continue.', retryPrompt: 'Type "yes" when you are ready to continue.' };
                     return await step.prompt(BEGIN_PROMPT, promptOptions);
                 }
@@ -744,10 +708,10 @@ class UserProfileDialog extends ComponentDialog {
 
         // TODO: Replace Elemental Image
         var img = "https://uhhmstorage.blob.core.windows.net/artwork/MC.png";
-        var text = "Tight! It's MC over here.";
+        var text = "What's up? It's MCing over here.";
         await step.context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
 
-        await step.context.sendActivity("**Now I'm curious to learn about your taste in Hip Hop lyrics. Let me ask you a few more questions.**");
+        await step.context.sendActivity("**Now I'm curious to learn about your taste in Hip Hop lyrics. Imma ask you a few more questions.**");
         const promptOptions = { prompt: 'Type "yes" when you are ready to explore your lyrical preferences.', retryPrompt: 'Type "yes" when you are ready to explore your lyrical preferences.' };
         return await step.prompt(BEGIN_PROMPT, promptOptions);
     }
@@ -760,7 +724,7 @@ class UserProfileDialog extends ComponentDialog {
         // await step.context.sendActivity(L1);
         // await step.context.sendActivity(L2);
 
-        await step.context.sendActivity("Between these two choices of Hip Hop lyrics, which do you like more?");
+        await step.context.sendActivity("Between these two choices of Hip Hop lyrics, which ya like more?");
 
         lyric = "“This is truffle season\n\nTom Ford tuxedos for no reason\n\nAll Saints for my angel\n\nAlexander Wang too”";
         //var currentDir = process.cwd();
@@ -800,7 +764,7 @@ class UserProfileDialog extends ComponentDialog {
         // await step.context.sendActivity(L1);
         // await step.context.sendActivity(L2);
         
-        await step.context.sendActivity("Between these two choices of Hip Hop lyrics, which do you like more?");
+        await step.context.sendActivity("Between these two choices of Hip Hop lyrics, which ya like more?");
         
 
         lyric = "“I must say, by your songs I'm unimpressed, hey\n\nBut I love to see a Black man get paid\n\nAnd plus, you havin' fun and I respect that\n\nBut have you ever thought about your impact?”";
@@ -842,7 +806,7 @@ class UserProfileDialog extends ComponentDialog {
         // await step.context.sendActivity(L1);
         // await step.context.sendActivity(L2);
 
-        await step.context.sendActivity("Between these two choices of Hip Hop lyrics, which do you like more?");
+        await step.context.sendActivity("Between these two choices of Hip Hop lyrics, which ya like more?");
        
 
         lyric= "“My motivation is from thirty pointers, VVS\n\nThe furniture my mouth piece simply symbolize success”";
@@ -884,7 +848,7 @@ class UserProfileDialog extends ComponentDialog {
         // await step.context.sendActivity(L1);
         // await step.context.sendActivity(L2);
 
-        await step.context.sendActivity("Between these two choices of Hip Hop lyrics, which do you like more?");
+        await step.context.sendActivity("Between these two choices of Hip Hop lyrics, which ya like more?");
   
 
         lyric= "“I made 'Jesus Walks,' so I'm never going to hell\n\nCouture-level flow is never going on sale\n\nLuxury rap, the Hermes of verses\n\nSophisticated ignorance, write my curses in cursive”";
@@ -926,7 +890,7 @@ class UserProfileDialog extends ComponentDialog {
         var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
         await step.context.sendActivity(transitions[rndInd]);
 
-        await step.context.sendActivity("Between these two choices of Hip Hop lyrics, which do you like more?");
+        await step.context.sendActivity("Tell me which is better -- between these two choices of Hip Hop lyrics, which is more ill?");
 
         lyric = "“Powdered eggs and government cheeses \n\nThe calendars with Martin, JFK and Jesus \n\nGotta be fresh to go to school with fly sneakers \n\nSchools with outdated books, we are the forgotten”";
         //var currentDir = process.cwd();
@@ -970,17 +934,20 @@ class UserProfileDialog extends ComponentDialog {
                 break;
             }
         }
-        console.log(lyric_category_tally);
-        console.log("User's Lyric Survey Choice: " + userProfile.lyricSurveyChoices);
-        console.log(rnd, max_key);
-        userProfile.lyricCategory = lyric_category_map[max_key];
-        console.log("User's Lyric Category: " + userProfile.lyricCategory);
+
+        console.log("User's Pre-Assessment Choices: " + userProfile.preAssessment);
 
         console.log("User's Music Survey Choice: " + userProfile.musicSurveyChoices);
         console.log("User's Music Category: " + userProfile.musicCategory);
-        console.log("Music Category User Map: " + music_category_user_map[userProfile.musicCategory]);
+        
+        console.log("User's Lyric Survey Choice: " + userProfile.lyricSurveyChoices);
+        console.log(lyric_category_tally);
+        //console.log(rnd, max_key);
 
-        await step.context.sendActivity("That's dope! So, it sounds like you’re into " + music_category_user_map[userProfile.musicCategory] + " music and care about Hip Hop music that deals with "+lyric_category_user_map[userProfile.lyricCategory]+".");
+        userProfile.lyricCategory = lyric_category_map[max_key];
+        console.log("User's Lyric Category: " + userProfile.lyricCategory);
+
+        await step.context.sendActivity("Mkay! So, it sounds like you’re into " + music_category_user_map[userProfile.musicCategory] + " music and care about Hip Hop music that deals with "+lyric_category_user_map[userProfile.lyricCategory]+".");
         const promptOptions = { prompt: 'Type "yes" when you are ready to continue.', retryPrompt: 'Type "yes" when you are ready to continue.' };
         return await step.prompt(BEGIN_PROMPT, promptOptions);
     }
@@ -1024,10 +991,10 @@ class UserProfileDialog extends ComponentDialog {
 
         // TODO: Replace Elemental Image
         var img = "https://uhhmstorage.blob.core.windows.net/artwork/Breakdance.png";
-        var text = "This is Breakdance taking over.";
+        var text = "This is Breakdancing taking over.";
         await step.context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
 
-        await step.context.sendActivity("**Based on all the information you gave us, we've created a customized narrative experience just for you!**");
+        await step.context.sendActivity("**Based on all the info you gave us, we've created a customized narrative experience just for you!**");
         return step.next();
     }
 
@@ -1075,10 +1042,10 @@ class UserProfileDialog extends ComponentDialog {
 
         // TODO: Replace Elemental Image
         var img = "https://uhhmstorage.blob.core.windows.net/artwork/Knowledge.png";
-        var text = "Yo, it's Knowledge. Hope you enjoyed your narrative!";
+        var text = "Yo, it's Knowledge here. \n\nHope you enjoyed your narrative!";
         await step.context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
 
-        await step.context.sendActivity("**We wanna hear what you thought about the experience to help us research how to improve it.**");
+        await step.context.sendActivity("**We wanna hear what you thought about the experience to help us with the science of how to improve it.**");
         return await step.prompt(CHOICE_PROMPT, {
             prompt: "We can only use your feedback if you're over 18 years old, though. Are you over 18?",
             choices: ChoiceFactory.toChoices(['No', 'Yes'])
@@ -1089,7 +1056,7 @@ class UserProfileDialog extends ComponentDialog {
         if (step.result.value == "Yes") {
             userIsAdult = true;
             return await step.prompt(CHOICE_PROMPT, {
-                prompt: 'Word! Can we share your feedback with MIT to make the future experience better?',
+                prompt: 'Def! Can we share your feedback with MIT to make the future experience better?',
                 choices: ChoiceFactory.toChoices(['No', 'Yes'])
             });
         }
@@ -1123,7 +1090,7 @@ class UserProfileDialog extends ComponentDialog {
     // POST-ASSESSMENT FLOW
     async askAge(step) {
         if (userProfile.consent) {
-            const promptOptions = { prompt: 'Yo, please provide your age to continue.', retryPrompt: "You've gotta be between 18 and 120 years old." };
+            const promptOptions = { prompt: 'Yo, please provide your age to continue.', retryPrompt: "Ya gotta be between 18 and 120 years old." };
             return await step.prompt(NUMBER_PROMPT, promptOptions);
         }
         else {
@@ -1301,19 +1268,21 @@ class UserProfileDialog extends ComponentDialog {
         if (userProfile.consent) {
             step.values.postAssessment_6 = step.result.value;
 
-            //userProfile.postAssessment = [step.values.postAssessment_1, step.values.postAssessment_2, step.values.postAssessment_3, step.values.postAssessment_4, step.values.postAssessment_5, step.values.postAssessment_6]
             userProfile.postAssessment = [step.values.postAssessment_0_1, step.values.postAssessment_0_2, step.values.postAssessment_1, step.values.postAssessment_2, step.values.postAssessment_3, step.values.postAssessment_4, step.values.postAssessment_5, step.values.postAssessment_6]
+
+            console.log("User's Post-Assessment Choices: " + userProfile.postAssessment);
+
             if (step.values.postAssessment_6 == 1 || step.values.postAssessment_6 == 2) {
-                var checkRatingMsg = "I'm sorry that you didn't find the experience as interesting as we'd hoped, but your feedback will be very helpful for us to make it better!";
+                var checkRatingMsg = "It's too bad that ya didn't find the experience as cool as we'd hoped, but your feedback will be very helpful to make it better.";
             }
             else if (step.values.postAssessment_6 == 3) {
-                var checkRatingMsg = "I hope you were able to learn something new or interesting from the narrative experience and I'm glad to have had you participate.";
+                var checkRatingMsg = "For real, we appreciate the feedback and hope ya learned something new from the experience.";
             }
             else if (step.values.postAssessment_6 == 4 || step.values.postAssessment_6 == 5) {
-                var checkRatingMsg = "I'm so glad you enjoyed your customized narrative experience!";
+                var checkRatingMsg = "We're so glad you enjoyed your customized experience.";
             }
             await step.context.sendActivity(checkRatingMsg);
-            await step.context.sendActivity("We definitely enjoyed getting to learn more about you today.");
+            await step.context.sendActivity("We enjoyed kickin' it with ya today!");
 
             const promptOptions = { prompt: 'Type "yes" when you are ready to move on.', retryPrompt: 'Type "yes" when you are ready to move on.' };
             return await step.prompt(BEGIN_PROMPT, promptOptions);
@@ -1348,57 +1317,6 @@ class UserProfileDialog extends ComponentDialog {
         return await step.endDialog();
     }
 
-
-
-
-    //async transportStep(step) {
-    //    // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
-    //    // Running a prompt here means the next WaterfallStep will be run when the users response is received.
-    //    return await step.prompt(CHOICE_PROMPT, {
-    //        prompt: 'Please enter your mode of transport.',
-    //        choices: ChoiceFactory.toChoices(['Car', 'Bus', 'Bicycle'])
-    //    });
-    //}
-
-    //async nameStep(step) {
-    //    step.values.transport = step.result.value;
-    //    return await step.prompt(NAME_PROMPT, `What is your name, human?`);
-    //}
-
-    //async nameConfirmStep(step) {
-    //    step.values.name = step.result;
-
-    //    // We can send messages to the user at any point in the WaterfallStep.
-    //    await step.context.sendActivity(`Thanks ${ step.result }.`);
-
-    //    // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
-    //    return await step.prompt(CONFIRM_PROMPT, 'Do you want to give your age?', ['yes', 'no']);
-    //}
-
-    
-    //async summaryStep(step) {
-    //    if (step.result) {
-    //        // Get the current profile object from user state.
-    //        const userProfile = await this.userProfile.get(step.context, new UserProfile());
-
-    //        userProfile.transport = step.values.transport;
-    //        userProfile.name = step.values.name;
-    //        userProfile.age = step.values.age;
-    //        userProfile.gender = step.values.gender;
-
-    //        let msg = `I have your mode of transport as ${ userProfile.transport } and your name as ${ userProfile.name }.`;
-    //        if (userProfile.age !== -1) {
-    //            msg += ` And age as ${ userProfile.age }.`;
-    //        }
-
-    //        await step.context.sendActivity(msg);
-    //    } else {
-    //        await step.context.sendActivity('Thanks. Your profile will not be kept.');
-    //    }
-
-    //    // WaterfallStep always finishes with the end of the Waterfall or with another dialog, here it is the end.
-    //    return await step.endDialog();
-    //}
 
     async agePromptValidator(promptContext) {
         // This condition is our validation rule. You can also change the value at this point.

@@ -34,11 +34,10 @@ class DialogBot extends ActivityHandler {
 
                     // TODO: Replace Image of All 5 Elementals
                     var img = "https://uhhmstorage.blob.core.windows.net/artwork/AllElementals.png";
-                    var text = "Welcome to the Breakbeat Narrative Experience.";
+                    var text = "Yo, we are the Hip Hop Elementals! \n\nWelcome to the Breakbeat Narrative Experience.";
                     await context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
 
-                    await context.sendActivity("**Yo, we are the Hip Hop Elementals!**");
-                    await context.sendActivity("Our names are:\n\n" + "* MCing\n\n" + "* DJing\n\n" + "* Breakdancing\n\n" + "* Graffiti Art\n\n" + "* Knowledge");
+                    await context.sendActivity("**Our names are:**\n\n" + "* MCing\n\n" + "* DJing\n\n" + "* Breakdancing\n\n" + "* Graffiti Art\n\n" + "* Knowledge");
                     await context.sendActivity("We embody the Five Cosmic Forces of Hip Hop.");
 
                     wel = true;
