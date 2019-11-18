@@ -1,5 +1,6 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+// By the MIT Center for Advanced Virtuality
+// Licensed under a Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported (CC BY-NC-ND 3.0) License.
+
 const { AttachmentLayoutTypes, CardFactory } = require('botbuilder');
 
 const {
@@ -32,7 +33,7 @@ var music_category_user_map = { "sophisticated": "artsy", "intense": "intense", 
 var lyric_category_user_map = { "Fashion": "fashion", "Social Issues": "social impacts", "Location": "location" };
 
 // TODO: Fox to update transition text to suit tone and personality of characters. Right now, these transitions are chosen at random between questions.
-var transitions = { 0: "Dope! Let’s move to the next question.", 1: "Word! Let's move on." };
+var transitions = { 0: "Dope. Let’s move to the next question.", 1: "Word. Let's move on." };
 
 var lyric, url, songName, singerName;
 

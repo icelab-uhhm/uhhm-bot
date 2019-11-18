@@ -1,5 +1,5 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+// By the MIT Center for Advanced Virtuality
+// Licensed under a Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported (CC BY-NC-ND 3.0) License.
 
 const { ActivityHandler, CardFactory } = require('botbuilder');
 
@@ -37,10 +37,9 @@ class DialogBot extends ActivityHandler {
                     var text = "Welcome to the Breakbeat Narrative Experience.";
                     await context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
 
-                    await context.sendActivity("**We are the Hip Hop Elementals!**");
-                    //await context.sendActivity("We embody the Five Cosmic Forces of Hip Hop:");
-                    //await context.sendActivity("* **MC-ing**\n\n" + "* **DJ-ing**\n\n" + "* **Breakdance**\n\n" + "* **Graffiti**\n\n" + "* **Knowledge**");
-                    await context.sendActivity("We embody the Five Cosmic Forces of Hip Hop:\n\n" + "* MC-ing\n\n" + "* DJ-ing\n\n" + "* Breakdance\n\n" + "* Graffiti\n\n" + "* Knowledge");
+                    await context.sendActivity("**Yo, we are the Hip Hop Elementals!**");
+                    await context.sendActivity("Our names are:\n\n" + "* MCing\n\n" + "* DJing\n\n" + "* Breakdancing\n\n" + "* Graffiti Art\n\n" + "* Knowledge");
+                    await context.sendActivity("We embody the Five Cosmic Forces of Hip Hop.");
 
                     wel = true;
                 }
