@@ -26,13 +26,13 @@ var L2 = "";
 var lyric_category_tally = {FL:0, SIL:0, LL:0};
 var lyric_category_map = { FL: "Fashion", SIL: "Social Issues", LL: "Location" };
 
-// TODO: Fox to update the adjectives associated with giving user feedback on their music survey outcome
+// Adjectives associated with giving user feedback on their music survey outcome
 var music_category_user_map = { "sophisticated": "artsy", "intense": "intense", "urban": "danceable", "mellow": "mellow", "campestral": "rootsy" };
 
-// TODO: Fox to update the adjectives associated with giving user feedback on their lyric survey outcome
+// Adjectives associated with giving user feedback on their lyric survey outcome
 var lyric_category_user_map = { "Fashion": "fashion", "Social Issues": "social impacts", "Location": "location" };
 
-// TODO: Fox to update transition text to suit tone and personality of characters. Right now, these transitions are chosen at random between questions.
+// Transition text to suit tone and personality of characters. These transitions are chosen at random between questions.
 var transitions = { 0: "Dope. Let’s move to the next question.", 1: "Word. Let's move on.", 2: "That's what's up. Let's move on.", 3: "Kool, kool. Let's move to the next one.", 4: "Cool, next question now.", 5: "Nice. Next question." };
 
 var lyric, url, songName, singerName;
@@ -168,12 +168,12 @@ class UserProfileDialog extends ComponentDialog {
 
     async explainPreAssessment(step) {
 
-        // TODO: Replace Elemental Image
+        // Graffiti Art Elemental Image
         var img = "https://uhhmstorage.blob.core.windows.net/artwork/Graffiti.png";
         var text = "Graffiti Art here. Let's kick this thing off!";
         await step.context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
 
-        await step.context.sendActivity("**I want you to tell me how you agree or disagree with each of the following statements:**");
+        await step.context.sendActivity("**Please tell me how you agree or disagree with each of the following statements:**");
 
         return step.next();
     }
@@ -212,7 +212,7 @@ class UserProfileDialog extends ComponentDialog {
     async explainMusicSurvey(step) {
         step.values.preAssessment_3 = step.result.value;
 
-        // TODO: Replace Elemental Image
+        // DJ Elemental Image
         var img = "https://uhhmstorage.blob.core.windows.net/artwork/DJ.png";
         var text = "Whassup, it's DJ. Let's get to the fun stuff!";
         await step.context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
@@ -706,7 +706,7 @@ class UserProfileDialog extends ComponentDialog {
 
     async explainLyricSurvey(step) {
 
-        // TODO: Replace Elemental Image
+        // MC Elemental Image
         var img = "https://uhhmstorage.blob.core.windows.net/artwork/MC.png";
         var text = "What's up? It's MC over here.";
         await step.context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
@@ -989,7 +989,7 @@ class UserProfileDialog extends ComponentDialog {
             userProfile.playlist = "C" + userProfile.narrative.toString();
         }
 
-        // TODO: Replace Elemental Image
+        // Breakdance Elemental Image
         var img = "https://uhhmstorage.blob.core.windows.net/artwork/Breakdance.png";
         var text = "This is Breakdance taking over.";
         await step.context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
@@ -1010,8 +1010,8 @@ class UserProfileDialog extends ComponentDialog {
             "From the Streets to Fashion Week",
             "Brand Marketing Through Hip Hop",
             "Evolution of Bling",
-            "Violence",
-            "Drugs",
+            "Beyond the Stereotypes: Violence",
+            "A Complicated Picture: Drugs",
             "Self Representation of Women",
             "What Moves the Crowd",
             "Internet Streaming, Social Media, and Hip Hop",
@@ -1025,7 +1025,8 @@ class UserProfileDialog extends ComponentDialog {
         console.log("User Playlist: " + userProfile.playlist);
 
         await step.context.sendActivity("**EXPLORE YOUR CUSTOM NARRATIVE:**");
-        await step.context.sendActivity("**"+userProfile.lyricCategory + ": " + narrativeTitle+"**");
+        await step.context.sendActivity("**" + userProfile.lyricCategory + ": " + narrativeTitle + "**");
+        await step.context.sendActivity("*Please note that the music playlist may or may not contain explicit content.*");
 
         return step.next();
     }
@@ -1040,7 +1041,7 @@ class UserProfileDialog extends ComponentDialog {
 
     async checkIfAdult(step) {
 
-        // TODO: Replace Elemental Image
+        // Knowledge Elemental Image
         var img = "https://uhhmstorage.blob.core.windows.net/artwork/Knowledge.png";
         var text = "Yo, it's Knowledge here. \n\nHope you enjoyed your narrative!";
         await step.context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
@@ -1297,11 +1298,13 @@ class UserProfileDialog extends ComponentDialog {
     async endExperience_1(step) {
         await step.context.sendActivity("**Thanks again for joining us for the Breakbeat Narrative Experience! To get your custom music playlist, scan the QR code below with your mobile device camera.**");
         // Display QR code to playlist
-        //var currentDir = process.cwd();
-        //var QRcodeImg = currentDir + "/playlistQRCodes/" + userProfile.playlist + ".png";
+
+        // TODO: Update QR code images to link to latest Soundcloud playlists
         var QRcodeImg = "https://uhhmstorage.blob.core.windows.net/qrcodes/" + userProfile.playlist + ".png";
         var text = "Here's Your Custom [R]Evolution of Hip Hop Playlist!";
         await step.context.sendActivity({ attachments: [this.createHeroCard(QRcodeImg, text)] });
+
+        await step.context.sendActivity("*Please note that the music playlist may or may not contain explicit content.*");
         //console.log("Path to QR code: " + QRcodeImg);
 
         return step.next();
@@ -1313,7 +1316,12 @@ class UserProfileDialog extends ComponentDialog {
     }
 
     async endExperience_3(step) {
-        await step.context.sendActivity("Enjoy the rest of your day exploring the [R]Evolution of Hip Hop! Peace out.");
+
+        // Image of All 5 Elementals
+        var img = "https://uhhmstorage.blob.core.windows.net/artwork/AllElementals.png";
+        var text = "Enjoy the rest of your day exploring the [R]Evolution of Hip Hop. Peace out!";
+        await context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
+
         return await step.endDialog();
     }
 
