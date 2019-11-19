@@ -1011,7 +1011,7 @@ class UserProfileDialog extends ComponentDialog {
             "Brand Marketing Through Hip Hop",
             "Evolution of Bling",
             "Beyond the Stereotypes: Violence",
-            "A Complicated Picture: Drugs",
+            "Drugs: Truthtelling, Pain, and Excess",
             "Self Representation of Women",
             "What Moves the Crowd",
             "Internet Streaming, Social Media, and Hip Hop",
