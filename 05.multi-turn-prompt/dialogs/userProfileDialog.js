@@ -44,6 +44,8 @@ const BEGIN_PROMPT = 'BEGIN_PROMPT';
 const NUMBER_PROMPT = 'NUMBER_PROMPT';
 const USER_PROFILE = 'USER_PROFILE';
 const WATERFALL_DIALOG = 'WATERFALL_DIALOG';
+const WATERFALL_DIALOG2 = 'WATERFALL_DIALOG2';
+const WATERFALL_DIALOG1 = 'WATERFALL_DIALOG1';
 
 
 
@@ -58,20 +60,15 @@ class UserProfileDialog extends ComponentDialog {
         this.addDialog(new ConfirmPrompt(CONFIRM_PROMPT));
         this.addDialog(new NumberPrompt(NUMBER_PROMPT, this.agePromptValidator));
         this.addDialog(new TextPrompt(BEGIN_PROMPT, this.beginPromptValidator));
+        this.addDialog(new ChoicePrompt('cardPrompt'));
 
-        this.addDialog(new WaterfallDialog(WATERFALL_DIALOG, [
-            // Introduction
-            this.startExperience1.bind(this),
-            this.startExperience2.bind(this),
+        this.addDialog(new WaterfallDialog(WATERFALL_DIALOG1, [
+            this.genreDef.bind(this),
+            this.genreDefRec.bind(this)
+        ]));
 
-            //Pre-Assessment
-            this.explainPreAssessment.bind(this),
-            this.preAssessment_1.bind(this),
-            this.preAssessment_2.bind(this),
-            this.preAssessment_3.bind(this),
-
+        this.addDialog(new WaterfallDialog(WATERFALL_DIALOG2, [
             ////Music Survey
-            this.explainMusicSurvey.bind(this),
             this.musicSurvey_st1_1.bind(this),
             this.musicSurvey_st1_2.bind(this),
             this.musicSurvey_st1_3.bind(this),
@@ -127,8 +124,21 @@ class UserProfileDialog extends ComponentDialog {
             // CONCLUSION
              this.endExperience_1.bind(this),
              this.endExperience_2.bind(this),
-             this.endExperience_3.bind(this),
+             this.endExperience_3.bind(this)
+        ]));
 
+        this.addDialog(new WaterfallDialog(WATERFALL_DIALOG, [
+            // Introduction
+            this.startExperience1.bind(this),
+            this.startExperience2.bind(this),
+
+            //Pre-Assessment
+            this.explainPreAssessment.bind(this),
+            this.preAssessment_1.bind(this),
+            this.preAssessment_2.bind(this),
+            this.preAssessment_3.bind(this),
+            this.explainMusicSurvey.bind(this),
+            this.musicSurveyTrans.bind(this)
         ]));
 
         this.initialDialogId = WATERFALL_DIALOG;
@@ -209,10 +219,75 @@ class UserProfileDialog extends ComponentDialog {
             });   
     }
 
-    async explainMusicSurvey(step) {
-        step.values.preAssessment_3 = step.result.value;
+    async genreDef(step) {
+        const options = {
+            prompt: 'If you aren’t familiar with any of the following genres, click on the name of the genre to learn more. **If you’re good to go, select “Next” to continue to the survey.**',
+            retryPrompt: 'Please select a music genre or type yes to continue.',
+            choices: this.getChoices()
+        };
 
+        // Prompt the user with the configured PromptOptions.
+        return await step.prompt('cardPrompt', options);
+    }
+
+    async genreDefRec(step){
+        console.log(step.result.value);
+        if(step.result.value != "Next"){
+            if(step.result.value == "Classical"){
+                await step.context.sendActivity("Classical music is rooted in late 18th and early 19th century European tradition and is typically performed with orchestras and other solo instruments, including the piano, organ and harp.");
+            } 
+            else if(step.result.value == "World Music"){
+                await step.context.sendActivity("World music refers to a wide range of music from around the world rooted in localized ethnic and cultural traditions and techniques.");
+            } 
+            else if(step.result.value == "Jazz"){
+                await step.context.sendActivity("Jazz music originated in the late 19th and early 20th centuries within African-American communities as one of America’s original art forms. It features swing and blue notes, call-and- response vocals, polyrhythms and improvisation.");
+            } 
+            else if(step.result.value == "Soul/R&B"){
+                await step.context.sendActivity("Rhythm and blues (or R&B) music is typically performed using a piano, guitars, bass, drums, saxophones, and background vocalists. R&B songs feature themes expressing love, relationships, hardships, and joy.");
+            } 
+            else if(step.result.value == "Pop"){
+                await step.context.sendActivity("Pop music features elements of a wide range of musical styles and typically features verses with repeated choruses, hooks, and melodic tunes.");
+            } 
+            else if(step.result.value == "Country"){
+                await step.context.sendActivity("Country music, also known as country and western, originates from the working-class folk music of the southern United States. It often consists of ballads and dance tunes with folk lyrics and harmonies. Common country instruments include banjos, electric and acoustic guitars, steel guitars, fiddles, and harmonicas.");
+            } 
+            else if(step.result.value == "Early Rock and Roll"){
+                await step.context.sendActivity("Rock and roll (or rock 'n' roll) originated during the late 1940s and early 1950s in the southern United States. It is rooted in African-American musical styles (gospel, jazz, rhythm and blues) that were popularized by both black and white popular artists.");
+            } 
+            else if(step.result.value == "Soft Rock"){
+                await step.context.sendActivity("Soft rock is a form of rock music that originated in the late 1960s in both Southern California and the United Kingdom. It relies on simple, melodic songs with large stage productions. Soft rock was popular on the radio throughout the 1970s.");
+            } 
+            else if(step.result.value == "Heavy Metal"){
+                await step.context.sendActivity("Heavy metal (or simply metal) is a genre of rock music that developed in the late 1960s and early 1970s, largely in the United Kingdom. Heavy metal music is characterized by highly amplified distortion, extended guitar solos, emphatic beats, and overall loudness. The genre's lyrics and performance styles are sometimes associated with aggression and machismo.");
+            } 
+            else if(step.result.value == "Electronica"){
+                await step.context.sendActivity("Electronica music is produced using electrical instruments such as synthesizers, electronic percussion and samples of recorded music or sound. It is often used for dancing and performances.");
+            } 
+            else if(step.result.value == "Rock"){
+                await step.context.sendActivity("Rock music began as “rock n’ roll” in the United States in the early 1950s, and developed into a range of different styles in the 1960s in both the U.S. and the United Kingdom. It primarily draws from the genres of jazz,blues,  rhythm and blues, and country music. Musically, rock centers on the electric guitar, usually as part of a rock group with electric bass, drums, and one or more singers. Lyrics may address a variety of themes, including but not limited to love, romance, and social and political topics.");
+            } 
+            else if(step.result.value == "Punk"){
+                await step.context.sendActivity("Punk rock (or simply punk) is a rock music genre that emerged in the mid-1970s in the United States, United Kingdom, and Australia. Rooted in 1960s garage rock, punk rock bands rejected perceived excesses of mainstream 1970s rock. Punk is characterized by short, fast-paced songs with hard-edged melodies, stripped-down instrumentation, and political, anti-establishment lyrics. Punk embraces a DIY ethic; many bands self-produce music and distribute their albums through independent record labels.");
+            } 
+            else if(step.result.value == "Acid Jazz"){
+                await step.context.sendActivity("Acid jazz (or club jazz) combines elements of jazz, soul, funk, and disco. Acid jazz originated in the London club scene of the mid-1980s and spread to the US, Japan, Eastern Europe, and Brazil.");
+            } 
+            else if(step.result.value == "Funk"){
+                await step.context.sendActivity("Funk originated in the mid-1960s when African-American musicians created a new form of music through a mix of soul music, jazz, and rhythm and blues (R&B). Funk focuses on a strong rhythmic groove of a bass line played by an electric bassist and a drum part played by a drummer, often at slow tempos. Funk can be described as both rhythmic and danceable.");
+            } 
+            else if(step.result.value == "Rap"){
+                await step.context.sendActivity("Rapping (AKA rhyming, spitting, emceeing, MCing) is a musical form of vocal delivery that incorporates \"rhyme, rhythmic speech, and street vernacular\", which is performed or chanted in a variety of ways, usually over a backing beat or musical accompaniment. Rap originates from West African oral tradition and was developed into its own genre by African-American musicians. Rap is often associated with, and is a primary ingredient of contemporary hip-hop music. ");
+            }
+            return await step.replaceDialog(WATERFALL_DIALOG1);
+        }
+        else{
+            return await step.replaceDialog(WATERFALL_DIALOG2);
+        }
+    }
+
+    async explainMusicSurvey(step) {
         // DJ Elemental Image
+        step.values.preAssessment_3 = step.result.value;
         var img = "https://uhhmstorage.blob.core.windows.net/artwork/DJ.png";
         var text = "Whassup, it's DJ. Let's get to the fun stuff!";
         await step.context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
@@ -221,6 +296,10 @@ class UserProfileDialog extends ComponentDialog {
        
         const promptOptions = { prompt: 'Type "yes" when you are ready to get started.', retryPrompt: 'Type "yes" when you are ready to get started.' };
         return await step.prompt(BEGIN_PROMPT, promptOptions);  
+    }
+
+    async musicSurveyTrans(step){
+        return await step.replaceDialog(WATERFALL_DIALOG1);
     }
 
     async musicSurvey_st1_1(step){
@@ -1364,16 +1443,67 @@ class UserProfileDialog extends ComponentDialog {
         );
     }
 
-    // imageCard usage
-        // var img = 'https://sec.ch9.ms/ch9/7ff5/e07cfef0-aa3b-40bb-9baa-7c9ef8ff7ff5/buildreactionbotframework_960.jpg';
-        // var text = "Scan the QR code with your camera to get your playlist";
-        // await step.context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
     createHeroCard(img, text) {
         return CardFactory.heroCard(
             text,
             CardFactory.images([img]),
             CardFactory.actions([])
         );
+    }
+
+    getChoices() {
+        const cardOptions = [
+            {
+                value: 'Classical'
+            },
+            {
+                value: 'World Music'
+            },
+            {
+                value: 'Jazz'
+            },
+            {
+                value: 'Soul/R&B'
+            },
+            {
+                value: 'Pop'
+            },
+            {
+                value: 'Country'
+            },
+            {
+                value: 'Early Rock and Roll'
+            },
+            {
+                value: 'Soft Rock'
+            },
+            {
+                value: 'Heavy Metal'
+            },
+            {
+                value: 'Electronica'
+            },
+            {
+                value: 'Rock'
+            },
+            {
+                value: 'Punk'
+            },
+            {
+                value: 'Acid Jazz'
+            },
+            {
+                value: 'Funk'
+            },
+            {
+                value: 'Rap'
+            },
+            {
+                value: 'Next'
+            }
+        ];
+
+        return cardOptions;
     }
 
 }

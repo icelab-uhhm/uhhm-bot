@@ -1,7 +1,7 @@
 // By the MIT Center for Advanced Virtuality
 // Licensed under a Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported (CC BY-NC-ND 3.0) License.
 
-const { ActivityHandler, CardFactory } = require('botbuilder');
+const { ActivityHandler, CardFactory, AttachmentLayoutTypes } = require('botbuilder');
 
 var wel = false;
 
@@ -37,7 +37,26 @@ class DialogBot extends ActivityHandler {
                     var text = "Yo, we are the Hip Hop Elementals! \n\nWelcome to the Breakbeat Narrative Experience.";
                     await context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
 
-                    await context.sendActivity("**Our names are:**\n\n" + "* MC\n\n" + "* DJ\n\n" + "* Breakdance\n\n" + "* Graffiti Art\n\n" + "* Knowledge");
+                    //await context.sendActivity("**Our names are:**\n\n" + "* MC\n\n" + "* DJ\n\n" + "* Breakdance\n\n" + "* Graffiti Art\n\n" + "* Knowledge");
+                    await context.sendActivity("**Our names are:**");
+                       
+                    var img1 = "https://uhhmstorage.blob.core.windows.net/artwork/MC.png";
+                    var img2 = "https://uhhmstorage.blob.core.windows.net/artwork/DJ.png";
+                    var img3 = "https://uhhmstorage.blob.core.windows.net/artwork/Breakdance.png";
+                    var img4 = "https://uhhmstorage.blob.core.windows.net/artwork/Graffiti.png";
+                    var img5 = "https://uhhmstorage.blob.core.windows.net/artwork/Knowledge.png";
+
+                    await context.sendActivity({
+                        attachments: [
+                            this.createHeroCard(img1, "MC"),
+                            this.createHeroCard(img2, "DJ"),
+                            this.createHeroCard(img3, "Breakdance"),
+                            this.createHeroCard(img4, "Graffiti Art"),
+                            this.createHeroCard(img5, "Knowledge")
+                        ],
+                        attachmentLayout: AttachmentLayoutTypes.Carousel
+                    });
+
                     await context.sendActivity("We embody the Five Cosmic Forces of Hip Hop.");
 
                     wel = true;
