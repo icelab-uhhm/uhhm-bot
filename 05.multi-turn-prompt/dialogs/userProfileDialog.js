@@ -1103,6 +1103,12 @@ class UserProfileDialog extends ComponentDialog {
         console.log("User Narrative Title: " + narrativeTitle);
         console.log("User Playlist: " + userProfile.playlist);
 
+        await step.context.sendActivity({
+            type: 'event',
+            name: 'begin-narrative',
+            value: userProfile 
+        });
+
         await step.context.sendActivity("**EXPLORE YOUR CUSTOM NARRATIVE:**");
         await step.context.sendActivity("**" + userProfile.lyricCategory + ": " + narrativeTitle + "**");
         await step.context.sendActivity("*Please note that the music playlist may or may not contain explicit content.*");
