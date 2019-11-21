@@ -57,7 +57,9 @@ class DialogBot extends ActivityHandler {
                         attachmentLayout: AttachmentLayoutTypes.Carousel
                     });
 
-                    await context.sendActivity("We embody the Five Cosmic Forces of Hip Hop.");
+                    await context.sendActivity([{ type: 'typing'},
+                                                { type: 'delay', value: 5000 },
+                                                { type: 'message', text: "We embody the Five Cosmic Forces of Hip Hop."}]);
 
                     wel = true;
                 }
