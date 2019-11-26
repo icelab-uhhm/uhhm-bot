@@ -1406,7 +1406,7 @@ class UserProfileDialog extends ComponentDialog {
         var img = "https://uhhmstorage.blob.core.windows.net/artwork/AllElementals.png";
         var text = "Enjoy the rest of your day exploring the [R]Evolution of Hip Hop. Peace out!";
         await context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
-
+        
         return await step.endDialog();
     }
 
