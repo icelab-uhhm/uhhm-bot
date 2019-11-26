@@ -221,7 +221,7 @@ class UserProfileDialog extends ComponentDialog {
 
     async genreDef(step) {
         const options = {
-            prompt: 'If you aren’t familiar with any of the following genres, click on the name of the genre to learn more. **If you’re good to go, select “Next” to continue to the survey.**',
+            prompt: 'If you aren’t familiar with any of the following genres, click on the name of the genre to learn more. **If you’re good to go, type “next” to continue to the survey.**',
             retryPrompt: 'Please select a music genre or type yes to continue.',
             choices: this.getChoices()
         };
