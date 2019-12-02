@@ -191,7 +191,7 @@ class UserProfileDialog extends ComponentDialog {
     async preAssessment_1(step){
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: 'I consider myself a fan of Hip Hop music.',
-                choices: ChoiceFactory.toChoices(['Disagree',  'Neutral', 'Agree'])
+                choices: ChoiceFactory.toChoices(['Agree', 'Neutral', 'Disagree'])
             });
     }
 
@@ -203,7 +203,7 @@ class UserProfileDialog extends ComponentDialog {
 
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: 'Music is important to me.',
-                choices: ChoiceFactory.toChoices(['Disagree',  'Neutral', 'Agree'])
+                choices: ChoiceFactory.toChoices(['Agree', 'Neutral', 'Disagree'])
             });
     }
 
@@ -215,7 +215,7 @@ class UserProfileDialog extends ComponentDialog {
 
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: "I'm knowledgeable about Hip Hop history and/or culture.",
-                choices: ChoiceFactory.toChoices(['Disagree',  'Neutral', 'Agree'])
+                choices: ChoiceFactory.toChoices(['Agree', 'Neutral', 'Disagree'])
             });   
     }
 
@@ -1223,7 +1223,7 @@ class UserProfileDialog extends ComponentDialog {
         if (userProfile.consent) {
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: "I'm an experienced technology user.",
-                choices: ChoiceFactory.toChoices(['Disagree', 'Neutral', 'Agree'])
+                choices: ChoiceFactory.toChoices(['Agree', 'Neutral', 'Disagree'])
             });
         }
         else {
@@ -1240,7 +1240,7 @@ class UserProfileDialog extends ComponentDialog {
 
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: 'I enjoy learning about new things using technology.',
-                choices: ChoiceFactory.toChoices(['Disagree', 'Neutral', 'Agree'])
+                choices: ChoiceFactory.toChoices(['Agree', 'Neutral', 'Disagree'])
             });
         }
         else {
@@ -1257,7 +1257,7 @@ class UserProfileDialog extends ComponentDialog {
 
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: 'I found the experience to be easy to understand.',
-                choices: ChoiceFactory.toChoices(['Disagree', 'Neutral', 'Agree'])
+                choices: ChoiceFactory.toChoices(['Agree', 'Neutral', 'Disagree'])
             });
         }
         else {
@@ -1274,7 +1274,7 @@ class UserProfileDialog extends ComponentDialog {
 
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: ' I enjoyed the experience.',
-                choices: ChoiceFactory.toChoices(['Disagree', 'Neutral', 'Agree'])
+                choices: ChoiceFactory.toChoices(['Agree', 'Neutral', 'Disagree'])
             });
         }
         else {
@@ -1291,7 +1291,7 @@ class UserProfileDialog extends ComponentDialog {
 
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: 'I learned something new about Hip Hop history and/or culture from the experience.',
-                choices: ChoiceFactory.toChoices(['Disagree', 'Neutral', 'Agree'])
+                choices: ChoiceFactory.toChoices(['Agree', 'Neutral', 'Disagree'])
             });
         }
         else {
@@ -1308,7 +1308,7 @@ class UserProfileDialog extends ComponentDialog {
 
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: 'I felt like the experience was customized to fit my interests.',
-                choices: ChoiceFactory.toChoices(['Disagree', 'Neutral', 'Agree'])
+                choices: ChoiceFactory.toChoices(['Agree', 'Neutral', 'Disagree'])
             });
         }
         else {
@@ -1325,7 +1325,7 @@ class UserProfileDialog extends ComponentDialog {
 
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: 'I felt like the audio playlist was customized to fit my music preferences.',
-                choices: ChoiceFactory.toChoices(['Disagree', 'Neutral', 'Agree'])
+                choices: ChoiceFactory.toChoices(['Agree', 'Neutral', 'Disagree'])
             });
         }
         else {
