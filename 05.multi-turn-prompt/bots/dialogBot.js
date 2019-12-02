@@ -33,7 +33,8 @@ class DialogBot extends ActivityHandler {
                 if (context.activity.membersAdded[idx].id !== context.activity.recipient.id) {
 
                     // Image of All 5 Elementals
-                    var img = "https://uhhmstorage.blob.core.windows.net/artwork/AllElementals.png";
+                    //var img = "https://uhhmstorage.blob.core.windows.net/artwork/AllElementals.png";
+                    var img = "";
                     var text = "Yo, we are the Hip Hop Elementals! \n\nWelcome to the Breakbeat Narrative Experience.";
                     await context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
 

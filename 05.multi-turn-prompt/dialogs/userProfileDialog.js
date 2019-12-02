@@ -1403,9 +1403,12 @@ class UserProfileDialog extends ComponentDialog {
     async endExperience_3(step) {
        
         // Image of All 5 Elementals
-        var img = "https://uhhmstorage.blob.core.windows.net/artwork/AllElementals.png";
-        var text = "Enjoy the rest of your day exploring the [R]Evolution of Hip Hop. Peace out!";
-        await step.context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
+        //var img = "https://uhhmstorage.blob.core.windows.net/artwork/AllElementals.png";
+        //var img = "";
+        //var text = "Enjoy the rest of your day exploring the [R]Evolution of Hip Hop. Peace out!";
+        //await step.context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
+
+        await step.context.sendActivity("**Enjoy the rest of your day exploring the [R]Evolution of Hip Hop. Peace out!**");
 
         await step.context.sendActivity({
             type: 'event',
