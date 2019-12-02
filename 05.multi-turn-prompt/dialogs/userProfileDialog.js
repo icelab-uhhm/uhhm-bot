@@ -1134,7 +1134,7 @@ class UserProfileDialog extends ComponentDialog {
         await step.context.sendActivity("**We wanna hear what you thought about the experience to help us with the science of how to improve it.**");
         return await step.prompt(CHOICE_PROMPT, {
             prompt: "We can only use your feedback if you're over 18 years old, though. Are you over 18?",
-            choices: ChoiceFactory.toChoices(['No', 'Yes'])
+            choices: ChoiceFactory.toChoices(['Yes', 'No'])
         });
     }
 
@@ -1143,7 +1143,7 @@ class UserProfileDialog extends ComponentDialog {
             userIsAdult = true;
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: 'Def! Can we share your feedback with MIT to make the future experience better?',
-                choices: ChoiceFactory.toChoices(['No', 'Yes'])
+                choices: ChoiceFactory.toChoices(['Yes', 'No'])
             });
         }
         else {
