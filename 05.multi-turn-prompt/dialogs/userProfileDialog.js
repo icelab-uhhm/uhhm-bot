@@ -221,7 +221,7 @@ class UserProfileDialog extends ComponentDialog {
 
     async genreDef(step) {
         const options = {
-            prompt: 'If you aren’t familiar with any of the following genres, click on the name of the genre to learn more. **If you’re good to go, type “next” to continue to the survey.**',
+            prompt: 'If you aren’t familiar with any of the following genres, click on the name of the genre to learn more. **If you’re good to go, select “Next” to continue to the survey.**',
             retryPrompt: 'Please select a music genre or type yes to continue.',
             choices: this.getChoices()
         };
@@ -1401,12 +1401,16 @@ class UserProfileDialog extends ComponentDialog {
     }
 
     async endExperience_3(step) {
-
+       
         // Image of All 5 Elementals
         var img = "https://uhhmstorage.blob.core.windows.net/artwork/AllElementals.png";
         var text = "Enjoy the rest of your day exploring the [R]Evolution of Hip Hop. Peace out!";
-        await context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
+        await step.context.sendActivity({ attachments: [this.createHeroCard(img, text)] });
 
+        await step.context.sendActivity({
+            type: 'event',
+            name: 'end-chat'
+        });  
         return await step.endDialog();
     }
 
