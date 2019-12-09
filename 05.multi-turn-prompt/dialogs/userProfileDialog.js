@@ -323,7 +323,7 @@ class UserProfileDialog extends ComponentDialog {
 
         return await step.prompt(CHOICE_PROMPT, {
             prompt: 'Between these two types of music, which is more dope?',
-            choices: ChoiceFactory.toChoices(["Jazz", "Country"])
+            choices: ChoiceFactory.toChoices(["Jazz", "Soul/R&B"])
         }); 
     }
 
@@ -337,11 +337,11 @@ class UserProfileDialog extends ComponentDialog {
 
         // Update the tallies for genre 1 and genre 2
         if (lastChosenGenre == "jazz") { genre1_tally++; }
-        else if (lastChosenGenre == "country") { genre2_tally++; }
+        else if (lastChosenGenre == "soul/r&b") { genre2_tally++; }
 
         return await step.prompt(CHOICE_PROMPT, {
             prompt: 'Between these two types of music, which are you more down with (which do you like more)?',
-            choices: ChoiceFactory.toChoices(["World Music", "Heavy Metal"])
+            choices: ChoiceFactory.toChoices(["World Music", "Rap"])
         });
     }
 
@@ -355,11 +355,11 @@ class UserProfileDialog extends ComponentDialog {
 
         // Update the tallies for genre 1 and genre 2
         if (lastChosenGenre == "world music") { genre1_tally++; }
-        else if (lastChosenGenre == "heavy metal") { genre2_tally++; }
+        else if (lastChosenGenre == "rap") { genre2_tally++; }
 
         return await step.prompt(CHOICE_PROMPT, {
             prompt: 'Between these next two types of music, which one you like better?',
-            choices: ChoiceFactory.toChoices(["Classical", "Electronica"])
+            choices: ChoiceFactory.toChoices(["Classical", "Rock"])
         });
     }
 
@@ -373,7 +373,7 @@ class UserProfileDialog extends ComponentDialog {
 
         // Update the tallies for genre 1 and genre 2
         if (lastChosenGenre == "classical") { genre1_tally++; }
-        else if (lastChosenGenre == "electronica") { genre2_tally++; }
+        else if (lastChosenGenre == "rock") { genre2_tally++; }
 
         return await step.prompt(CHOICE_PROMPT, {
             prompt: 'Now, tell us which you like more between these. Which is more def out of the next two?',
@@ -395,7 +395,7 @@ class UserProfileDialog extends ComponentDialog {
 
         return await step.prompt(CHOICE_PROMPT, {
             prompt: 'Between these two types of music, which is more your jam?',
-            choices: ChoiceFactory.toChoices(["World Music", "Electronica"])
+            choices: ChoiceFactory.toChoices(["World Music", "Country"])
         });
     }
 
@@ -409,7 +409,7 @@ class UserProfileDialog extends ComponentDialog {
 
         // Update the tallies for genre 1 and genre 2
         if (lastChosenGenre == "world music") { genre1_tally++; }
-        else if (lastChosenGenre == "electronica") { genre2_tally++; }
+        else if (lastChosenGenre == "country") { genre2_tally++; }
 
         return await step.prompt(CHOICE_PROMPT, {
             prompt: "Now let's hear what you like better between these two types of music. Which of the following two do you feel more?",
@@ -495,7 +495,7 @@ class UserProfileDialog extends ComponentDialog {
 
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: 'Now, between these two types of music, which you like more?',
-                choices: ChoiceFactory.toChoices(["Heavy Metal", "Soft Rock"])
+                choices: ChoiceFactory.toChoices(["Electronica", "Soft Rock"])
             });
         }
         else {
@@ -511,14 +511,14 @@ class UserProfileDialog extends ComponentDialog {
             //await step.context.sendActivity(`You chose: ${step.result.value}.`);
 
             // Update the tallies for genre 1 and genre 2
-            if (lastChosenGenre == "heavy metal") { genre1_tally++; }
+            if (lastChosenGenre == "electronica") { genre1_tally++; }
             else if (lastChosenGenre == "soft rock") { genre2_tally++; }
 
             var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
             await step.context.sendActivity(transitions[rndInd]);
             return await step.prompt(CHOICE_PROMPT, {
                 prompt: 'I wanna know which you think is better. Between these two types of music, which is more fire?',
-                choices: ChoiceFactory.toChoices(["Punk", "Pop"])
+                choices: ChoiceFactory.toChoices(["Rap", "Pop"])
             });
         }
         else {
@@ -534,7 +534,7 @@ class UserProfileDialog extends ComponentDialog {
             //await step.context.sendActivity(`You chose: ${step.result.value}.`);
 
             // Update the tallies for genre 1 and genre 2
-            if (lastChosenGenre == "punk") { genre1_tally++; }
+            if (lastChosenGenre == "rap") { genre1_tally++; }
             else if (lastChosenGenre == "pop") { genre2_tally++; }
 
             var rndInd = Math.floor(Math.random() * Object.keys(transitions).length);
@@ -1119,6 +1119,13 @@ class UserProfileDialog extends ComponentDialog {
     async concludeNarrative(step) {
         const promptOptions = { prompt: "Type 'yes' when you're finished exploring your narrative.", retryPrompt: "Type 'yes' when you're finished exploring your narrative." };
 
+        // RESET ALL TALLIES FOR THE LYRIC SURVEY
+        lyric_category_tally["FL"] = 0;
+        lyric_category_tally["SIL"] = 0;
+        lyric_category_tally["LL"] = 0;
+        //console.log("RESETTING ALL LYRIC CATEGORY TALLIES: ");
+        //console.log(lyric_category_tally);
+
         return await step.prompt(BEGIN_PROMPT, promptOptions);
     }
 
@@ -1384,7 +1391,7 @@ class UserProfileDialog extends ComponentDialog {
         await step.context.sendActivity("**Thanks again for joining us for the Breakbeat Narrative Experience! To get your custom music playlist, scan the QR code below with your mobile device camera.**");
         // Display QR code to playlist
 
-        // TODO: Update QR code images to link to latest Soundcloud playlists
+        // QR CODES TO SPOTIFY PLAYLISTS 
         var QRcodeImg = "https://uhhmstorage.blob.core.windows.net/qrcodes/" + userProfile.playlist + ".png";
         var text = "Here's Your Custom [R]Evolution of Hip Hop Playlist!";
         await step.context.sendActivity({ attachments: [this.createHeroCard(QRcodeImg, text)] });
