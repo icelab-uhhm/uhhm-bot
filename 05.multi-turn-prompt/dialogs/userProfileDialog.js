@@ -1419,7 +1419,8 @@ class UserProfileDialog extends ComponentDialog {
 
         await step.context.sendActivity({
             type: 'event',
-            name: 'end-chat'
+            name: 'end-chat',
+            value: userProfile
         });  
         return await step.endDialog();
     }
